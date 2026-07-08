@@ -1,0 +1,110 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Venue {
+  id           String    @id @default(uuid())
+  name         String
+  tournamentId String    @map("tournament_id")
+  timezone     String
+  zones        Zone[]
+  createdAt    DateTime  @default(now()) @map("created_at")
+}
+
+model Zone {
+  id                String      @id
+  venueId           String      @map("venue_id")
+  venue             Venue       @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  name              String
+  capacity          Int
+  currentCount      Int         @default(0) @map("current_count")
+  warningThreshold  Float       @default(0.85) @map("warning_threshold")
+  criticalThreshold Float       @default(0.95) @map("critical_threshold")
+  geoPolygon        String      @map("geo_polygon") // JSON string of coordinates array
+  sectionMetadata   String      @map("section_metadata") // JSON string metadata
+  amenities         Amenity[]
+  incidents         Incident[]
+  alertLogs         AlertLog[]
+  volunteers        Volunteer[]
+  wasteBins         WasteBin[]
+}
+
+model Amenity {
+  id                 String  @id
+  zoneId             String  @map("zone_id")
+  zone               Zone    @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  type               String  // "restroom" | "medical" | "food" | "exit" | "seating" | "lift"
+  name               String
+  accessibilityFlags String  @map("accessibility_flags") // JSON string (wheelchair: boolean, etc)
+  status             String  @default("open") // "open" | "closed" | "restricted"
+}
+
+model Incident {
+  id                  String     @id @default(uuid())
+  category            String     // "medical" | "lost_person" | "security" | "facilities" | "other"
+  zoneId              String     @map("zone_id")
+  zone                Zone       @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  priority            String     @default("medium") // "low" | "medium" | "high" | "critical"
+  status              String     @default("reported") // "reported" | "dispatched" | "resolved"
+  assignedVolunteerId String?    @map("assigned_volunteer_id")
+  assignedVolunteer   Volunteer? @relation(fields: [assignedVolunteerId], references: [id], onDelete: SetNull)
+  createdBy           String     @map("created_by")
+  description         String
+  createdAt           DateTime   @default(now()) @map("created_at")
+  resolvedAt          DateTime?  @map("resolved_at")
+}
+
+model Volunteer {
+  id                String     @id
+  name              String
+  preferredLanguage String     @map("preferred_language")
+  zoneAssignment    String     @map("zone_assignment")
+  zone              Zone       @relation(fields: [zoneAssignment], references: [id])
+  availability      String     @default("available") // "available" | "busy" | "offline"
+  contactChannel    String     @map("contact_channel")
+  incidents         Incident[]
+}
+
+model ChatLog {
+  id                  String   @id @default(uuid())
+  sessionId           String   @map("session_id")
+  query               String
+  detectedLanguage    String   @map("detected_language")
+  response            String
+  groundedSources     String   @map("grounded_sources") // JSON array of cited amenity/zone IDs
+  flaggedHallucination Boolean  @default(false) @map("flagged_hallucination")
+  createdAt           DateTime @default(now()) @map("created_at")
+}
+
+model AlertLog {
+  id                String   @id @default(uuid())
+  zoneId            String   @map("zone_id")
+  zone              Zone     @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  thresholdCrossed  String   @map("threshold_crossed") // "warning" | "critical"
+  generatedSummary  String   @map("generated_summary")
+  recommendedAction String   @map("recommended_action")
+  acknowledged      Boolean  @default(false)
+  acknowledgedBy    String?  @map("acknowledged_by")
+  timestamp         DateTime @default(now())
+}
+
+model TransportZone {
+  id           String @id
+  name         String
+  type         String // "parking" | "shuttle_stop"
+  capacity     Int
+  currentCount Int    @default(0) @map("current_count")
+}
+
+model WasteBin {
+  id          String   @id
+  zoneId      String   @map("zone_id")
+  zone        Zone     @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  fillPct     Float    @map("fill_pct")
+  lastUpdated DateTime @updatedAt @map("last_updated")
+}

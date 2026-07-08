@@ -1,0 +1,21 @@
+{
+  "name": "@stadiumpulse/ai",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@google/genai": "^0.2.0",
+    "@stadiumpulse/db": "workspace:*",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^1.6.1",
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
+  }
+}
