@@ -10,6 +10,22 @@
 
 ---
 
+## 🎯 Problem Statement & Challenge Alignment Matrix
+
+### **Challenge**: Hack2Skill — GenAI-Enabled Stadium Operations & Tournament Experience
+**Team**: Chicha Core | **Project Owner**: Ismail Sayyed
+
+| Hack2Skill Challenge Requirement | StadiumPulse AI Production Feature | Grounded AI & Technical Implementation |
+| :--- | :--- | :--- |
+| **1. Multilingual Fan Navigation & RAG Companion** | Interactive stadium map (`/fan/map`), turn-by-turn indoor wayfinding (`/fan/navigation`), and AI Chat Assistant (`/fan/assistant`) supporting English, Hindi, Marathi, Arabic, French, and Spanish. | Database-backed grounding verification (`lib/ai/guardrails.ts`) checks DB entity presence to prevent LLM hallucinations. |
+| **2. Real-Time Crowd Density & Flow Telemetry** | Server-Sent Events (SSE) stream (`/api/zones/stream`) driving live concourse density heatmaps (`/ops/dashboard` & `/fan/crowd`) with automated LLM situation report generation. | Single background EventBroadcaster loop prevents DB pool exhaustion; 60s anti-spam cooldown window prevents threshold alert flapping. |
+| **3. AI Volunteer & Incident Intake Copilot** | Two-panel voice/text incident intake workspace (`/volunteer/copilot`) drafting structured tickets, assessing priority, and matching nearest available volunteers. | Matches volunteer availability, zone proximity (GPS/polygon bounds), and target volunteer language preferences. |
+| **4. Inclusive Accessibility & Emergency SOS Protocol** | 1-Tap geolocation Emergency SOS button (`/fan/emergency`), wheelchair accessible route finder, and elevator status telemetry (`/fan/accessibility`). | Direct hotline integration and instant coordinate dispatch to Control Room desk and security personnel. |
+| **5. Transport & Sustainability Telemetry** | Real-time shuttle countdowns, parking lot occupancy meters (`/fan/transport`), and smart waste bin fill monitors (`/ops/sustainability`). | SSE event bus broadcasting shuttle departures and bin fill alerts (>85%) directly to ground staff. |
+| **6. System Governance & Audit Logging** | Admin governance dashboard (`/admin`) for venue polygon configuration, prompt tuning, and hallucination audit logs (`/admin/audit`). | Prisma ORM AuditLog entity logging threshold breaches, staff acknowledgements, and LLM token usage metrics. |
+
+---
+
 ## 🎨 UI & Design Aesthetics (Stitch Design System)
 
 The platform is designed using a state-of-the-art dark obsidian and cyan telemetry design system built across 34 custom UI screen specifications:

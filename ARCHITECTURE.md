@@ -4,6 +4,20 @@ This document details the architectural principles, module decomposition, data s
 
 ---
 
+## 🎯 Problem Statement & Challenge Alignment
+
+**Hack2Skill Challenge**: GenAI-Enabled Stadium Operations & Tournament Experience  
+**Team**: Chicha Core | **Project Owner**: Ismail Sayyed
+
+The platform directly solves the core challenge requirements through 5 production pillars:
+1. **Multilingual RAG Fan Companion**: Grounded navigation in 6 languages with database entity verification (`lib/ai/guardrails.ts`).
+2. **Real-Time Crowd Telemetry & Heatmap**: SSE event bus broadcasting zone occupancy & LLM situation reports (`/api/zones/stream`).
+3. **AI Volunteer Incident Copilot**: Structured intake, priority scoring, and proximity/language volunteer matchmaking (`/volunteer/copilot`).
+4. **Inclusive Accessibility & SOS Protocol**: 1-Tap geolocation emergency dispatch (`/fan/emergency`) & wheelchair navigation (`/fan/accessibility`).
+5. **Platform Governance & Audit Log**: Executive management, prompt tuning, and hallucination tracking (`/admin/audit`).
+
+---
+
 ## 🏛️ 1. Layered System Architecture
 
 ```
