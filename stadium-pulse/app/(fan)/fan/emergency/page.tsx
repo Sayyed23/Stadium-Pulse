@@ -1,4 +1,5 @@
-import { ShieldAlert, Cross, Shield, Search, Phone, AlertTriangle } from "lucide-react";
+import Link from "next/link";
+import { ShieldAlert, Cross, Shield, Search, Phone, AlertTriangle, ArrowLeft } from "lucide-react";
 
 const emergencyContacts = [
   { name: "Stadium Security", number: "+91 22 1234 0001", available: "24/7" },
@@ -10,13 +11,17 @@ const emergencyContacts = [
 
 export default function EmergencyPage() {
   return (
-    <div className="flex flex-col gap-6 p-4 pb-28 max-w-lg mx-auto font-sans">
-      <div>
-        <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-          <ShieldAlert className="text-red-400" size={28} />
-          Emergency SOS
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
+      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <ArrowLeft size={14} /> Back to Fan Dashboard
+      </Link>
+
+      <div className="bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+          <ShieldAlert className="text-red-400" size={30} />
+          Emergency SOS Response
         </h2>
-        <p className="text-xs text-[#b9cacb]">Instant 1-Tap dispatch to Control Room & Security</p>
+        <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Instant 1-Tap geolocation dispatch to Control Room & Security Desk</p>
       </div>
 
       {/* SOS Button */}

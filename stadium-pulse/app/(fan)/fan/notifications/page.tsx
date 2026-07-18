@@ -1,4 +1,5 @@
-import { Bell, AlertTriangle, Info, CheckCircle2, Clock } from "lucide-react";
+import Link from "next/link";
+import { Bell, AlertTriangle, Info, CheckCircle2, Clock, ArrowLeft } from "lucide-react";
 
 const notifications = [
   { id: "1", type: "alert", title: "Zone B Near Capacity", body: "Zone B is at 91% occupancy. Consider using alternate routes via Gate 7.", time: "2 min ago", read: false },
@@ -20,11 +21,15 @@ export default function NotificationsPage() {
   const read = notifications.filter((n) => n.read);
 
   return (
-    <div className="flex flex-col gap-5 p-4 pb-28 max-w-lg mx-auto font-sans">
-      <div className="flex items-center justify-between">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
+      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <ArrowLeft size={14} /> Back to Fan Dashboard
+      </Link>
+
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Notifications Center</h2>
-          <p className="text-xs text-[#b9cacb] font-mono">{unread.length} new unread updates</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Notifications Center</h2>
+          <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">{unread.length} new unread updates</p>
         </div>
         <button className="text-xs font-mono font-bold text-[#00f2ff] hover:underline">Mark all read</button>
       </div>

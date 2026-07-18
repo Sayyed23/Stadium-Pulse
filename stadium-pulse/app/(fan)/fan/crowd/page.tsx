@@ -1,6 +1,7 @@
 "use client";
 
-import { Users, Clock, ArrowRight, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import Link from "next/link";
+import { Users, Clock, ArrowRight, TrendingUp, TrendingDown, Minus, ArrowLeft } from "lucide-react";
 
 const zones = [
   { id: "zone_a", name: "Zone A — North Stand", pct: 72, count: 5760, capacity: 8000, trend: "up" as const },
@@ -33,10 +34,14 @@ const TrendIcon = ({ trend }: { trend: string }) => {
 
 export default function CrowdPage() {
   return (
-    <div className="flex flex-col gap-6 p-4 pb-28 max-w-lg mx-auto font-sans">
-      <div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">Live Crowd Heatmap</h2>
-        <p className="text-xs text-[#b9cacb]">Real-time stadium occupancy & flow telemetry</p>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
+      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <ArrowLeft size={14} /> Back to Fan Dashboard
+      </Link>
+
+      <div className="bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Live Crowd Heatmap & Density Telemetry</h2>
+        <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Real-time stadium occupancy & flow telemetry across concourses</p>
       </div>
 
       {/* Crowd Heatmap Grid */}

@@ -1,4 +1,5 @@
-import { Accessibility, Navigation, ArrowUp, Armchair, Headphones, HandHelping, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
+import { Accessibility, Navigation, ArrowUp, Armchair, Headphones, HandHelping, MapPin, Phone, ArrowLeft } from "lucide-react";
 
 const wheelchairRoutes = [
   { from: "Gate 1", to: "Section A (Accessible)", via: "Ramp + Lift 2", time: "6 min" },
@@ -22,13 +23,17 @@ const accessibleSeating = [
 
 export default function AccessibilityPage() {
   return (
-    <div className="flex flex-col gap-6 p-4 pb-28 max-w-lg mx-auto font-sans">
-      <div>
-        <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-          <Accessibility className="text-[#00f2ff]" size={26} />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
+      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <ArrowLeft size={14} /> Back to Fan Dashboard
+      </Link>
+
+      <div className="bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+          <Accessibility className="text-[#00f2ff]" size={28} />
           Accessibility Services
         </h2>
-        <p className="text-xs text-[#b9cacb]">Accessible routes, elevators, seating & dedicated volunteer support</p>
+        <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Accessible routes, elevators, seating & dedicated volunteer support</p>
       </div>
 
       {/* Quick Action — Request Assistance */}

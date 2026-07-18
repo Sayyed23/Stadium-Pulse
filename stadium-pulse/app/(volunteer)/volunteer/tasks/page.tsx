@@ -1,4 +1,5 @@
-import { ListChecks, MapPin, Clock, CheckCircle2, Circle, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { ListChecks, MapPin, Clock, CheckCircle2, Circle, Loader2, ArrowLeft } from "lucide-react";
 
 const tasks = [
   { id: "T-001", title: "Patrol Zone B concourse", zone: "Zone B", priority: "medium", due: "16:30", status: "in-progress" },
@@ -10,15 +11,15 @@ const tasks = [
 ];
 
 const priorityColors: Record<string, string> = {
-  high: "bg-amber-500/10 text-amber-400",
-  medium: "bg-blue-500/10 text-blue-400",
-  low: "bg-slate-500/10 text-slate-400",
+  high: "bg-amber-500/10 text-amber-400 border border-amber-500/30",
+  medium: "bg-[#00f2ff]/10 text-[#00f2ff] border border-[#00f2ff]/30",
+  low: "bg-[#3a494b]/30 text-[#b9cacb] border border-[#3a494b]",
 };
 
 const statusIcons: Record<string, React.ReactNode> = {
-  "in-progress": <Loader2 size={16} className="text-blue-500 animate-spin" />,
-  pending: <Circle size={16} className="text-slate-400" />,
-  completed: <CheckCircle2 size={16} className="text-emerald-500" />,
+  "in-progress": <Loader2 size={16} className="text-[#00f2ff] animate-spin" />,
+  pending: <Circle size={16} className="text-[#b9cacb]" />,
+  completed: <CheckCircle2 size={16} className="text-[#5cf968]" />,
 };
 
 export default function VolunteerTasksPage() {
@@ -26,10 +27,14 @@ export default function VolunteerTasksPage() {
   const done = tasks.filter((t) => t.status === "completed");
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-          <ListChecks size={16} /> Active Tasks ({active.length})
+    <div className="max-w-6xl mx-auto space-y-6 font-sans p-4">
+      <Link href="/volunteer" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <ArrowLeft size={14} /> Back to Volunteer Dashboard
+      </Link>
+
+      <div className="bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl flex items-center justify-between">
+        <h3 className="text-sm font-mono font-bold text-[#00f2ff] uppercase tracking-wider flex items-center gap-2">
+          <ListChecks size={18} /> Active Assigned Tasks ({active.length})
         </h3>
       </div>
 

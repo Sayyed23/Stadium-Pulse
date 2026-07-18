@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ShieldCheck, ArrowRight, Lock, Mail, Smartphone } from "lucide-react";
+import { ShieldCheck, ArrowRight, ArrowLeft, Lock, Mail, Smartphone } from "lucide-react";
 
 export default function UnifiedLoginPage() {
   const [portal, setPortal] = useState<"fan" | "volunteer" | "ops" | "admin">("fan");
@@ -11,6 +11,13 @@ export default function UnifiedLoginPage() {
 
   return (
     <div className="w-full max-w-md p-8 bg-[#1d2022] rounded-3xl shadow-2xl border border-[#00f2ff]/30 space-y-6">
+      <div className="flex items-center justify-between">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+          <ArrowLeft size={14} /> Back to Home
+        </Link>
+        <span className="text-[10px] font-mono text-[#b9cacb]">SECURE AUTH</span>
+      </div>
+
       <div className="text-center space-y-2">
         <div className="inline-flex w-12 h-12 rounded-2xl bg-[#00f2ff]/10 border border-[#00f2ff]/40 items-center justify-center text-[#00f2ff] font-bold text-sm font-mono glow-cyan-sm mb-1">
           SP

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Bot, Send, AlertTriangle, MapPin, User, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
+import { Bot, Send, AlertTriangle, MapPin, User, CheckCircle2, ArrowLeft } from "lucide-react";
 
 export default function VolunteerCopilotPage() {
   const [description, setDescription] = useState("");
@@ -12,7 +13,11 @@ export default function VolunteerCopilotPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-6rem)] max-w-6xl mx-auto font-sans">
+    <div className="flex flex-col h-[calc(100vh-6rem)] max-w-6xl mx-auto font-sans p-4 space-y-4">
+      <Link href="/volunteer" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <ArrowLeft size={14} /> Back to Volunteer Dashboard
+      </Link>
+      
       <div className="flex-1 flex flex-col md:flex-row gap-6 overflow-hidden">
         {/* Left Panel: Report */}
         <div className="flex-1 flex flex-col min-w-0 bg-[#1d2022] border border-[#3a494b]/40 rounded-2xl overflow-hidden shadow-2xl">

@@ -1,15 +1,18 @@
 import { ChatWindow } from "@/components/chat/ChatWindow";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function AssistantPage() {
   return (
-    <div className="flex flex-col h-full p-4 md:p-8 max-w-4xl mx-auto w-full relative">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-blue-500/10 to-transparent pointer-events-none -z-10" />
+    <div className="flex flex-col h-full p-4 md:p-8 max-w-4xl mx-auto w-full relative font-sans">
+      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline mb-3">
+        <ArrowLeft size={14} /> Back to Fan Dashboard
+      </Link>
       
       <div className="mb-6">
-        <h2 className="text-3xl font-extrabold tracking-tight mb-2">Navigation Assistant</h2>
-        <p className="text-slate-500 dark:text-slate-400">
-          Ask a question in your preferred language to get grounded venue directions and recommendations.
+        <h2 className="text-3xl font-extrabold tracking-tight mb-2 text-white">AI Navigation Assistant</h2>
+        <p className="text-[#b9cacb] font-mono text-xs">
+          Ask a question in English, Hindi, Marathi, Arabic, French, or Spanish for grounded venue guidance.
         </p>
       </div>
       

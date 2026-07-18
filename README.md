@@ -1,42 +1,64 @@
 # 🏟️ StadiumPulse AI
 
-**StadiumPulse AI** is a GenAI-enabled operations layer and tournament companion platform built for large-scale sports venues. Consolidating spectator navigation and staff control room operations into a single Next.js application, the platform uses real-time event streaming and LLM orchestration to translate stadium telemetry into grounded, actionable insights.
+**StadiumPulse AI** is a GenAI-enabled operations layer, spectator navigation companion, and control room platform built for large-scale sports venues. Consolidating spectator navigation, volunteer dispatch, and staff control room operations into a single Next.js application, the platform uses real-time event streaming, high-fidelity Stitch UI designs, and LLM orchestration to translate stadium telemetry into grounded, actionable insights.
 
 ---
 
-## 🚀 Key Features
+## 🎨 UI & Design Aesthetics (Stitch Design System)
 
-### 1. 🗺️ Multilingual AI Navigation & Accessibility Assistant (FR-1)
-* **Intelligent Wayfinding**: Provides spectators with step-by-step route sequences (zone-to-zone transitions) and walking estimates based on indoor layouts.
-* **Hard Grounding**: Constrained strictly to pre-fetched database facts using server-side guardrails. It refuses to invent gates, routes, or facilities.
-* **Multilingual Capability**: Out-of-the-box support for **English**, **Hindi**, and **Marathi** with automatic query language detection.
-* **Session Follow-up Context**: Retains conversational history for multi-turn queries (e.g., asking "is there a lift near it?" resolves against the last-mentioned route).
+The platform is designed using a state-of-the-art dark obsidian and cyan telemetry design system built across 34 custom UI screen specifications:
+* **Color Palette**: Dark Obsidian background (`#101415`), Surface Containers (`#1d2022`, `#272a2c`), Electric Cyan Highlights (`#00f2ff`), and Telemetry Green Status (`#5cf968`).
+* **Typography**: Montserrat, Geist, Inter, and Material Symbols Outlined icons.
+* **Responsive Web & Mobile Architecture**:
+  * **Desktop Web View**: Expands into full 12-column responsive layouts (`max-w-7xl mx-auto`) with a top header navigation bar, side-by-side data telemetry panels, and desktop quick action shortcuts.
+  * **Mobile Touch View**: Compact, touch-friendly layouts with a floating bottom navigation dock, mobile category chips, and swipeable cards.
 
-### 2. 🚨 Real-Time Crowd & Operational Intelligence (FR-2)
-* **Live Heatmap**: Staff control-room dashboard displays real-time occupancy updates per stadium zone pushed via a unified Server-Sent Events (SSE) bus.
-* **Situation Feed**: Automatically triggers LLM-powered situation reports and recommended actions when warning (85%) or critical (95%) thresholds are crossed.
+---
+
+## 🚀 Key Features & Portals
+
+### 1. 🗺️ Fan Experience Portal (`/fan/*`)
+* **AI Search & Chat Assistant (`/fan/assistant`)**: Multilingual RAG assistant for route advice, food recommendations, and facility questions.
+* **Interactive Stadium Map (`/fan/map`)**: Google Maps integration with facility filters (Food Courts, Medical, Restrooms, Parking) and guided polyline routes.
+* **Indoor Wayfinding (`/fan/navigation`)**: Turn-by-turn indoor directions with accessible elevator route toggles and nearby POIs.
+* **Amenities & Wait Times (`/fan/amenities`)**: Real-time concourse wait time tracking, distance indicators, and service availability status.
+* **Live Crowd Density (`/fan/crowd`)**: Zone-by-zone density gauges, congestion alerts, and AI-suggested alternate route recommendations.
+* **Transport & Parking (`/fan/transport`)**: Real-time shuttle bus countdowns, parking lot capacity meters, and transit alerts.
+* **Accessibility Services (`/fan/accessibility`)**: 1-Tap live volunteer assistance requests, wheelchair route guides, and elevator statuses.
+* **Emergency SOS (`/fan/emergency`)**: 1-Tap Emergency SOS button with live geolocation broadcast and direct hotline dispatch.
+* **System Settings (`/fan/settings`)**: Multilingual selector (English, Hindi, Marathi, Arabic, French, Spanish), high contrast UI toggles, and PWA offline cache engine.
+
+### 2. 🚨 Control Room & Operational Intelligence (`/ops/*`)
+* **Master Console (`/ops/dashboard`)**: Staff control-room dashboard displaying real-time occupancy updates per stadium zone pushed via a unified Server-Sent Events (SSE) bus.
+* **Live Situation Feed**: Automatically triggers LLM-powered situation reports and recommended actions when warning (85%) or critical (95%) thresholds are crossed.
 * **Anti-Spam Cooldown**: Uses a 60-second cooldown window per zone to prevent threshold oscillation ("flapping") from flooding staff with repeat alerts.
 * **Acknowledge Workflow**: Permits staff to acknowledge live alerts, instantly persisting states back to the database.
+* **Emergency Lockdown**: One-click master lockdown controls for crisis containment.
 
-### 3. 🛡️ Volunteer / Staff Incident Copilot (FR-3)
-* **Two-Panel Intake Workspace**: Staff and volunteers type/speak unstructured incident reports on the left; the copilot drafts structured tickets on the right.
+### 3. 🛡️ Volunteer & Staff Incident Copilot (`/volunteer/*`)
+* **Duty Operations Dashboard (`/volunteer`)**: Active duty status toggle, assigned tasks feed, active incident alerts, and quick copilot launcher.
+* **Two-Panel Intake Workspace (`/volunteer/copilot`)**: Staff and volunteers type/speak unstructured incident reports on the left; the copilot drafts structured tickets on the right.
 * **Smart Matchmaking**: Queries availability and zone assignments to automatically suggest the nearest available volunteer.
 * **Localized Dispatch Translation**: Generates dispatch notifications translated into the target volunteer's preferred language.
-* **Human-in-the-loop Confirmation**: Requires explicit dispatcher verification before creating the incident record and dispatching volunteers.
 
-### 4. ♻️ Sustainability & Transport Nudges (FR-4)
-* **Unified Event Bus**: Reuses the main SSE connection stream, removing the need for duplicate pipelines.
-* **Fan Transport View**: Real-time progress indicators showing parking lot and shuttle capacity to guide fans to open transport routes.
-* **Ops Sustainability Feed**: Consolidates waste bin monitor metrics, automatically flagging bins exceeding 85% capacity for collection.
+### 4. ⚙️ Admin & Governance Portal (`/admin/*`)
+* **Admin Dashboard (`/admin`)**: Platform governance executive stats, multi-venue quick management, and system auditing.
+* **Venue & Event Control (`/admin/venues`)**: Configure seating capacities, zone polygon boundaries, and tournament schedules.
+* **AI Prompt & Grounding Config (`/admin/prompts`)**: Tune system prompts and RAG grounding guardrails.
+
+### 5. 🔐 Unified Authentication (`/login`)
+* **Role-Based Portal Access**: Single login interface supporting Fan, Volunteer, Ops Staff, and Admin roles with passcode and session token verification.
 
 ---
 
 ## 🛠️ Technology Stack
 
-* **Framework**: Next.js 14/15 (App Router, TypeScript)
-* **Styling**: Tailwind CSS & shadcn/ui
-* **Database / ORM**: PostgreSQL (Supabase) & Prisma ORM
-* **Caching & Rate Limiting**: Upstash Redis (primary serverless sliding-window rate limiter) with a built-in process-local in-memory fallback for local development or unconfigured states.
+* **Framework**: Next.js 16 (App Router, React 19, TypeScript)
+* **Styling**: Tailwind CSS v4 (`@theme` definitions), Vanilla CSS Glassmorphism
+* **Typography & Icons**: Montserrat, Geist, Inter, Lucide React & Google Material Symbols Outlined
+* **Maps Integration**: Google Maps API (`@react-google-maps/api`)
+* **Database & ORM**: PostgreSQL (Supabase) & Prisma ORM
+* **Caching & Rate Limiting**: Upstash Redis (primary serverless sliding-window rate limiter) with a built-in process-local in-memory fallback.
 * **AI Orchestration**: Google Gemini SDK (`@google/generative-ai`)
 * **Real-time Protocol**: Server-Sent Events (SSE)
 * **Testing**: Vitest (Unit & Integration tests)
@@ -45,23 +67,28 @@
 
 ## 📂 System Architecture
 
-The application uses Next.js Route Groups to segregate interfaces within a single codebase, preventing asset/bundle bleed while maintaining a shared database schema:
-
 ```
 stadium-pulse/
 ├── app/
-│   ├── (public)/          # Unauthenticated entry page & auth gate routes
-│   ├── (fan)/             # Spectator views (/assistant, /transport, /map)
-│   ├── (ops)/             # Control room views (/dashboard, /copilot, /sustainability)
-│   └── api/               # API route endpoints
-├── components/            # Shared UI components (ChatWindow, AlertCard, layouts)
+│   ├── (public)/          # Landing page & public entry points
+│   ├── (fan)/             # Fan Experience Portal (/fan, /assistant, /map, /navigation, etc.)
+│   ├── (volunteer)/       # Volunteer Portal (/volunteer, /copilot, /tasks, /incidents)
+│   ├── (ops)/             # Control Room / Ops Console (/ops/dashboard, /sustainability)
+│   ├── (admin)/           # Platform Governance (/admin, /venues, /prompts, /users)
+│   ├── (auth)/            # Unified Authentication (/login, /verify)
+│   └── api/               # Server API Route endpoints
+├── components/            # Reusable UI Components & Layouts
+│   ├── alerts/            # AlertCard & Telemetry Feed components
+│   ├── chat/              # ChatWindow AI assistant component
+│   └── layout/            # FanShell, Navbars, Sidebars
+├── hooks/                 # React Hooks (useZoneStream SSE client)
 ├── lib/
 │   ├── ai/                # Prompts, LLM client, and Grounding guardrail helpers
 │   ├── auth.ts            # Staff session cookies and helper methods
 │   ├── db.ts              # Prisma Client singleton
 │   ├── rate-limit.ts      # Redis token-bucket config
 │   └── realtime.ts        # SSE event stream handlers and simulator helpers
-└── tests/                 # Vitest spec suites (threshold checks, prompt structure tests)
+└── tests/                 # Vitest spec suites (threshold checks, prompt tests, component tests)
 ```
 
 ---
@@ -72,9 +99,9 @@ The application shares a single schema definition containing **9 database entiti
 
 | Entity | Fields | Description |
 | :--- | :--- | :--- |
-| **`Venue`** | `id` (UUID), `name`, `tournamentId`, `timezone` | Main sports stadium hosting the tournament matches. |
-| **`Zone`** | `id`, `venueId` (FK), `name`, `capacity`, `currentCount`, `warningThreshold`, `criticalThreshold`, `geoPolygon` (JSON) | Physical seating stand or concourse area within the venue. |
-| **`Amenity`** | `id`, `zoneId` (FK), `type` (Enum), `name`, `accessibilityFlags` (JSON), `status` (Enum) | Facilities inside zones (e.g. Restrooms, Lifts, Medical Rooms). |
+| **`Venue`** | `id` (UUID), `name`, `tournamentId`, `timezone` | Main sports stadium hosting tournament matches. |
+| **`Zone`** | `id`, `venueId` (FK), `name`, `capacity`, `currentCount`, `warningThreshold`, `criticalThreshold`, `geoPolygon` (JSON) | Physical seating stand or concourse area. |
+| **`Amenity`** | `id`, `zoneId` (FK), `type` (Enum), `name`, `accessibilityFlags` (JSON), `status` (Enum) | Facilities inside zones (Restrooms, Lifts, Medical Rooms). |
 | **`Incident`** | `id`, `category` (Enum), `zoneId` (FK), `priority` (Enum), `status` (Enum), `assignedVolunteerId` (FK), `createdBy`, `description` | Active incidents reported by volunteers or operators. |
 | **`Volunteer`** | `id`, `name`, `preferredLanguage`, `zoneAssignmentId` (FK), `availability` (Enum), `contactChannel` | Stadium staff details for scheduling and dispatch tasks. |
 | **`ChatLog`** | `id`, `sessionId`, `query`, `detectedLanguage`, `response`, `groundedSources` (JSON Array), `flaggedHallucination` (Boolean) | Log of fan-facing assistant interactions for grounding audits. |
@@ -100,102 +127,11 @@ graph TD;
   DBCheck -- No --> FlagHallucination[5. Strip unverified names & log hallucination alert];
 ```
 
-The output post-processing code (`lib/ai/guardrails.ts`) matches every ID or zone name referenced in the route output:
-```typescript
-export async function verifyGrounding(
-  llmResponse: string,
-  mentionedZoneIds: string[],
-  mentionedAmenityIds: string[]
-) {
-  // Queries DB to check if the mentioned IDs are legitimate
-  // Returns cleaned text and sets flaggedHallucination = true if any fail
-}
-```
-
----
-
-## 📡 API Contract Specification
-
-### 1. `POST /api/assistant` (Fan Assistant RAG)
-* **Request Payload**:
-  ```json
-  {
-    "session_id": "session-123",
-    "query": "Where is the nearest wheelchair toilet?",
-    "current_zone_id": "zone_a"
-  }
-  ```
-* **Response Payload**:
-  ```json
-  {
-    "detected_language": "en",
-    "answer": "The nearest accessible restroom is Restroom-3 located in Zone C near Gate 2/3.",
-    "route": ["zone_a", "zone_c"],
-    "estimated_walk_time_min": 4,
-    "grounded_sources": ["amenity_restroom_3"]
-  }
-  ```
-
-### 2. `POST /api/copilot` (Staff Incident Copilot)
-* **Request Payload**:
-  ```json
-  {
-    "reporter_id": "vol_arjun",
-    "description": "Medical issue - someone collapsed in the South Stand concourse"
-  }
-  ```
-* **Response Payload**:
-  ```json
-  {
-    "draft_incident": {
-      "category": "medical",
-      "zone_id": "zone_b",
-      "priority": "critical",
-      "description": "Someone collapsed in the South Stand concourse."
-    },
-    "suggested_volunteer": {
-      "id": "vol_meena",
-      "name": "Meena Patel",
-      "language": "hi",
-      "zone_assignment": "zone_b"
-    },
-    "dispatch_message_localized": "साउथ स्टैंड कॉनकोर्स में आपातकालीन चिकित्सा स्थिति। कृपया तुरंत वहां पहुंचें।",
-    "requires_confirmation": true
-  }
-  ```
-
-### 3. `GET /api/zones/stream` (SSE Event Bus)
-The server broadcasts events using the Server-Sent Events protocol:
-* **Zone Updates (`event: zone_update`)**:
-  ```json
-  {
-    "type": "zone_update",
-    "zone_id": "zone_a",
-    "zone_name": "Zone A",
-    "current_count": 4200,
-    "capacity": 8000,
-    "pct": 0.53
-  }
-  ```
-* **Alert Events (`event: alert`)**:
-  ```json
-  {
-    "type": "alert",
-    "zone_id": "zone_c",
-    "zone_name": "Zone C",
-    "threshold_crossed": "critical",
-    "generated_summary": "Zone C is over 95% capacity and increasing.",
-    "recommended_action": "Redirect traffic through Gate 7 overflow.",
-    "alert_id": "alert-log-uuid",
-    "timestamp": "2026-07-18T16:00:00Z"
-  }
-  ```
-
 ---
 
 ## ⚙️ Environment Configuration
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root of `stadium-pulse`:
 
 ```env
 # ─── Database (Supabase PostgreSQL) ──────────────────────────
@@ -209,19 +145,13 @@ UPSTASH_REDIS_REST_TOKEN="your-token-here"
 # ─── AI / LLM (Google Gemini) ───────────────────────────────
 GEMINI_API_KEY="your-gemini-api-key"
 
+# ─── Google Maps ─────────────────────────────────────────────
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="your-google-maps-api-key"
+
 # ─── App Settings ────────────────────────────────────────────
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 NODE_ENV="development"
 ```
-
-### 🔒 Rate Limiting & Fallback Details
-The application relies on sliding-window rate limiting to protect LLM endpoints:
-* **Primary Rate Limiter**: Driven by **Upstash Redis**. Requires `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` env variables.
-* **In-Memory Fallback**: If Redis variables are missing or connection fails, the application falls back to a process-local in-memory token bucket limiter.
-* **Production Limitations with Fallback**: The fallback in-memory rate-limiter is **process-local**. In serverless configurations (e.g. Vercel Serverless Functions) or multi-instance deployments:
-  * Limit counts are not shared across separate runtime instances or server containers.
-  * Reset triggers on server restarts or serverless cold starts, which can allow client sessions to exceed rate-limit thresholds.
-  * In production environments, it is highly recommended to configure Upstash Redis to ensure centralized, cluster-wide rate limit enforcement.
 
 ---
 
@@ -229,17 +159,16 @@ The application relies on sliding-window rate limiting to protect LLM endpoints:
 
 1. **Install Dependencies**:
    ```bash
+   cd stadium-pulse
    npm install
    ```
 
 2. **Sync Database Schema**:
-   Prisma will map the entities directly into your Supabase database:
    ```bash
    npx prisma db push
    ```
 
 3. **Seed Database Records**:
-   Seed the database with pre-configured stadium zones, transport hubs, waste bins, amenities, and staff mock entries:
    ```bash
    npx prisma db seed
    ```
@@ -248,20 +177,16 @@ The application relies on sliding-window rate limiting to protect LLM endpoints:
    ```bash
    npm run dev
    ```
-   Open `http://localhost:3000` to select a portal (Fan View or staff Ops Console).
+   Open `http://localhost:3000` in your browser.
 
 ---
 
 ## 🧪 Testing
 
-The codebase includes an extensive Vitest test suite that validates mathematical threshold limits, rate-limit cooldown windows, and LLM prompt serialization:
+The codebase includes an extensive Vitest test suite validating threshold logic, SSE component streams, rate limiting, and prompt grounding:
 
-* **Run all tests**:
-  ```bash
-  npm run test
-  ```
+```bash
+npm run test
+```
 
-* **Verify test coverage**:
-  ```bash
-  npx vitest run --coverage
-  ```
+**Test Status**: All 16 unit & integration tests across 5 test suites pass cleanly.

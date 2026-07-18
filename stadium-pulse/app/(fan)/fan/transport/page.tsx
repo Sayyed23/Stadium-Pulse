@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Bus, Car, Train, AlertTriangle } from "lucide-react";
+import Link from "next/link";
+import { Bus, Car, Train, AlertTriangle, ArrowLeft } from "lucide-react";
 
 interface TransportZone {
   zone_id: string;
@@ -65,12 +66,16 @@ export default function TransportPage() {
   ];
 
   return (
-    <div className="flex flex-col gap-5 p-4 pb-28 max-w-lg mx-auto font-sans">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
+      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <ArrowLeft size={14} /> Back to Fan Dashboard
+      </Link>
+
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
         <div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Transport & Parking</h2>
-          <p className="text-xs text-[#b9cacb]">Live shuttle, parking & transit status</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Transport & Parking Telemetry</h2>
+          <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Live shuttle countdowns, parking capacities & transit alerts</p>
         </div>
         <span
           className={`flex items-center gap-1.5 text-xs font-mono font-semibold px-3 py-1 rounded-full border ${
