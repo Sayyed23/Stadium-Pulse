@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ShieldCheck, ArrowRight, ArrowLeft, Lock, Mail, Smartphone } from "lucide-react";
+import { ArrowRight, ArrowLeft, Lock, Mail, Smartphone } from "lucide-react";
 
 export default function UnifiedLoginPage() {
   const [portal, setPortal] = useState<"fan" | "volunteer" | "ops" | "admin">("fan");

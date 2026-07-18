@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-this-alias */
 import { render, screen, act } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import DashboardPage from "../app/(ops)/ops/dashboard/page";

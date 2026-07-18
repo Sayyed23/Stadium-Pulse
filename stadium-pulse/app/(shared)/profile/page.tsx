@@ -1,4 +1,4 @@
-import { UserCircle2, Mail, Phone, MapPin, Globe, Shield, Edit } from "lucide-react";
+import { UserCircle2, Mail, Phone, MapPin, Globe } from "lucide-react";
 
 export default function SharedProfilePage() {
   return (

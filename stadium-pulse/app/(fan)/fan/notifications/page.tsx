@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bell, AlertTriangle, Info, CheckCircle2, Clock, ArrowLeft } from "lucide-react";
+import { AlertTriangle, Info, CheckCircle2, Clock, ArrowLeft } from "lucide-react";
 
 const notifications = [
   { id: "1", type: "alert", title: "Zone B Near Capacity", body: "Zone B is at 91% occupancy. Consider using alternate routes via Gate 7.", time: "2 min ago", read: false },

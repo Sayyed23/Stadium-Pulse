@@ -1,16 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Settings, Bell, Users, Activity, Save } from "lucide-react";
+import { Settings, Bell, Activity, Save } from "lucide-react";
 
-export default function OpsSettingsPage() {
-  const [warningThreshold, setWarningThreshold] = useState(85);
-  const [criticalThreshold, setCriticalThreshold] = useState(95);
-  const [cooldownSec, setCooldownSec] = useState(60);
-  const [pushEnabled, setPushEnabled] = useState(true);
-  const [emailEnabled, setEmailEnabled] = useState(false);
-
-  const Toggle = ({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) => (
+function ToggleButton({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+  return (
     <button
       onClick={() => onChange(!value)}
       className={`w-11 h-6 rounded-full transition-colors relative ${value ? "bg-blue-500" : "bg-slate-300 dark:bg-slate-700"}`}
@@ -18,6 +12,14 @@ export default function OpsSettingsPage() {
       <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`} />
     </button>
   );
+}
+
+export default function OpsSettingsPage() {
+  const [warningThreshold, setWarningThreshold] = useState(85);
+  const [criticalThreshold, setCriticalThreshold] = useState(95);
+  const [cooldownSec, setCooldownSec] = useState(60);
+  const [pushEnabled, setPushEnabled] = useState(true);
+  const [emailEnabled, setEmailEnabled] = useState(false);
 
   return (
     <div className="space-y-6 max-w-3xl">
@@ -63,14 +65,14 @@ export default function OpsSettingsPage() {
               <div className="text-sm font-medium">Push Notifications</div>
               <div className="text-xs text-zinc-400">Browser push for threshold alerts</div>
             </div>
-            <Toggle value={pushEnabled} onChange={setPushEnabled} />
+            <ToggleButton value={pushEnabled} onChange={setPushEnabled} />
           </div>
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm font-medium">Email Notifications</div>
               <div className="text-xs text-zinc-400">Daily summary and critical alerts</div>
             </div>
-            <Toggle value={emailEnabled} onChange={setEmailEnabled} />
+            <ToggleButton value={emailEnabled} onChange={setEmailEnabled} />
           </div>
         </div>
       </div>

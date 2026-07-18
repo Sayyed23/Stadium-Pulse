@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authenticateStaff, SESSION_COOKIE, encodeSession } from "@/lib/auth";
+import { authenticateStaff, SESSION_COOKIE } from "@/lib/auth";
 
 /**
  * POST /api/auth/login

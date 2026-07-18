@@ -1,4 +1,4 @@
-import { HelpCircle, Search, MessageSquare, Phone, BookOpen } from "lucide-react";
+import { Search, MessageSquare, Phone, BookOpen } from "lucide-react";
 
 export default function HelpCenterPage() {
   return (

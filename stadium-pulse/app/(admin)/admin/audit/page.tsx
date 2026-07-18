@@ -1,4 +1,4 @@
-import { ScrollText, ShieldAlert, CheckCircle2 } from "lucide-react";
+// System Audit Logs
 
 const logs = [
   { id: "log1", action: "ALERT_ACKNOWLEDGED", actor: "meena_ops", details: "Acknowledged critical alert for Zone B", timestamp: "2026-07-18 16:15:22" },

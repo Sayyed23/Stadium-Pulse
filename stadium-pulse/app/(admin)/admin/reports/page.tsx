@@ -1,4 +1,4 @@
-import { BarChart3, FileText, Download } from "lucide-react";
+import { BarChart3, Download } from "lucide-react";
 
 const reports = [
   { id: "rep1", name: "Tournament Crowd Density Summary", dateRange: "Matchdays 1 - 4", type: "PDF / CSV" },

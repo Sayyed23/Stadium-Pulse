@@ -1,4 +1,4 @@
-import { Users, MapPin, Radio, BarChart3, Clock } from "lucide-react";
+import { MapPin, Clock } from "lucide-react";
 
 const volunteers = [
   { id: "VOL-001", name: "Arjun Kumar", zone: "Zone B", status: "available", tasks: 3, responseTime: "2.5 min" },

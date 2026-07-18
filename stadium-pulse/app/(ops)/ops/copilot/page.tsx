@@ -116,7 +116,7 @@ export default function CopilotPage() {
                     <p><span className="font-medium text-zinc-600 dark:text-zinc-400">Current Zone:</span> {draft.suggested_volunteer.zone_assignment}</p>
                   </div>
                   <div className="bg-white dark:bg-zinc-950 p-3 rounded border border-zinc-200 dark:border-zinc-800 text-sm italic">
-                    "{draft.dispatch_message_localized}"
+                    &quot;{draft.dispatch_message_localized}&quot;
                   </div>
                 </div>
               )}

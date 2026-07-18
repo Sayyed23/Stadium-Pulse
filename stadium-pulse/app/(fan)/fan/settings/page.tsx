@@ -13,6 +13,17 @@ const languages = [
   { code: "es", label: "Spanish", native: "Español" },
 ];
 
+function ToggleButton({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+  return (
+    <button
+      onClick={() => onChange(!value)}
+      className={`w-11 h-6 rounded-full transition-colors relative ${value ? "bg-[#00f2ff]" : "bg-[#3a494b]"}`}
+    >
+      <div className={`absolute top-0.5 w-5 h-5 bg-[#101415] rounded-full shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`} />
+    </button>
+  );
+}
+
 export default function SettingsPage() {
   const [selectedLang, setSelectedLang] = useState("en");
   const [highContrast, setHighContrast] = useState(false);
@@ -21,15 +32,6 @@ export default function SettingsPage() {
   const [pushNotifs, setPushNotifs] = useState(true);
   const [crowdAlerts, setCrowdAlerts] = useState(true);
   const [eventUpdates, setEventUpdates] = useState(true);
-
-  const Toggle = ({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) => (
-    <button
-      onClick={() => onChange(!value)}
-      className={`w-11 h-6 rounded-full transition-colors relative ${value ? "bg-[#00f2ff]" : "bg-[#3a494b]"}`}
-    >
-      <div className={`absolute top-0.5 w-5 h-5 bg-[#101415] rounded-full shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`} />
-    </button>
-  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
@@ -78,21 +80,21 @@ export default function SettingsPage() {
               <div className="text-xs font-bold text-white">High Contrast UI</div>
               <div className="text-[11px] text-[#b9cacb]">Maximize screen element contrast</div>
             </div>
-            <Toggle value={highContrast} onChange={setHighContrast} />
+            <ToggleButton value={highContrast} onChange={setHighContrast} />
           </div>
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xs font-bold text-white">Large Text Rendering</div>
               <div className="text-[11px] text-[#b9cacb]">Increase typography scale</div>
             </div>
-            <Toggle value={largeText} onChange={setLargeText} />
+            <ToggleButton value={largeText} onChange={setLargeText} />
           </div>
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xs font-bold text-white">Screen Reader Optimization</div>
               <div className="text-[11px] text-[#b9cacb]">Enhanced ARIA announcement labels</div>
             </div>
-            <Toggle value={screenReader} onChange={setScreenReader} />
+            <ToggleButton value={screenReader} onChange={setScreenReader} />
           </div>
         </div>
       </section>
@@ -109,21 +111,21 @@ export default function SettingsPage() {
               <div className="text-xs font-bold text-white">Real-Time Push Alerts</div>
               <div className="text-[11px] text-[#b9cacb]">Receive instant stadium updates</div>
             </div>
-            <Toggle value={pushNotifs} onChange={setPushNotifs} />
+            <ToggleButton value={pushNotifs} onChange={setPushNotifs} />
           </div>
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xs font-bold text-white">Crowd Density Warnings</div>
               <div className="text-[11px] text-[#b9cacb]">Alert when zones approach peak capacity</div>
             </div>
-            <Toggle value={crowdAlerts} onChange={setCrowdAlerts} />
+            <ToggleButton value={crowdAlerts} onChange={setCrowdAlerts} />
           </div>
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xs font-bold text-white">Match & Gate Announcements</div>
               <div className="text-[11px] text-[#b9cacb]">Official match schedule updates</div>
             </div>
-            <Toggle value={eventUpdates} onChange={setEventUpdates} />
+            <ToggleButton value={eventUpdates} onChange={setEventUpdates} />
           </div>
         </div>
       </section>

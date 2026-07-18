@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Bot, Send, AlertTriangle, MapPin, User, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Bot, AlertTriangle, MapPin, User, CheckCircle2, ArrowLeft } from "lucide-react";
 
 export default function VolunteerCopilotPage() {
   const [description, setDescription] = useState("");

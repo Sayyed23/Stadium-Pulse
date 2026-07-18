@@ -1,4 +1,4 @@
-import { Settings, Save, Database, Cpu, Radio, ShieldCheck } from "lucide-react";
+import { Save, Database, Cpu, Radio } from "lucide-react";
 
 export default function SystemSettingsPage() {
   return (
