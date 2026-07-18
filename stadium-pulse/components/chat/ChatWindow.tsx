@@ -151,30 +151,30 @@ export function ChatWindow({
   };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 overflow-hidden max-h-[80vh] w-full max-w-2xl mx-auto">
+    <div className="flex flex-col h-full bg-[#101415] rounded-2xl shadow-2xl border border-[#3a494b]/40 overflow-hidden max-h-[80vh] w-full max-w-2xl mx-auto">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map(msg => (
           <div key={msg.id} className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-            <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${msg.role === "user" ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300" : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"}`}>
-              {msg.role === "user" ? <User size={16} /> : <Bot size={16} />}
+            <div className={`flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center ${msg.role === "user" ? "bg-[#00f2ff]/20 text-[#00f2ff] border border-[#00f2ff]/30" : "bg-[#1d2022] text-[#5cf968] border border-[#5cf968]/30"}`}>
+              {msg.role === "user" ? <User size={18} /> : <Bot size={18} />}
             </div>
-            <div className={`p-3 rounded-lg max-w-[80%] ${msg.role === "user" ? "bg-blue-600 text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200"}`}>
+            <div className={`p-4 rounded-2xl max-w-[80%] text-sm ${msg.role === "user" ? "bg-[#00f2ff]/10 border border-[#00f2ff]/30 text-[#e0e3e5]" : "bg-[#1d2022] border border-[#3a494b]/50 text-[#e0e3e5]"}`}>
               {msg.text}
             </div>
           </div>
         ))}
         {isLoading && (
           <div className="flex gap-3 flex-row">
-            <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-              <Bot size={16} />
+            <div className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center bg-[#1d2022] text-[#00f2ff] border border-[#00f2ff]/30">
+              <Bot size={18} />
             </div>
-            <div className="p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 animate-pulse">
-              ...
+            <div className="p-4 rounded-2xl bg-[#1d2022] border border-[#3a494b]/50 text-[#00f2ff] animate-pulse text-sm">
+              Analyzing query...
             </div>
           </div>
         )}
       </div>
-      <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
+      <div className="p-3 border-t border-[#3a494b]/40 bg-[#1d2022]/80 backdrop-blur-md">
         <form 
           onSubmit={(e) => { e.preventDefault(); handleSend(); }} 
           className="flex gap-2"
@@ -183,12 +183,12 @@ export function ChatWindow({
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={role === "fan" ? "Ask a question..." : "Describe the incident..."}
-            className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder={role === "fan" ? "Ask AI assistant anything..." : "Describe the incident..."}
+            className="flex-1 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] placeholder:text-[#b9cacb]/60 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#00f2ff]"
           />
           <button 
             type="submit" 
-            className="bg-blue-600 text-white rounded-full p-2 h-10 w-10 flex items-center justify-center hover:bg-blue-700 transition-colors"
+            className="bg-[#00f2ff] text-[#00363a] font-bold rounded-xl p-2.5 h-10 w-10 flex items-center justify-center hover:bg-[#74f5ff] transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)]"
           >
             <Send size={18} />
           </button>

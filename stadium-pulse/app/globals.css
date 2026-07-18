@@ -1,26 +1,139 @@
 @import "tailwindcss";
 
+@theme {
+  --color-surface: #101415;
+  --color-background: #101415;
+  --color-surface-dim: #101415;
+  --color-surface-bright: #363a3b;
+  --color-surface-container-lowest: #0b0f10;
+  --color-surface-container-low: #191c1e;
+  --color-surface-container: #1d2022;
+  --color-surface-container-high: #272a2c;
+  --color-surface-container-highest: #323537;
+  --color-surface-variant: #323537;
+
+  --color-primary: #e1fdff;
+  --color-primary-container: #00f2ff;
+  --color-primary-fixed: #74f5ff;
+  --color-primary-fixed-dim: #00dbe7;
+  --color-on-primary: #00363a;
+  --color-on-primary-container: #006a71;
+  --color-on-primary-fixed: #002022;
+  --color-on-primary-fixed-variant: #004f54;
+
+  --color-secondary: #b9c8dd;
+  --color-secondary-container: #3a485a;
+  --color-secondary-fixed: #d5e4fa;
+  --color-secondary-fixed-dim: #b9c8dd;
+  --color-on-secondary: #233142;
+  --color-on-secondary-container: #a8b6cc;
+  --color-on-secondary-fixed: #0e1c2d;
+
+  --color-tertiary: #e6ffde;
+  --color-tertiary-container: #5cf968;
+  --color-tertiary-fixed: #70ff76;
+  --color-tertiary-fixed-dim: #42e355;
+  --color-on-tertiary: #00390a;
+  --color-on-tertiary-container: #00701c;
+
+  --color-on-surface: #e0e3e5;
+  --color-on-surface-variant: #b9cacb;
+  --color-on-background: #e0e3e5;
+  --color-outline: #849495;
+  --color-outline-variant: #3a494b;
+
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+  --color-on-error: #690005;
+  --color-on-error-container: #ffdad6;
+
+  --font-montserrat: 'Montserrat', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-geist: 'Geist', sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #101415;
+  --foreground: #e0e3e5;
+  --stitch-cyan: #00f2ff;
+  --stitch-dark: #101415;
+  --stitch-card: #1d2022;
+  --stitch-card-high: #272a2c;
+  --stitch-card-highest: #323537;
+  --stitch-text: #e0e3e5;
+  --stitch-text-muted: #b9cacb;
+  --stitch-green: #5cf968;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #101415;
+  color: #e0e3e5;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Stitch Glassmorphism & Cyan Telemetry Utilities */
+.glass-panel {
+  @apply bg-white/70 dark:bg-[#1d2022]/80 backdrop-blur-md border border-white/20 dark:border-[#00f2ff]/15 shadow-xl;
+}
+
+.glass-nav {
+  @apply bg-white/80 dark:bg-[#101415]/90 backdrop-blur-xl border border-slate-200/50 dark:border-[#00f2ff]/20 shadow-2xl;
+}
+
+.stitch-card {
+  @apply bg-[#1d2022] border border-[#3a494b]/50 rounded-2xl p-5 text-[#e0e3e5] shadow-lg hover:border-[#00f2ff]/30 transition-all;
+}
+
+.stitch-badge-cyan {
+  @apply bg-[#00f2ff]/10 text-[#00f2ff] border border-[#00f2ff]/30 text-xs font-semibold px-2.5 py-0.5 rounded-full font-mono;
+}
+
+.stitch-badge-green {
+  @apply bg-[#5cf968]/10 text-[#5cf968] border border-[#5cf968]/30 text-xs font-semibold px-2.5 py-0.5 rounded-full font-mono;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 25px rgba(0, 242, 255, 0.25);
+}
+
+.glow-cyan-sm {
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.2);
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse-cyan {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-cyan {
+  animation: pulse-cyan 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

@@ -14,48 +14,48 @@ export function AlertCard({ id, level, zoneId, summary, action, time, acknowledg
   const isCritical = level === "critical";
   const isWarning = level === "warning";
   
-  const bgClass = isCritical 
-    ? "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-900/50" 
+  const borderClass = isCritical 
+    ? "bg-[#101415] border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]" 
     : isWarning
-      ? "bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-900/50"
-      : "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-900/50";
+      ? "bg-[#101415] border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.15)]"
+      : "bg-[#101415] border-[#00f2ff]/30 shadow-[0_0_15px_rgba(0,242,255,0.1)]";
 
-  const iconColor = isCritical ? "text-red-600 dark:text-red-400" : isWarning ? "text-amber-600 dark:text-amber-400" : "text-blue-600 dark:text-blue-400";
+  const iconColor = isCritical ? "text-red-400" : isWarning ? "text-amber-400" : "text-[#00f2ff]";
 
   return (
-    <div className={`rounded-lg border p-4 ${bgClass} relative`} aria-live="polite">
+    <div className={`rounded-2xl border p-4 ${borderClass} relative`} aria-live="polite">
       {acknowledged ? (
-        <div className="absolute top-4 right-4 flex items-center text-green-600 dark:text-green-500 text-xs font-semibold">
-          <CheckCircle2 size={14} className="mr-1" /> Ack
+        <div className="absolute top-4 right-4 flex items-center text-[#5cf968] font-mono text-[10px] font-bold uppercase tracking-wider bg-[#5cf968]/10 border border-[#5cf968]/30 px-2 py-0.5 rounded-full">
+          <CheckCircle2 size={12} className="mr-1" /> ACKNOWLEDGED
         </div>
       ) : (
         onAcknowledge && (
           <button 
             onClick={() => onAcknowledge(id)}
-            className="absolute top-4 right-4 flex items-center bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:text-green-600 dark:hover:text-green-400 border border-zinc-200 dark:border-zinc-700 hover:border-green-300 rounded text-xs font-semibold px-2 py-1 transition-colors"
+            className="absolute top-4 right-4 flex items-center bg-[#1d2022] text-[#00f2ff] hover:bg-[#00f2ff] hover:text-[#00363a] border border-[#00f2ff]/40 rounded-lg text-xs font-mono font-bold px-2.5 py-1 transition-all"
           >
             Acknowledge
           </button>
         )
       )}
       <div className="flex gap-3">
-        <div className="mt-1">
+        <div className="mt-0.5">
           {isCritical || isWarning ? (
             <AlertTriangle size={20} className={iconColor} />
           ) : (
             <Info size={20} className={iconColor} />
           )}
         </div>
-        <div className="flex-1 space-y-2 pr-20">
-          <div className="flex justify-between">
-            <span className={`font-semibold ${iconColor}`}>Zone {zoneId}</span>
-            <span className="text-xs text-zinc-500">{time}</span>
+        <div className="flex-1 space-y-2 pr-24">
+          <div className="flex items-center justify-between">
+            <span className={`font-bold text-xs uppercase font-mono ${iconColor}`}>Zone: {zoneId}</span>
+            <span className="text-[10px] font-mono text-[#b9cacb]">{time}</span>
           </div>
-          <p className="text-zinc-800 dark:text-zinc-200 font-medium">
+          <p className="text-[#e0e3e5] text-xs leading-relaxed font-medium">
             {summary}
           </p>
-          <div className="bg-white/50 dark:bg-black/20 p-2 rounded text-sm text-zinc-800 dark:text-zinc-300">
-            <strong>Action:</strong> {action}
+          <div className="bg-[#1d2022] border border-[#3a494b]/40 p-2.5 rounded-xl text-xs text-[#00f2ff] font-mono">
+            <strong className="text-[#b9cacb]">RECOMMENDED ACTION:</strong> {action}
           </div>
         </div>
       </div>

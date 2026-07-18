@@ -65,35 +65,38 @@ export default function TransportPage() {
   ];
 
   return (
-    <div className="flex flex-col gap-5 p-4 pb-24">
+    <div className="flex flex-col gap-5 p-4 pb-28 max-w-lg mx-auto font-sans">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Transport</h2>
+        <div>
+          <h2 className="text-2xl font-bold text-white tracking-tight">Transport & Parking</h2>
+          <p className="text-xs text-[#b9cacb]">Live shuttle, parking & transit status</p>
+        </div>
         <span
-          className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${
+          className={`flex items-center gap-1.5 text-xs font-mono font-semibold px-3 py-1 rounded-full border ${
             connected
-              ? "bg-emerald-500/10 text-emerald-400"
-              : "bg-zinc-500/10 text-zinc-400"
+              ? "bg-[#5cf968]/10 text-[#5cf968] border-[#5cf968]/30"
+              : "bg-[#3a494b]/20 text-[#b9cacb] border-[#3a494b]"
           }`}
         >
           <span
-            className={`w-1.5 h-1.5 rounded-full ${connected ? "bg-emerald-400 animate-pulse" : "bg-zinc-500"}`}
+            className={`w-2 h-2 rounded-full ${connected ? "bg-[#5cf968] animate-pulse" : "bg-slate-500"}`}
           />
-          {connected ? "Live" : "Connecting…"}
+          {connected ? "LIVE TELEMETRY" : "CONNECTING…"}
         </span>
       </div>
 
       {/* Nudge Banner */}
       {zones.some((z) => z.pct >= 0.9) && (
         <div
-          className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20"
+          className="flex items-center gap-3 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 shadow-lg"
           role="alert"
           aria-live="assertive"
         >
           <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
-          <p className="text-sm text-amber-200">
-            Some transport options are near capacity. Consider alternatives marked
-            <span className="font-semibold text-emerald-400"> Available</span>.
+          <p className="text-xs text-[#b9cacb]">
+            Some parking & transit options are near capacity. Consider alternatives marked
+            <span className="font-bold text-[#5cf968]"> AVAILABLE</span>.
           </p>
         </div>
       )}
@@ -101,9 +104,9 @@ export default function TransportPage() {
       {/* Sections */}
       <div aria-live="polite" aria-atomic="false">
         {zones.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 text-zinc-500">
-            <Bus className="w-10 h-10 mb-3 animate-pulse" />
-            <p className="text-sm">Waiting for transport data…</p>
+          <div className="flex flex-col items-center justify-center py-20 text-[#b9cacb]">
+            <Bus className="w-10 h-10 mb-3 animate-bounce text-[#00f2ff]" />
+            <p className="text-xs font-mono uppercase tracking-wider">Loading Live Transport Status...</p>
           </div>
         )}
 
@@ -111,7 +114,7 @@ export default function TransportPage() {
           .filter((s) => s.items.length > 0)
           .map((section) => (
             <div key={section.title} className="mb-6">
-              <div className="flex items-center gap-2 text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-3">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#00f2ff] uppercase tracking-wider mb-3">
                 {section.icon}
                 {section.title}
               </div>
@@ -121,31 +124,31 @@ export default function TransportPage() {
                   return (
                     <div
                       key={zone.zone_id}
-                      className="bg-white/5 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 transition-all hover:border-zinc-600"
+                      className="bg-[#1d2022] border border-[#3a494b]/40 rounded-2xl p-4 transition-all duration-300 hover:border-[#00f2ff]/40 shadow-lg"
                     >
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2.5">
-                          <span className="text-zinc-400">
+                          <span className="text-[#00f2ff]">
                             {typeIcon[zone.transport_type] || <Bus className="w-5 h-5" />}
                           </span>
-                          <span className="font-medium text-sm">{zone.name}</span>
+                          <span className="font-bold text-sm text-white">{zone.name}</span>
                         </div>
-                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${s.badge}`}>
+                        <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${s.badge}`}>
                           {s.label}
                         </span>
                       </div>
 
                       {/* Progress Bar */}
-                      <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden mb-2">
+                      <div className="w-full h-2 bg-[#101415] rounded-full overflow-hidden mb-2">
                         <div
                           className={`h-full rounded-full transition-all duration-700 ease-out ${s.bar}`}
                           style={{ width: `${Math.min(zone.pct * 100, 100)}%` }}
                         />
                       </div>
 
-                      <div className="flex justify-between text-xs text-zinc-500">
-                        <span>{zone.current_count} / {zone.capacity}</span>
-                        <span>{Math.round(zone.pct * 100)}%</span>
+                      <div className="flex justify-between text-xs font-mono text-[#b9cacb]">
+                        <span>{zone.current_count} / {zone.capacity} Units</span>
+                        <span>{Math.round(zone.pct * 100)}% Capacity</span>
                       </div>
                     </div>
                   );
