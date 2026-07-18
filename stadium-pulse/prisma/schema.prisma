@@ -1,0 +1,207 @@
+// StadiumPulse AI — Single Source of Truth
+// All 9 entities in one schema, shared by both (fan) and (ops) route groups.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Enums ────────────────────────────────────────────────
+
+enum AmenityType {
+  restroom
+  medical
+  food
+  exit
+  seating
+  lift
+}
+
+enum AmenityStatus {
+  open
+  closed
+  restricted
+}
+
+enum IncidentCategory {
+  medical
+  lost_person
+  security
+  facilities
+  other
+}
+
+enum IncidentPriority {
+  low
+  medium
+  high
+  critical
+}
+
+enum IncidentStatus {
+  reported
+  dispatched
+  resolved
+}
+
+enum VolunteerAvailability {
+  available
+  busy
+  offline
+}
+
+enum ThresholdLevel {
+  warning
+  critical
+}
+
+enum TransportType {
+  parking
+  shuttle_stop
+}
+
+enum StaffRole {
+  operator
+  volunteer
+  admin
+}
+
+// ─── Models ───────────────────────────────────────────────
+
+model Venue {
+  id            String   @id @default(cuid())
+  name          String
+  tournamentId  String   @map("tournament_id")
+  timezone      String   @default("Asia/Kolkata")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  zones         Zone[]
+
+  @@map("venues")
+}
+
+model Zone {
+  id                String   @id @default(cuid())
+  venueId           String   @map("venue_id")
+  name              String
+  capacity          Int
+  currentCount      Int      @default(0) @map("current_count")
+  warningThreshold  Float    @default(0.85) @map("warning_threshold")
+  criticalThreshold Float    @default(0.95) @map("critical_threshold")
+  geoPolygon        Json?    @map("geo_polygon")
+  sectionMetadata   Json?    @map("section_metadata")
+
+  venue             Venue      @relation(fields: [venueId], references: [id])
+  amenities         Amenity[]
+  incidents         Incident[]
+  alertLogs         AlertLog[]
+  wasteBins         WasteBin[]
+  volunteers        Volunteer[]
+
+  @@map("zones")
+}
+
+model Amenity {
+  id                  String        @id @default(cuid())
+  zoneId              String        @map("zone_id")
+  type                AmenityType
+  name                String
+  accessibilityFlags  Json?         @map("accessibility_flags")
+  status              AmenityStatus @default(open)
+
+  zone                Zone          @relation(fields: [zoneId], references: [id])
+
+  @@map("amenities")
+}
+
+model Incident {
+  id                    String            @id @default(cuid())
+  category              IncidentCategory
+  zoneId                String            @map("zone_id")
+  priority              IncidentPriority
+  status                IncidentStatus    @default(reported)
+  assignedVolunteerId   String?           @map("assigned_volunteer_id")
+  createdBy             String            @map("created_by")
+  description           String
+  createdAt             DateTime          @default(now()) @map("created_at")
+  resolvedAt            DateTime?         @map("resolved_at")
+
+  zone                  Zone              @relation(fields: [zoneId], references: [id])
+  assignedVolunteer     Volunteer?        @relation(fields: [assignedVolunteerId], references: [id])
+
+  @@index([zoneId, status])
+  @@map("incidents")
+}
+
+model Volunteer {
+  id                String                 @id @default(cuid())
+  name              String
+  preferredLanguage String                 @map("preferred_language")
+  zoneAssignmentId  String                 @map("zone_assignment")
+  availability      VolunteerAvailability  @default(available)
+  contactChannel    String                 @map("contact_channel")
+  role              StaffRole              @default(volunteer)
+  passwordHash      String?                @map("password_hash")
+
+  zoneAssignment    Zone                   @relation(fields: [zoneAssignmentId], references: [id])
+  incidents         Incident[]
+
+  @@map("volunteers")
+}
+
+model ChatLog {
+  id                   String   @id @default(cuid())
+  sessionId            String   @map("session_id")
+  query                String
+  detectedLanguage     String   @map("detected_language")
+  response             String
+  groundedSources      Json     @default("[]") @map("grounded_sources")
+  flaggedHallucination Boolean  @default(false) @map("flagged_hallucination")
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  @@index([sessionId])
+  @@map("chat_logs")
+}
+
+model AlertLog {
+  id                String         @id @default(cuid())
+  zoneId            String         @map("zone_id")
+  thresholdCrossed  ThresholdLevel @map("threshold_crossed")
+  generatedSummary  String         @map("generated_summary")
+  recommendedAction String         @map("recommended_action")
+  acknowledged      Boolean        @default(false)
+  acknowledgedBy    String?        @map("acknowledged_by")
+  timestamp         DateTime       @default(now())
+  triggeringMetric  Float?         @map("triggering_metric")
+
+  zone              Zone           @relation(fields: [zoneId], references: [id])
+
+  @@index([zoneId, timestamp])
+  @@map("alert_logs")
+}
+
+model TransportZone {
+  id           String        @id @default(cuid())
+  name         String
+  type         TransportType
+  capacity     Int
+  currentCount Int           @default(0) @map("current_count")
+
+  @@map("transport_zones")
+}
+
+model WasteBin {
+  id          String   @id @default(cuid())
+  zoneId      String   @map("zone_id")
+  fillPct     Float    @default(0) @map("fill_pct")
+  lastUpdated DateTime @default(now()) @map("last_updated")
+
+  zone        Zone     @relation(fields: [zoneId], references: [id])
+
+  @@map("waste_bins")
+}
