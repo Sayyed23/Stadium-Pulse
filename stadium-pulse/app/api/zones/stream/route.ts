@@ -1,4 +1,5 @@
-import { encodeSSE, sseHeaders } from "@/lib/realtime";
+import { NextResponse } from "next/server";
+import { encodeSSE, sseHeaders, type SSEEvent } from "@/lib/realtime";
 import { globalBroadcaster } from "@/lib/broadcaster";
 
 export const dynamic = "force-dynamic";
@@ -6,8 +7,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const encoder = new TextEncoder();
 
-  type SSEBroadcastEvent = { type: string; data: unknown };
-  let listener: ((event: SSEBroadcastEvent) => void) | undefined;
+  let listener: ((event: SSEEvent) => void) | undefined;
   let registered = false;
   const cleanup = () => {
     if (!registered || !listener) return;
@@ -18,7 +18,7 @@ export async function GET() {
   // Create stream using the EventBroadcaster to prevent DB connection pool exhaustion
   const stream = new ReadableStream({
     start(controller) {
-      listener = (event: SSEBroadcastEvent) => {
+      listener = (event: SSEEvent) => {
         try {
           controller.enqueue(encoder.encode(encodeSSE(event)));
         } catch {
