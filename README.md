@@ -1,5 +1,10 @@
 # 🏟️ StadiumPulse AI
 
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-stadium--pulse--sooty.vercel.app-00f2ff?style=for-the-badge&logo=vercel&logoColor=white)](https://stadium-pulse-sooty.vercel.app)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Sayyed23%2FStadium--Pulse-181717?style=for-the-badge&logo=github)](https://github.com/Sayyed23/Stadium-Pulse)
+
+> 🔗 **Live Web Application**: [https://stadium-pulse-sooty.vercel.app](https://stadium-pulse-sooty.vercel.app)
+
 **StadiumPulse AI** is a GenAI-enabled operations layer, spectator navigation companion, and control room platform built for large-scale sports venues. Consolidating spectator navigation, volunteer dispatch, and staff control room operations into a single Next.js application, the platform uses real-time event streaming, high-fidelity Stitch UI designs, and LLM orchestration to translate stadium telemetry into grounded, actionable insights.
 
 ---
