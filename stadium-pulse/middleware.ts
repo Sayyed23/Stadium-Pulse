@@ -26,7 +26,7 @@ const PROTECTED_API_ROUTES = [
   "/api/alerts",
 ];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check if this is a protected page route
@@ -56,7 +56,7 @@ export function middleware(request: NextRequest) {
     }
 
     // Validate the session
-    const session = decodeSession(sessionToken);
+    const session = await decodeSession(sessionToken);
     if (!session) {
       if (isProtectedApi) {
         return NextResponse.json(

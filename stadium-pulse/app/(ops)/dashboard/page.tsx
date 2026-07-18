@@ -1,42 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useZoneStream } from "@/hooks/useZoneStream";
 import { AlertCard } from "@/components/alerts/AlertCard";
 import { Users } from "lucide-react";
 
 export default function DashboardPage() {
-  const [zones, setZones] = useState<Record<string, any>>({});
-  const [alerts, setAlerts] = useState<any[]>([]);
-
-  useEffect(() => {
-    const eventSource = new EventSource("/api/zones/stream");
-
-    eventSource.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        
-        if (data.type === "zone_update") {
-          setZones(prev => ({
-            ...prev,
-            [data.zone_id]: data
-          }));
-        } else if (data.type === "alert") {
-          setAlerts(prev => [data, ...prev].slice(0, 50)); // Keep last 50
-        }
-      } catch (e) {
-        console.error("SSE parse error", e);
-      }
-    };
-
-    eventSource.onerror = (error) => {
-      console.error("SSE error", error);
-      eventSource.close();
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, []);
+  const { zones, alerts, setAlerts } = useZoneStream();
 
   const handleAcknowledge = async (id: string) => {
     // Optimistic UI update

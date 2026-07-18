@@ -25,6 +25,7 @@ export interface AlertEvent {
   recommended_action: string;
   alert_id: string;
   timestamp: string;
+  acknowledged?: boolean;
 }
 
 export interface TransportUpdate {

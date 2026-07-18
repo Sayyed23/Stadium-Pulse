@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { prisma } from "@/lib/db";
+import { prisma } from "./db";
 
 /**
  * StadiumPulse AI — Staff Authentication Helpers
@@ -18,25 +18,87 @@ export interface StaffSession {
 }
 
 const SESSION_COOKIE = "sp_staff_session";
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 /**
- * Encode a staff session into a simple base64 token.
- * In production, this would be a signed JWT.
+ * Encode a staff session into a signed token.
  */
-export function encodeSession(session: StaffSession): string {
-  return Buffer.from(JSON.stringify(session)).toString("base64");
+export async function encodeSession(session: StaffSession): Promise<string> {
+  if (!SESSION_SECRET) {
+    throw new Error("SESSION_SECRET environment variable is missing.");
+  }
+  const payloadData = {
+    ...session,
+    exp: Date.now() + 24 * 60 * 60 * 1000, // 24 hours expiration
+  };
+  const payload = Buffer.from(JSON.stringify(payloadData)).toString("base64");
+  const encoder = new TextEncoder();
+  
+  // Web Crypto HMAC signing
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(SESSION_SECRET),
+    { name: "HMAC", hash: { name: "SHA-256" } },
+    false,
+    ["sign"]
+  );
+  
+  const signatureBuffer = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    encoder.encode(payload)
+  );
+  
+  const signature = Buffer.from(signatureBuffer).toString("base64url");
+  return `${payload}.${signature}`;
 }
 
 /**
- * Decode a session token back into a StaffSession.
+ * Decode a session token and verify its HMAC signature.
  */
-export function decodeSession(token: string): StaffSession | null {
+export async function decodeSession(token: string): Promise<StaffSession | null> {
+  if (!SESSION_SECRET) {
+    return null;
+  }
   try {
-    const decoded = Buffer.from(token, "base64").toString("utf-8");
+    const parts = token.split(".");
+    if (parts.length !== 2) return null;
+    const [payload, signature] = parts;
+
+    const encoder = new TextEncoder();
+    
+    // Web Crypto HMAC verification
+    const key = await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(SESSION_SECRET),
+      { name: "HMAC", hash: { name: "SHA-256" } },
+      false,
+      ["verify"]
+    );
+
+    const isValid = await crypto.subtle.verify(
+      "HMAC",
+      key,
+      Buffer.from(signature, "base64url"),
+      encoder.encode(payload)
+    );
+
+    if (!isValid) return null;
+
+    const decoded = Buffer.from(payload, "base64").toString("utf-8");
     const parsed = JSON.parse(decoded);
 
+    // Validate expiration claim (exp)
+    if (!parsed.exp || Date.now() > parsed.exp) {
+      return null;
+    }
+
     if (parsed.staffId && parsed.name && parsed.role) {
-      return parsed as StaffSession;
+      return {
+        staffId: parsed.staffId,
+        name: parsed.name,
+        role: parsed.role,
+      } as StaffSession;
     }
     return null;
   } catch {
@@ -52,7 +114,18 @@ export async function getStaffSession(): Promise<StaffSession | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE)?.value;
   if (!token) return null;
-  return decodeSession(token);
+  const session = await decodeSession(token);
+  if (!session) return null;
+
+  // Revalidate staff existence and current role in database to prevent unauthorized access
+  const staff = await prisma.volunteer.findUnique({
+    where: { id: session.staffId }
+  });
+  if (!staff || staff.role !== session.role) {
+    return null; // Staff removed or role changed!
+  }
+
+  return session;
 }
 
 /**
@@ -79,7 +152,7 @@ export async function authenticateStaff(
     role: staff.role as "operator" | "volunteer" | "admin",
   };
 
-  const token = encodeSession(session);
+  const token = await encodeSession(session);
   return { token, session };
 }
 

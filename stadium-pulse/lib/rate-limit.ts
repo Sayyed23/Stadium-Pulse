@@ -12,22 +12,78 @@ import { Redis } from "@upstash/redis";
 
 let redis: Redis | null = null;
 
-function getRedis(): Redis {
+function getRedis(): Redis | null {
   if (!redis) {
     const url = process.env.UPSTASH_REDIS_REST_URL;
     const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
     if (!url || !token) {
       console.warn(
-        "⚠️  Upstash Redis not configured. Rate limiting disabled."
+        "⚠️  Upstash Redis not configured. Falling back to in-memory rate limiting."
       );
-      // Return a mock that always allows
-      return null as unknown as Redis;
+      return null;
     }
 
     redis = new Redis({ url, token });
   }
   return redis;
+}
+
+// ─── In-Memory Rate Limiter Fallback ─────────────────────────
+
+export class InMemoryRatelimit {
+  private limitCount: number;
+  private windowMs: number;
+  private prefix: string;
+  private static stores = new Map<string, Map<string, number[]>>();
+  private static lastCleanup = Date.now();
+
+  constructor(config: { limit: number; windowMs: number; prefix: string }) {
+    this.limitCount = config.limit;
+    this.windowMs = config.windowMs;
+    this.prefix = config.prefix;
+  }
+
+  async limit(identifier: string) {
+    if (!InMemoryRatelimit.stores.has(this.prefix)) {
+      InMemoryRatelimit.stores.set(this.prefix, new Map());
+    }
+    const store = InMemoryRatelimit.stores.get(this.prefix)!;
+    const now = Date.now();
+    const cutoff = now - this.windowMs;
+
+    // Passive cleanup of all keys in the store every 60 seconds
+    if (now - InMemoryRatelimit.lastCleanup > 60000) {
+      InMemoryRatelimit.lastCleanup = now;
+      for (const [id, timestamps] of store.entries()) {
+        const active = timestamps.filter((t) => t > cutoff);
+        if (active.length === 0) {
+          store.delete(id);
+        } else {
+          store.set(id, active);
+        }
+      }
+    }
+
+    if (!store.has(identifier)) {
+      store.set(identifier, []);
+    }
+    const timestamps = store.get(identifier)!;
+
+    // Filter out old timestamps
+    const activeTimestamps = timestamps.filter((t) => t > cutoff);
+
+    if (activeTimestamps.length >= this.limitCount) {
+      const oldest = activeTimestamps[0];
+      const reset = oldest + this.windowMs;
+      store.set(identifier, activeTimestamps);
+      return { success: false, reset };
+    }
+
+    activeTimestamps.push(now);
+    store.set(identifier, activeTimestamps);
+    return { success: true, reset: now + this.windowMs };
+  }
 }
 
 // ─── Rate Limiters ──────────────────────────────────────────
@@ -36,9 +92,15 @@ function getRedis(): Redis {
  * Fan assistant rate limiter: 20 requests per 60-second window.
  * Keyed by session_id — fans don't log in.
  */
-export function getAssistantLimiter(): Ratelimit | null {
+export function getAssistantLimiter(): Ratelimit | InMemoryRatelimit {
   const r = getRedis();
-  if (!r) return null;
+  if (!r) {
+    return new InMemoryRatelimit({
+      limit: 20,
+      windowMs: 60 * 1000,
+      prefix: "ratelimit:assistant",
+    });
+  }
 
   return new Ratelimit({
     redis: r,
@@ -52,9 +114,15 @@ export function getAssistantLimiter(): Ratelimit | null {
  * Copilot rate limiter: 30 requests per 60-second window.
  * Keyed by staff user ID.
  */
-export function getCopilotLimiter(): Ratelimit | null {
+export function getCopilotLimiter(): Ratelimit | InMemoryRatelimit {
   const r = getRedis();
-  if (!r) return null;
+  if (!r) {
+    return new InMemoryRatelimit({
+      limit: 30,
+      windowMs: 60 * 1000,
+      prefix: "ratelimit:copilot",
+    });
+  }
 
   return new Ratelimit({
     redis: r,
@@ -69,12 +137,12 @@ export function getCopilotLimiter(): Ratelimit | null {
  * Returns { allowed: true } if within limits, or { allowed: false, retryAfter }
  */
 export async function checkRateLimit(
-  limiter: Ratelimit | null,
+  limiter: Ratelimit | InMemoryRatelimit | null,
   identifier: string
 ): Promise<{ allowed: boolean; retryAfter?: number }> {
   if (!limiter) {
-    // Rate limiting not configured — allow all (dev mode)
-    return { allowed: true };
+    // If somehow no limiter is provided, fail closed for security
+    return { allowed: false, retryAfter: 60 };
   }
 
   const result = await limiter.limit(identifier);

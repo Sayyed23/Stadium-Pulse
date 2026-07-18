@@ -1,16 +1,37 @@
 "use client";
 
 import { useState } from "react";
-import { ChatWindow } from "@/components/chat/ChatWindow";
+import { ChatWindow, type ChatResponse } from "@/components/chat/ChatWindow";
 import { CheckCircle2, User, MapPin, AlertTriangle, Bot } from "lucide-react";
 
+interface SuggestedVolunteer {
+  id: string;
+  name: string;
+  language: string;
+  zone_assignment: string;
+}
+
+interface DraftIncident {
+  category: string;
+  zone_id: string | null;
+  priority: string;
+  description: string;
+}
+
+interface CopilotResponse {
+  draft_incident: DraftIncident;
+  suggested_volunteer?: SuggestedVolunteer;
+  dispatch_message_localized?: string;
+  requires_confirmation?: boolean;
+}
+
 export default function CopilotPage() {
-  const [draft, setDraft] = useState<any>(null);
+  const [draft, setDraft] = useState<CopilotResponse | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleResponse = (data: any) => {
-    if (data.draft_incident) {
-      setDraft(data);
+  const handleResponse = (data: ChatResponse) => {
+    if ("draft_incident" in data && data.draft_incident) {
+      setDraft(data as CopilotResponse);
     }
   };
 

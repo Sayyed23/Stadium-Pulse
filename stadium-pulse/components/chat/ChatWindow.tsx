@@ -2,6 +2,66 @@
 
 import { useState } from "react";
 import { Send, User, Bot } from "lucide-react";
+import { z } from "zod";
+
+// Zod schemas for runtime validation
+const AssistantResponseSchema = z.object({
+  detected_language: z.string().optional().default("en"),
+  answer: z.string(),
+  route: z.array(z.string()).optional().default([]),
+  estimated_walk_time_min: z.number().optional().default(0),
+  grounded_sources: z.array(z.string()).optional().default([]),
+});
+
+const DraftIncidentSchema = z.object({
+  category: z.string(),
+  zone_id: z.string().nullable(),
+  priority: z.string(),
+  description: z.string(),
+});
+
+const CopilotResponseSchema = z.object({
+  draft_incident: DraftIncidentSchema,
+  suggested_volunteer: z.object({
+    id: z.string(),
+    name: z.string(),
+    language: z.string(),
+    zone_assignment: z.string(),
+  }).optional(),
+  dispatch_message_localized: z.string().optional(),
+  requires_confirmation: z.boolean().optional(),
+});
+
+export interface SuggestedVolunteer {
+  id: string;
+  name: string;
+  language: string;
+  zone_assignment: string;
+}
+
+export interface DraftIncident {
+  category: string;
+  zone_id: string | null;
+  priority: string;
+  description: string;
+}
+
+export interface CopilotResponse {
+  draft_incident: DraftIncident;
+  suggested_volunteer?: SuggestedVolunteer;
+  dispatch_message_localized?: string;
+  requires_confirmation?: boolean;
+}
+
+export interface AssistantResponse {
+  detected_language: string;
+  answer: string;
+  route: string[];
+  estimated_walk_time_min: number;
+  grounded_sources: string[];
+}
+
+export type ChatResponse = AssistantResponse | CopilotResponse;
 
 export function ChatWindow({ 
   role = "fan",
@@ -10,7 +70,7 @@ export function ChatWindow({
 }: { 
   role?: "fan" | "ops",
   apiEndpoint?: string,
-  onResponse?: (data: any) => void
+  onResponse?: (data: ChatResponse) => void
 }) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -45,16 +105,30 @@ export function ChatWindow({
         });
 
         const data = await res.json();
-        
-        if (role === "fan" && data.answer) {
-          setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: data.answer }]);
-        } else if (role === "ops" && data.draft_incident) {
-          setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "Draft generated. Please review and confirm the ticket." }]);
-        } else {
-          setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "I'm sorry, I couldn't process that request." }]);
-        }
 
-        if (onResponse) onResponse(data);
+        if (!res.ok) {
+          throw new Error(data.error || `HTTP error ${res.status}`);
+        }
+        
+        if (role === "fan") {
+          const parsed = AssistantResponseSchema.safeParse(data);
+          if (parsed.success) {
+            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: parsed.data.answer }]);
+            if (onResponse) onResponse(parsed.data as AssistantResponse);
+          } else {
+            console.error("Invalid AssistantResponse payload:", parsed.error);
+            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "Invalid response format received from assistant." }]);
+          }
+        } else if (role === "ops") {
+          const parsed = CopilotResponseSchema.safeParse(data);
+          if (parsed.success) {
+            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "Draft generated. Please review and confirm the ticket." }]);
+            if (onResponse) onResponse(parsed.data as CopilotResponse);
+          } else {
+            console.error("Invalid CopilotResponse payload:", parsed.error);
+            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "Invalid response format received from copilot." }]);
+          }
+        }
       } catch (error) {
         console.error("Chat API Error:", error);
         setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "An error occurred connecting to the backend." }]);
