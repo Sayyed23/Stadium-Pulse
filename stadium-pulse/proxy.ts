@@ -26,7 +26,7 @@ const PROTECTED_API_ROUTES = [
   "/api/alerts",
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check if this is a protected page route

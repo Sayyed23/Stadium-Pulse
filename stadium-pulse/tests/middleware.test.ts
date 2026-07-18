@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { middleware } from "../proxy";
+import { proxy as middleware } from "../proxy";
 import { NextRequest } from "next/server";
 import { encodeSession } from "../lib/auth";
 
