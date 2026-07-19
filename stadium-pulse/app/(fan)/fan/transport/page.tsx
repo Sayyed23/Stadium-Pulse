@@ -61,6 +61,16 @@ function TransportZoneItem({ zone }: Readonly<{ zone: TransportZone }>) {
   );
 }
 
+function updateZones(prev: TransportZone[], data: TransportZone): TransportZone[] {
+  const idx = prev.findIndex((z) => z.zone_id === data.zone_id);
+  if (idx >= 0) {
+    const copy = [...prev];
+    copy[idx] = data;
+    return copy;
+  }
+  return [...prev, data];
+}
+
 export default function TransportPage() {
   const [zones, setZones] = useState<TransportZone[]>([]);
   const [connected, setConnected] = useState(false);
@@ -70,15 +80,7 @@ export default function TransportPage() {
 
     const handleTransportUpdate = (e: MessageEvent) => {
       const data = JSON.parse(e.data) as TransportZone;
-      setZones((prev) => {
-        const idx = prev.findIndex((z) => z.zone_id === data.zone_id);
-        if (idx >= 0) {
-          const copy = [...prev];
-          copy[idx] = data;
-          return copy;
-        }
-        return [...prev, data];
-      });
+      setZones((prev) => updateZones(prev, data));
       setConnected(true);
     };
 
