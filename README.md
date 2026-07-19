@@ -9,13 +9,8 @@
 **StadiumPulse AI** is a state-of-the-art, GenAI-enabled operations layer, spectator navigation companion, and control room management platform custom-built for large-scale sports arenas and multi-stage tournaments. Consolidating spectator navigation, volunteer dispatch workflows, real-time telemetry analytics, and staff command center control systems into a single Next.js application, the platform uses real-time event streaming, premium Stitch UI layouts, and advanced Google Gemini LLM orchestration to translate complex stadium data feeds into grounded, actionable, and secure insights.
 
 
-### 📸 Live Platform Preview
 
-| Unified Spectator Landing Page (Stitch UI) | Operational Control Room Console |
-| :---: | :---: |
-| ![Landing Page](stadium-pulse/public/screenshot_landing.png) | ![Operations Console](stadium-pulse/public/screenshot_dashboard.png) |
 
----
 
 ## 🎯 Executive Summary & Problem Statement
 
