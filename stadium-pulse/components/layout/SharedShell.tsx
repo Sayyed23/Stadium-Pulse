@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
-export function SharedShell({ children }: { children: React.ReactNode }) {
+export function SharedShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
 
   const pageTitle: Record<string, string> = {

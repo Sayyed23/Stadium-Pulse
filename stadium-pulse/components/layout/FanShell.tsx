@@ -17,7 +17,7 @@ import {
   UserCircle2,
 } from "lucide-react";
 
-export function FanShell({ children }: { children: React.ReactNode }) {
+export function FanShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
 
   const primaryNavItems = [

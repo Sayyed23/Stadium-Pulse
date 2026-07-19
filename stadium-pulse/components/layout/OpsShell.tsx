@@ -15,7 +15,7 @@ import {
   LogOut,
 } from "lucide-react";
 
-export function OpsShell({ children }: { children: React.ReactNode }) {
+export function OpsShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
 
   const navItems = [

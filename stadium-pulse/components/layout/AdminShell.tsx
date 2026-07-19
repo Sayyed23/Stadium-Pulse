@@ -64,7 +64,7 @@ const navSections: NavSection[] = [
 
 const allItems = navSections.flatMap((s) => s.items);
 
-export function AdminShell({ children }: { children: React.ReactNode }) {
+export function AdminShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 

@@ -26,7 +26,7 @@ const navItems = [
   { href: "/volunteer/profile", label: "Profile", icon: UserCircle2 },
 ];
 
-export function VolunteerShell({ children }: { children: React.ReactNode }) {
+export function VolunteerShell({ children }: Readonly<{ children: React.ReactNode }>) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
