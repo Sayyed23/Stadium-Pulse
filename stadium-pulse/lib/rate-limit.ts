@@ -32,9 +32,9 @@ function getRedis(): Redis | null {
 // ─── In-Memory Rate Limiter Fallback ─────────────────────────
 
 export class InMemoryRatelimit {
-  private limitCount: number;
-  private windowMs: number;
-  private prefix: string;
+  private readonly limitCount: number;
+  private readonly windowMs: number;
+  private readonly prefix: string;
   private static stores = new Map<string, Map<string, number[]>>();
   private static lastCleanup = Date.now();
 

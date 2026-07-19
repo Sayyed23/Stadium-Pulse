@@ -1,4 +1,4 @@
-import { EventEmitter } from "events";
+import { EventEmitter } from "node:events";
 import { prisma } from "./db";
 import { generateStructuredOutput } from "./ai/client";
 import { situationReportPrompt, situationReportUserPrompt } from "./ai/prompts";
@@ -15,7 +15,7 @@ import {
 class EventBroadcaster extends EventEmitter {
   private intervalId: NodeJS.Timeout | null = null;
   private activeListeners = 0;
-  private previousCounts: Map<string, { counts: number[]; lastUpdated: number }> = new Map();
+  private readonly previousCounts: Map<string, { counts: number[]; lastUpdated: number }> = new Map();
   private tickInFlight = false;
   private readonly HISTORY_MAX_AGE_MS = 60 * 1000; // 1 minute eviction
 
@@ -163,7 +163,7 @@ class EventBroadcaster extends EventEmitter {
   ) {
   const trendPctPerMin =
     history.length >= 2
-      ? ((history[history.length - 1] - history[0]) /
+      ? (((history.at(-1) ?? 0) - (history.at(0) ?? 0)) /
         zone.capacity /
         15) * // 3s interval, 15s total for 5 elements
       60 *

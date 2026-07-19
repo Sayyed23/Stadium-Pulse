@@ -1,5 +1,5 @@
 import { defineConfig } from "vitest/config";
-import path from "path";
+import path from "node:path";
 
 process.env.SESSION_SECRET = "test_session_secret_for_vitest_runs_only";
 process.env.GOOGLE_API_KEY = "[GCP_API_KEY]";

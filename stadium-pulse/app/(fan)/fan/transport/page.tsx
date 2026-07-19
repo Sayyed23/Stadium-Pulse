@@ -22,7 +22,7 @@ const typeIcon: Record<string, React.ReactNode> = {
 import { getTransportStatusColor as statusColor } from "@/lib/transport-utils";
 
 
-function TransportZoneItem({ zone }: { zone: TransportZone }) {
+function TransportZoneItem({ zone }: Readonly<{ zone: TransportZone }>) {
   const s = useMemo(() => statusColor(zone.pct), [zone.pct]);
   return (
     <div className="bg-[#1d2022] border border-[#3a494b]/40 rounded-2xl p-4 transition-all duration-300 hover:border-[#00f2ff]/40 shadow-lg">
@@ -42,19 +42,14 @@ function TransportZoneItem({ zone }: { zone: TransportZone }) {
       </div>
 
       {/* Progress Bar */}
-      <div
-        className="w-full h-2 bg-[#101415] rounded-full overflow-hidden mb-2"
-        role="progressbar"
-        aria-valuenow={Math.round(zone.pct * 100)}
-        aria-valuemin={0}
-        aria-valuemax={100}
+      <progress
+        className="w-full h-2 rounded-full overflow-hidden mb-2 appearance-none [&::-webkit-progress-bar]:bg-[#101415] [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:rounded-full [&::-moz-progress-bar]:rounded-full"
+        value={Math.round(zone.pct * 100)}
+        max={100}
         aria-label={`${zone.name} capacity`}
       >
-        <div
-          className={`h-full rounded-full transition-all duration-700 ease-out ${s.bar}`}
-          style={{ width: `${Math.min(zone.pct * 100, 100)}%` }}
-        />
-      </div>
+        {Math.round(zone.pct * 100)}%
+      </progress>
 
       <div className="flex justify-between text-xs font-mono text-[#b9cacb]">
         <span>
@@ -73,7 +68,7 @@ export default function TransportPage() {
   useEffect(() => {
     const es = new EventSource("/api/zones/stream");
 
-    es.addEventListener("transport_update", (e) => {
+    const handleTransportUpdate = (e: MessageEvent) => {
       const data = JSON.parse(e.data) as TransportZone;
       setZones((prev) => {
         const idx = prev.findIndex((z) => z.zone_id === data.zone_id);
@@ -85,8 +80,9 @@ export default function TransportPage() {
         return [...prev, data];
       });
       setConnected(true);
-    });
+    };
 
+    es.addEventListener("transport_update", handleTransportUpdate);
     es.onerror = () => setConnected(false);
 
     return () => es.close();
@@ -151,8 +147,8 @@ export default function TransportPage() {
           <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
           <p className="text-xs text-[#b9cacb]">
             Some parking & transit options are near capacity. Consider
-            alternatives marked
-            <span className="font-bold text-[#5cf968]"> AVAILABLE</span>.
+            alternatives marked{" "}
+            <span className="font-bold text-[#5cf968]">AVAILABLE</span>.
           </p>
         </div>
       )}

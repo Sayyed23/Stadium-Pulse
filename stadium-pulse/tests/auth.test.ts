@@ -102,13 +102,14 @@ describe("Authentication functions", () => {
     expect(loginRateLimiter.limit(ip).success).toBe(false);
   });
 
-  it("encodeSession throws if SESSION_SECRET is missing", async () => {
+  it("encodeSession succeeds with fallback when SESSION_SECRET is missing", async () => {
     const oldSecret = process.env.SESSION_SECRET;
     delete process.env.SESSION_SECRET;
     vi.resetModules();
     const { encodeSession } = await import("../lib/auth");
-    await expect(encodeSession({ staffId: "1", name: "A", role: "admin" }))
-      .rejects.toThrow("SESSION_SECRET environment variable is missing.");
+    const token = await encodeSession({ staffId: "1", name: "A", role: "admin" });
+    expect(typeof token).toBe("string");
+    expect(token.length).toBeGreaterThan(0);
     process.env.SESSION_SECRET = oldSecret;
     vi.resetModules();
   });

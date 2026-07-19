@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+function getTransportStatus(ratio: number): string {
+  if (ratio > 0.9) return "full";
+  if (ratio > 0.7) return "filling";
+  return "available";
+}
+
 /**
  * GET /api/transport
  *
@@ -30,12 +36,7 @@ export async function GET() {
         capacity: tz.capacity,
         current_count: tz.currentCount,
         pct: Math.round((tz.currentCount / tz.capacity) * 100) / 100,
-        status:
-          tz.currentCount / tz.capacity > 0.9
-            ? "full"
-            : tz.currentCount / tz.capacity > 0.7
-              ? "filling"
-              : "available",
+        status: getTransportStatus(tz.currentCount / tz.capacity),
       })),
       waste_bins: wasteBins.map((wb) => ({
         id: wb.id,

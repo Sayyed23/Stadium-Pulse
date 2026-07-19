@@ -7,11 +7,11 @@ function ToggleButton({
   value,
   onChange,
   ariaLabel,
-}: {
+}: Readonly<{
   value: boolean;
   onChange: (v: boolean) => void;
   ariaLabel: string;
-}) {
+}>) {
   return (
     <button
       type="button"

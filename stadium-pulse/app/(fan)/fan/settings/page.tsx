@@ -23,10 +23,10 @@ const languages = [
 function ToggleButton({
   value,
   onChange,
-}: {
+}: Readonly<{
   value: boolean;
   onChange: (v: boolean) => void;
-}) {
+}>) {
   return (
     <button
       type="button"

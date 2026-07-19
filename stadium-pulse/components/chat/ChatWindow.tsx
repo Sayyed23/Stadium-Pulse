@@ -67,11 +67,11 @@ export function ChatWindow({
   role = "fan",
   apiEndpoint,
   onResponse
-}: { 
+}: Readonly<{ 
   role?: "fan" | "ops",
   apiEndpoint?: string,
   onResponse?: (data: ChatResponse) => void
-}) {
+}>) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
@@ -84,6 +84,34 @@ export function ChatWindow({
     }
   ]);
 
+  const handleFanResponse = (
+    data: unknown,
+    appendMessage: (text: string) => void
+  ) => {
+    const parsed = AssistantResponseSchema.safeParse(data);
+    if (parsed.success) {
+      appendMessage(parsed.data.answer);
+      if (onResponse) onResponse(parsed.data as AssistantResponse);
+    } else {
+      console.error("Invalid AssistantResponse payload:", parsed.error);
+      appendMessage("Invalid response format received from assistant.");
+    }
+  };
+
+  const handleOpsResponse = (
+    data: unknown,
+    appendMessage: (text: string) => void
+  ) => {
+    const parsed = CopilotResponseSchema.safeParse(data);
+    if (parsed.success) {
+      appendMessage("Draft generated. Please review and confirm the ticket.");
+      if (onResponse) onResponse(parsed.data as CopilotResponse);
+    } else {
+      console.error("Invalid CopilotResponse payload:", parsed.error);
+      appendMessage("Invalid response format received from copilot.");
+    }
+  };
+
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
     
@@ -91,62 +119,46 @@ export function ChatWindow({
     setMessages(prev => [...prev, { id: Date.now().toString(), role: "user", text: userText }]);
     setInput("");
     setIsLoading(true);
+
+    const appendMessage = (text: string) => {
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text }]);
+    };
     
-    if (apiEndpoint) {
-      try {
-        const payload = role === "fan" 
-          ? { session_id: "demo_session", query: userText, current_zone_id: "zone_a" }
-          : { reporter_id: "demo_volunteer", description: userText };
-
-        const res = await fetch(apiEndpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.error || `HTTP error ${res.status}`);
-        }
-        
-        if (role === "fan") {
-          const parsed = AssistantResponseSchema.safeParse(data);
-          if (parsed.success) {
-            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: parsed.data.answer }]);
-            if (onResponse) onResponse(parsed.data as AssistantResponse);
-          } else {
-            console.error("Invalid AssistantResponse payload:", parsed.error);
-            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "Invalid response format received from assistant." }]);
-          }
-        } else if (role === "ops") {
-          const parsed = CopilotResponseSchema.safeParse(data);
-          if (parsed.success) {
-            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "Draft generated. Please review and confirm the ticket." }]);
-            if (onResponse) onResponse(parsed.data as CopilotResponse);
-          } else {
-            console.error("Invalid CopilotResponse payload:", parsed.error);
-            setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "Invalid response format received from copilot." }]);
-          }
-        }
-      } catch (error) {
-        console.error("Chat API Error:", error);
-        setMessages(prev => [...prev, { id: Date.now().toString(), role: "assistant", text: "An error occurred connecting to the backend." }]);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      // Fallback if no endpoint provided
+    if (!apiEndpoint) {
+      const fallbackText = role === "fan"
+        ? "I am connected to the StadiumPulse AI backend. Once the API is integrated, I'll provide grounded venue directions."
+        : "Analyzing incident report... (Backend API integration pending)";
       setTimeout(() => {
-        setMessages(prev => [...prev, { 
-          id: (Date.now() + 1).toString(), 
-          role: "assistant", 
-          text: role === "fan" 
-            ? "I am connected to the StadiumPulse AI backend. Once the API is integrated, I'll provide grounded venue directions."
-            : "Analyzing incident report... (Backend API integration pending)"
-        }]);
+        appendMessage(fallbackText);
         setIsLoading(false);
       }, 1000);
+      return;
+    }
+
+    try {
+      const payload = role === "fan" 
+        ? { session_id: "demo_session", query: userText, current_zone_id: "zone_a" }
+        : { reporter_id: "demo_volunteer", description: userText };
+
+      const res = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP error ${res.status}`);
+      
+      if (role === "fan") {
+        handleFanResponse(data, appendMessage);
+      } else {
+        handleOpsResponse(data, appendMessage);
+      }
+    } catch (error) {
+      console.error("Chat API Error:", error);
+      appendMessage("An error occurred connecting to the backend.");
+    } finally {
+      setIsLoading(false);
     }
   };
 

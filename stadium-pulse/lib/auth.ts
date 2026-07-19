@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt";
 
 // Simple in-memory rate limiter for login
 class InMemoryRatelimit {
-  private store = new Map<string, { count: number; resetTime: number }>();
+  private readonly store = new Map<string, { count: number; resetTime: number }>();
 
   limit(ip: string): { success: boolean } {
     const now = Date.now();
@@ -36,10 +36,12 @@ export const loginRateLimiter = new InMemoryRatelimit();
  * In production, this would use NextAuth.js with proper JWT/session handling.
  */
 
+type StaffRole = "operator" | "volunteer" | "admin";
+
 export interface StaffSession {
   staffId: string;
   name: string;
-  role: "operator" | "volunteer" | "admin";
+  role: StaffRole;
 }
 
 const SESSION_COOKIE = "sp_staff_session";
@@ -146,7 +148,7 @@ export async function getStaffSession(): Promise<StaffSession | null> {
   const staff = await prisma.volunteer.findUnique({
     where: { id: session.staffId }
   });
-  if (!staff || staff.role !== session.role) {
+  if (!staff || staff.role as string !== session.role) {
     return null; // Staff removed or role changed!
   }
 
