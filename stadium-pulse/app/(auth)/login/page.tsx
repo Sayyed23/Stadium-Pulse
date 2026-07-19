@@ -135,6 +135,63 @@ export default function UnifiedLoginPage() {
         </Link>
       </form>
 
+      {/* Demo Credentials Autofill Helper */}
+      <div className="p-4 rounded-2xl bg-[#101415] border border-[#3a494b]/40 text-left space-y-2 text-[11px] font-mono text-[#b9cacb]">
+        <div className="font-bold text-[#00f2ff] uppercase tracking-wider mb-1 text-[10px]">
+          Demo Credentials (Click to Autofill):
+        </div>
+        <div className="space-y-1.5">
+          <button
+            type="button"
+            onClick={() => {
+              setPortal("admin");
+              setIdentity("Control Room Admin");
+              setPasscode("admin123");
+            }}
+            className="w-full text-left flex justify-between hover:text-white transition-colors"
+          >
+            <span>🔑 Admin: Control Room Admin</span>
+            <span className="text-[#00f2ff]">admin123</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPortal("ops");
+              setIdentity("Meera Operator");
+              setPasscode("123456");
+            }}
+            className="w-full text-left flex justify-between hover:text-white transition-colors"
+          >
+            <span>🔑 Operator: Meera Operator</span>
+            <span className="text-[#00f2ff]">(any)</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPortal("volunteer");
+              setIdentity("Arjun Patel");
+              setPasscode("123456");
+            }}
+            className="w-full text-left flex justify-between hover:text-white transition-colors"
+          >
+            <span>🔑 Volunteer: Arjun Patel</span>
+            <span className="text-[#00f2ff]">(any)</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPortal("fan");
+              setIdentity("+91 98765 43210");
+              setPasscode("123456");
+            }}
+            className="w-full text-left flex justify-between hover:text-white transition-colors"
+          >
+            <span>🔑 Fan Mobile: +91 98765 43210</span>
+            <span className="text-[#00f2ff]">(any)</span>
+          </button>
+        </div>
+      </div>
+
       <div className="text-center">
         <Link
           href="/verify"

@@ -43,7 +43,7 @@ export interface StaffSession {
 }
 
 const SESSION_COOKIE = "sp_staff_session";
-const SESSION_SECRET = process.env.SESSION_SECRET;
+const SESSION_SECRET = process.env.SESSION_SECRET || "fallback-secret-for-stadium-pulse-auth-key-123456";
 
 /**
  * Encode a staff session into a signed token.

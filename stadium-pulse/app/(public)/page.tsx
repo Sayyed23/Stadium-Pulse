@@ -174,7 +174,7 @@ export default function LandingPage() {
               <div className="flex items-center justify-between">
                 <div className="inline-flex items-center gap-2 text-[#5cf968] text-xs font-mono font-semibold">
                   <span className="w-2 h-2 rounded-full bg-[#5cf968] animate-ping" />
-                  LIVE EVENT ACTIVE
+                  <span>LIVE EVENT ACTIVE</span>
                 </div>
                 <span className="text-xs text-[#b9cacb]">
                   100,000+ Capacity

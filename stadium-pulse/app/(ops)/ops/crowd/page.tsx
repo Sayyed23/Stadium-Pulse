@@ -8,56 +8,8 @@ import {
   BarChart3,
 } from "lucide-react";
 
-const zones = [
-  {
-    id: "zone_a",
-    name: "Zone A — North Stand",
-    pct: 72,
-    count: 5760,
-    capacity: 8000,
-    trend: "up" as const,
-  },
-  {
-    id: "zone_b",
-    name: "Zone B — South Stand",
-    pct: 91,
-    count: 7280,
-    capacity: 8000,
-    trend: "up" as const,
-  },
-  {
-    id: "zone_c",
-    name: "Zone C — East Wing",
-    pct: 58,
-    count: 2900,
-    capacity: 5000,
-    trend: "stable" as const,
-  },
-  {
-    id: "zone_d",
-    name: "Zone D — West Wing",
-    pct: 45,
-    count: 2250,
-    capacity: 5000,
-    trend: "down" as const,
-  },
-  {
-    id: "zone_e",
-    name: "Concourse Level 1",
-    pct: 83,
-    count: 4150,
-    capacity: 5000,
-    trend: "up" as const,
-  },
-  {
-    id: "zone_f",
-    name: "Concourse Level 2",
-    pct: 35,
-    count: 1050,
-    capacity: 3000,
-    trend: "down" as const,
-  },
-];
+import { MOCK_CROWD_ZONES as zones } from "@/lib/mock-data";
+
 
 const predictions = [
   {

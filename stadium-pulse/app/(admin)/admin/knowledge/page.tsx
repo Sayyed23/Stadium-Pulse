@@ -1,4 +1,5 @@
-import { BookOpen, Plus, Search, Edit, Trash2, Tag } from "lucide-react";
+import { BookOpen, Plus, Search, Tag } from "lucide-react";
+import { TableRowActions } from "@/components/admin/TableRowActions";
 
 const articles = [
   {
@@ -102,20 +103,7 @@ export default function KnowledgeBasePage() {
                 <td className="py-3 px-5 text-sm text-zinc-400">
                   {art.updatedAt}
                 </td>
-                <td className="py-3 px-5 flex items-center gap-2">
-                  <button
-                    type="button"
-                    className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  >
-                    <Edit size={14} className="text-zinc-400" />
-                  </button>
-                  <button
-                    type="button"
-                    className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                  >
-                    <Trash2 size={14} className="text-red-400" />
-                  </button>
-                </td>
+                <TableRowActions />
               </tr>
             ))}
           </tbody>

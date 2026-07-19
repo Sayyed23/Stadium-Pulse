@@ -1,5 +1,6 @@
 "use client";
 
+import { SidebarHeader } from "./SidebarHeader";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -17,7 +18,6 @@ import {
   ScrollText,
   Settings,
   ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -72,38 +72,16 @@ export function AdminShell({ children }: Readonly<{ children: React.ReactNode }>
     <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-sans">
       {/* Sidebar */}
       <aside
-        className={`${
-          collapsed ? "w-[72px]" : "w-64"
-        } bg-white dark:bg-slate-900/80 backdrop-blur-md border-r border-slate-200 dark:border-slate-800 flex flex-col z-20 shadow-xl transition-all duration-300`}
+        className={`${collapsed ? "w-[72px]" : "w-64"
+          } bg-white dark:bg-slate-900/80 backdrop-blur-md border-r border-slate-200 dark:border-slate-800 flex flex-col z-20 shadow-xl transition-all duration-300`}
       >
-        <div className="h-16 flex items-center px-4 border-b border-slate-200 dark:border-slate-800/50 justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer overflow-hidden"
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-600 to-purple-500 flex items-center justify-center shadow-lg shadow-violet-500/20 shrink-0">
-              <span className="text-white font-bold text-xs tracking-tighter">
-                SP
-              </span>
-            </div>
-            {!collapsed && (
-              <h1 className="font-bold text-lg tracking-tight whitespace-nowrap">
-                StadiumPulse{" "}
-                <span className="font-light text-violet-400">Admin</span>
-              </h1>
-            )}
-          </Link>
-          <button type="button"
-            onClick={() => setCollapsed(!collapsed)}
-            className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
-          >
-            {collapsed ? (
-              <ChevronRight size={16} />
-            ) : (
-              <ChevronLeft size={16} />
-            )}
-          </button>
-        </div>
+        <SidebarHeader
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          badgeText="Admin"
+          badgeColorClass="text-violet-400"
+          logoGradientClass="bg-gradient-to-tr from-violet-600 to-purple-500 shadow-violet-500/20"
+        />
 
         <nav className="flex-1 py-4 px-3 space-y-5 overflow-y-auto" aria-label="Admin portal navigation">
           {navSections.map((section) => (
@@ -125,11 +103,10 @@ export function AdminShell({ children }: Readonly<{ children: React.ReactNode }>
                       key={item.href}
                       href={item.href}
                       title={collapsed ? item.label : undefined}
-                      className={`relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-violet-500 ${
-                        isActive
+                      className={`relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-violet-500 ${isActive
                           ? "text-violet-700 dark:text-violet-300 font-medium"
                           : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
-                      }`}
+                        }`}
                       aria-current={isActive ? "page" : undefined}
                     >
                       {isActive && (

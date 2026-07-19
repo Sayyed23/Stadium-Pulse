@@ -109,6 +109,51 @@ export default function LoginPage() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        {/* Demo Credentials Helper */}
+        <div className="mt-6 p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 space-y-2">
+          <div className="font-semibold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider text-[10px]">
+            Demo Credentials (Click to Autofill):
+          </div>
+          <div className="space-y-2 font-mono text-[11px]">
+            <button
+              type="button"
+              onClick={() => {
+                setName("Control Room Admin");
+                setRole("admin");
+                setPasscode("admin123");
+              }}
+              className="w-full text-left flex justify-between hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span>🔑 Admin: Control Room Admin</span>
+              <span className="font-semibold text-zinc-700 dark:text-zinc-300">admin123</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setName("Meera Operator");
+                setRole("operator");
+                setPasscode("123456");
+              }}
+              className="w-full text-left flex justify-between hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span>🔑 Operator: Meera Operator</span>
+              <span className="font-semibold text-zinc-700 dark:text-zinc-300">(any)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setName("Arjun Patel");
+                setRole("volunteer");
+                setPasscode("123456");
+              }}
+              className="w-full text-left flex justify-between hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              <span>🔑 Volunteer: Arjun Patel</span>
+              <span className="font-semibold text-zinc-700 dark:text-zinc-300">(any)</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

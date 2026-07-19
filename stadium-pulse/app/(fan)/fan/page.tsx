@@ -33,7 +33,7 @@ export default function FanExperiencePage() {
         <div className="flex items-center gap-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00f2ff]/10 border border-[#00f2ff]/30 text-[#00f2ff] text-xs font-mono font-bold shadow-lg">
             <span className="w-2 h-2 rounded-full bg-[#00f2ff] animate-pulse" />
-            LIVE: FIFA WORLD CUP FINALS
+            <span>LIVE: FIFA WORLD CUP FINALS</span>
           </div>
           <div className="w-10 h-10 rounded-xl bg-[#00f2ff]/10 border border-[#00f2ff]/30 flex items-center justify-center text-[#00f2ff] font-bold text-xs font-mono shadow-md shrink-0">
             FWC

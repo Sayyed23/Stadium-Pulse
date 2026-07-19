@@ -1,11 +1,6 @@
 import Link from "next/link";
-import {
-  AlertTriangle,
-  Info,
-  CheckCircle2,
-  Clock,
-  ArrowLeft,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { NotificationCard, type NotificationItem } from "@/components/notifications/NotificationCard";
 
 const notifications = [
   {
@@ -58,27 +53,6 @@ const notifications = [
   },
 ];
 
-const typeConfig: Record<
-  string,
-  { icon: React.ElementType; color: string; badge: string }
-> = {
-  alert: {
-    icon: AlertTriangle,
-    color: "text-amber-400",
-    badge: "bg-amber-500/10 text-amber-400",
-  },
-  info: {
-    icon: Info,
-    color: "text-blue-400",
-    badge: "bg-blue-500/10 text-blue-400",
-  },
-  update: {
-    icon: CheckCircle2,
-    color: "text-emerald-400",
-    badge: "bg-emerald-500/10 text-emerald-400",
-  },
-};
-
 export default function NotificationsPage() {
   const unread = notifications.filter((n) => !n.read);
   const read = notifications.filter((n) => n.read);
@@ -116,38 +90,9 @@ export default function NotificationsPage() {
             New System Alerts
           </h3>
           <div className="space-y-2.5">
-            {unread.map((n) => {
-              const config = typeConfig[n.type];
-              const Icon = config.icon;
-              return (
-                <div
-                  key={n.id}
-                  className="bg-[#1d2022] border-l-4 border-l-[#00f2ff] border border-[#3a494b]/40 rounded-2xl p-4 shadow-xl cursor-pointer hover:border-[#00f2ff]/40 transition-all"
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${config.badge}`}
-                    >
-                      <Icon size={16} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2 mb-0.5">
-                        <span className="text-xs font-bold text-white truncate">
-                          {n.title}
-                        </span>
-                        <span className="text-[10px] font-mono text-[#00f2ff] shrink-0 flex items-center gap-1">
-                          <Clock size={10} />
-                          {n.time}
-                        </span>
-                      </div>
-                      <p className="text-xs text-[#b9cacb] leading-relaxed">
-                        {n.body}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {unread.map((n) => (
+              <NotificationCard key={n.id} notification={n as NotificationItem} isUnread />
+            ))}
           </div>
         </section>
       )}
@@ -159,37 +104,9 @@ export default function NotificationsPage() {
             Earlier Notifications
           </h3>
           <div className="space-y-2">
-            {read.map((n) => {
-              const config = typeConfig[n.type];
-              const Icon = config.icon;
-              return (
-                <div
-                  key={n.id}
-                  className="bg-[#1d2022]/60 border border-[#3a494b]/30 rounded-xl p-3.5 opacity-70 cursor-pointer hover:opacity-100 transition-opacity"
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${config.badge}`}
-                    >
-                      <Icon size={16} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2 mb-0.5">
-                        <span className="text-xs font-semibold text-white truncate">
-                          {n.title}
-                        </span>
-                        <span className="text-[10px] font-mono text-[#b9cacb] shrink-0">
-                          {n.time}
-                        </span>
-                      </div>
-                      <p className="text-xs text-[#b9cacb] leading-relaxed">
-                        {n.body}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {read.map((n) => (
+              <NotificationCard key={n.id} notification={n as NotificationItem} />
+            ))}
           </div>
         </section>
       )}

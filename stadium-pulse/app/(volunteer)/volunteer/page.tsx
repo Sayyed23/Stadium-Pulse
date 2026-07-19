@@ -12,32 +12,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const tasks = [
-  {
-    id: "T-001",
-    title: "Patrol Zone B concourse",
-    zone: "Zone B",
-    priority: "medium",
-    due: "16:30",
-    status: "in-progress",
-  },
-  {
-    id: "T-002",
-    title: "Assist wheelchair guest — Gate 3",
-    zone: "Zone A",
-    priority: "high",
-    due: "16:15",
-    status: "pending",
-  },
-  {
-    id: "T-003",
-    title: "Restock water station 2",
-    zone: "Zone C",
-    priority: "low",
-    due: "17:00",
-    status: "pending",
-  },
-];
+import { MOCK_VOLUNTEER_TASKS as tasks } from "@/lib/mock-data";
+
 
 const incidents = [
   {

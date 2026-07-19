@@ -1,5 +1,6 @@
 "use client";
 
+import { SidebarHeader } from "./SidebarHeader";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -12,7 +13,6 @@ import {
   UserCircle2,
   Radio,
   ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -38,34 +38,13 @@ export function VolunteerShell({ children }: Readonly<{ children: React.ReactNod
           collapsed ? "w-[72px]" : "w-64"
         } bg-white dark:bg-slate-900/80 backdrop-blur-md border-r border-slate-200 dark:border-slate-800 flex flex-col z-20 shadow-xl transition-all duration-300`}
       >
-        <div className="h-16 flex items-center px-4 border-b border-slate-200 dark:border-slate-800/50 justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer overflow-hidden"
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-500/20 shrink-0">
-              <span className="text-white font-bold text-xs tracking-tighter">
-                SP
-              </span>
-            </div>
-            {!collapsed && (
-              <h1 className="font-bold text-lg tracking-tight whitespace-nowrap">
-                StadiumPulse{" "}
-                <span className="font-light text-teal-500">Vol</span>
-              </h1>
-            )}
-          </Link>
-          <button type="button"
-            onClick={() => setCollapsed(!collapsed)}
-            className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
-          >
-            {collapsed ? (
-              <ChevronRight size={16} />
-            ) : (
-              <ChevronLeft size={16} />
-            )}
-          </button>
-        </div>
+        <SidebarHeader
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          badgeText="Vol"
+          badgeColorClass="text-teal-500"
+          logoGradientClass="bg-gradient-to-tr from-teal-500 to-cyan-500 shadow-teal-500/20"
+        />
 
         {/* Availability Status */}
         {!collapsed && (

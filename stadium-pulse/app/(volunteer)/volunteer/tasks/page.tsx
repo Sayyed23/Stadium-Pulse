@@ -9,31 +9,10 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
+import { MOCK_VOLUNTEER_TASKS } from "@/lib/mock-data";
+
 const tasks = [
-  {
-    id: "T-001",
-    title: "Patrol Zone B concourse",
-    zone: "Zone B",
-    priority: "medium",
-    due: "16:30",
-    status: "in-progress",
-  },
-  {
-    id: "T-002",
-    title: "Assist wheelchair guest — Gate 3",
-    zone: "Zone A",
-    priority: "high",
-    due: "16:15",
-    status: "pending",
-  },
-  {
-    id: "T-003",
-    title: "Restock water station 2",
-    zone: "Zone C",
-    priority: "low",
-    due: "17:00",
-    status: "pending",
-  },
+  ...MOCK_VOLUNTEER_TASKS,
   {
     id: "T-004",
     title: "Check waste bins — Concourse L1",

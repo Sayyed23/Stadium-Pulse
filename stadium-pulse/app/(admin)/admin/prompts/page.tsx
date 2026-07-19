@@ -1,4 +1,5 @@
-import { Sparkles, Plus, Edit, Trash2 } from "lucide-react";
+import { Sparkles, Plus } from "lucide-react";
+import { TableRowActions } from "@/components/admin/TableRowActions";
 
 const prompts = [
   {
@@ -86,20 +87,7 @@ export default function PromptsPage() {
                     {p.status}
                   </span>
                 </td>
-                <td className="py-3 px-5 flex items-center gap-2">
-                  <button
-                    type="button"
-                    className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  >
-                    <Edit size={14} className="text-zinc-400" />
-                  </button>
-                  <button
-                    type="button"
-                    className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                  >
-                    <Trash2 size={14} className="text-red-400" />
-                  </button>
-                </td>
+                <TableRowActions />
               </tr>
             ))}
           </tbody>

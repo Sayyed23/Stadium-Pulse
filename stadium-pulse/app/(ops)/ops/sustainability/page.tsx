@@ -36,25 +36,8 @@ const typeIcon: Record<string, React.ReactNode> = {
   metro: <Train className="w-5 h-5" />,
 };
 
-function statusColor(pct: number) {
-  if (pct >= 0.9)
-    return {
-      bar: "bg-red-500",
-      badge: "text-red-400 bg-red-500/10",
-      label: "Full",
-    };
-  if (pct >= 0.7)
-    return {
-      bar: "bg-amber-500",
-      badge: "text-amber-400 bg-amber-500/10",
-      label: "Filling",
-    };
-  return {
-    bar: "bg-emerald-500",
-    badge: "text-emerald-400 bg-emerald-500/10",
-    label: "OK",
-  };
-}
+import { getTransportStatusColor as statusColor } from "@/lib/transport-utils";
+
 
 function handleTransportUpdate(prev: TransportZone[], data: TransportZone) {
   const idx = prev.findIndex((z) => z.zone_id === data.zone_id);
