@@ -40,7 +40,7 @@ export default function DashboardPage() {
           <div className="px-3.5 py-1.5 rounded-xl bg-[#101415] border border-[#3a494b] text-xs font-mono text-[#00f2ff]">
             SYSTEM STATUS: OPERATIONAL (99.9%)
           </div>
-          <button className="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/40 font-mono font-bold text-xs hover:bg-red-500/30 transition-all uppercase">
+          <button type="button" className="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 border border-red-500/40 font-mono font-bold text-xs hover:bg-red-500/30 transition-all uppercase">
             Emergency Lockdown
           </button>
         </div>

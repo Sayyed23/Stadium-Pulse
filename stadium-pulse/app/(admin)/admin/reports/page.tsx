@@ -24,7 +24,7 @@ export default function ReportsPage() {
               </div>
               <div className="text-xs text-zinc-400">Timeframe: {r.dateRange} · Format: {r.type}</div>
             </div>
-            <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-xs font-medium transition-colors shrink-0">
+            <button type="button" className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-xs font-medium transition-colors shrink-0">
               <Download size={14} /> Export
             </button>
           </div>

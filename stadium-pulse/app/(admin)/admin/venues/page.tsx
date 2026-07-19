@@ -20,7 +20,7 @@ export default function VenuesPage() {
           </h2>
           <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Configure seating capacities, zone polygon boundaries & tournament schedules</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] text-xs font-mono font-extrabold uppercase transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+        <button type="button" className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] text-xs font-mono font-extrabold uppercase transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)]">
           <Plus size={16} /> Add Venue
         </button>
       </div>
@@ -46,8 +46,8 @@ export default function VenuesPage() {
                 <td className="py-3.5 px-5 font-mono">{v.zones}</td>
                 <td className="py-3.5 px-5"><span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase ${v.status === "active" ? "bg-[#5cf968]/10 text-[#5cf968] border border-[#5cf968]/30" : "bg-[#3a494b]/30 text-[#b9cacb]"}`}>{v.status}</span></td>
                 <td className="py-3.5 px-5 flex items-center gap-2">
-                  <button className="p-1.5 rounded-lg bg-[#101415] hover:border-[#00f2ff] border border-[#3a494b] text-[#b9cacb] hover:text-white transition-colors"><Edit size={14} /></button>
-                  <button className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 transition-colors"><Trash2 size={14} /></button>
+                  <button type="button" className="p-1.5 rounded-lg bg-[#101415] hover:border-[#00f2ff] border border-[#3a494b] text-[#b9cacb] hover:text-white transition-colors"><Edit size={14} /></button>
+                  <button type="button" className="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 transition-colors"><Trash2 size={14} /></button>
                 </td>
               </tr>
             ))}

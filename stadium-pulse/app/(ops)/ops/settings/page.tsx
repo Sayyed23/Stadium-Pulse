@@ -5,7 +5,7 @@ import { Settings, Bell, Activity, Save } from "lucide-react";
 
 function ToggleButton({ value, onChange, ariaLabel }: { value: boolean; onChange: (v: boolean) => void; ariaLabel: string }) {
   return (
-    <button
+    <button type="button"
       role="switch"
       aria-checked={value}
       aria-label={ariaLabel}
@@ -102,7 +102,7 @@ export default function OpsSettingsPage() {
         </div>
       </div>
 
-      <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
+      <button type="button" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
         <Save size={18} />
         Save Settings
       </button>

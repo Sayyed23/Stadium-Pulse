@@ -55,7 +55,7 @@ export function VolunteerShell({ children }: { children: React.ReactNode }) {
               </h1>
             )}
           </Link>
-          <button
+          <button type="button"
             onClick={() => setCollapsed(!collapsed)}
             className="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
           >

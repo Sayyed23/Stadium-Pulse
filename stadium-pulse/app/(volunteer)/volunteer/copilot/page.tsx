@@ -31,7 +31,7 @@ export default function VolunteerCopilotPage() {
               placeholder="Describe the incident in detail... (e.g. 'Guest slipped near Gate 12, medical attention needed immediately')"
               className="flex-1 w-full bg-[#101415] border border-[#3a494b] rounded-xl p-4 text-xs text-[#e0e3e5] placeholder:text-[#b9cacb]/60 resize-none focus:outline-none focus:border-[#00f2ff]"
             />
-            <button
+            <button type="button"
               onClick={handleExtract}
               className="mt-4 w-full bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)] text-xs font-mono uppercase"
             >
@@ -82,7 +82,7 @@ export default function VolunteerCopilotPage() {
               </div>
 
               <div className="mt-auto pt-4">
-                <button className="w-full bg-[#5cf968] hover:bg-[#70ff76] text-[#00390a] font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(92,249,104,0.3)] text-xs font-mono uppercase">
+                <button type="button" className="w-full bg-[#5cf968] hover:bg-[#70ff76] text-[#00390a] font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(92,249,104,0.3)] text-xs font-mono uppercase">
                   <CheckCircle2 size={18} />
                   Confirm & Dispatch Volunteer
                 </button>

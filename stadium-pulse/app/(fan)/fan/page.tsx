@@ -54,7 +54,7 @@ export default function FanExperiencePage() {
                   placeholder="Ask anything... (e.g. 'Where is the nearest medical desk?' or 'Fastest way to Gate 4')"
                   className="bg-transparent border-none focus:outline-none text-[#e0e3e5] placeholder:text-[#b9cacb]/60 w-full text-xs sm:text-sm"
                 />
-                <button className="ml-2 text-[#00f2ff] p-2 hover:bg-[#00f2ff]/10 rounded-xl transition-colors shrink-0">
+                <button type="button" className="ml-2 text-[#00f2ff] p-2 hover:bg-[#00f2ff]/10 rounded-xl transition-colors shrink-0">
                   <Mic size={20} />
                 </button>
               </div>

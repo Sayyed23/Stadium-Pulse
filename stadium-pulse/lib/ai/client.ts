@@ -101,7 +101,7 @@ export async function generateText(
   };
 
   // Structured logging for observability
-  console.log(
+  console.info(
     JSON.stringify({
       event: "llm_call",
       model: modelName,

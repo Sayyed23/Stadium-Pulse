@@ -53,7 +53,7 @@ export default function AmenitiesPage() {
           const Icon = cat.icon;
           const isActive = active === cat.id;
           return (
-            <button
+            <button type="button"
               key={cat.id}
               onClick={() => setActive(cat.id)}
               className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${

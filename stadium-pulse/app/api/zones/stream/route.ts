@@ -34,7 +34,7 @@ export async function GET() {
     cancel() {
       // Cleanup listener when client disconnects
       cleanup();
-      console.log("SSE client disconnected from /api/zones/stream");
+      console.info("SSE client disconnected from /api/zones/stream");
     },
   });
 

@@ -53,7 +53,7 @@ export default function SystemSettingsPage() {
         </div>
       </div>
 
-      <button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
+      <button type="button" className="w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
         <Save size={18} /> Save Global System Settings
       </button>
     </div>

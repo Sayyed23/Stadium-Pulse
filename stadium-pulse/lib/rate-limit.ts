@@ -18,7 +18,7 @@ function getRedis(): Redis | null {
     const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
     if (!url || !token) {
-      console.warn(
+      console.error(
         "⚠️  Upstash Redis not configured. Falling back to in-memory rate limiting."
       );
       return null;
@@ -186,6 +186,6 @@ export async function setCache(
   try {
     await r.set(key, JSON.stringify(value), { ex: ttlSeconds });
   } catch (err) {
-    console.warn("Cache set failed:", err);
+    console.error("Cache set failed:", err);
   }
 }

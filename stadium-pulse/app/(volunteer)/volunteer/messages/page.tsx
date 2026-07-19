@@ -30,7 +30,7 @@ export default function VolunteerMessagesPage() {
         </div>
         <div className="flex-1 overflow-y-auto divide-y divide-zinc-200 dark:divide-zinc-800">
           {threads.map((t) => (
-            <button
+            <button type="button"
               key={t.id}
               onClick={() => setActiveThread(t.id)}
               className={`w-full text-left px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors ${activeThread === t.id ? "bg-teal-50 dark:bg-teal-900/20" : ""}`}
@@ -83,7 +83,7 @@ export default function VolunteerMessagesPage() {
               placeholder="Type a message..."
               className="flex-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl px-4 py-2.5 text-sm border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
-            <button className="w-10 h-10 rounded-xl bg-teal-500 hover:bg-teal-600 text-white flex items-center justify-center transition-colors">
+            <button type="button" className="w-10 h-10 rounded-xl bg-teal-500 hover:bg-teal-600 text-white flex items-center justify-center transition-colors">
               <Send size={18} />
             </button>
           </div>

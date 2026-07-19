@@ -37,7 +37,7 @@ export default function AccessibilityPage() {
       </div>
 
       {/* Quick Action — Request Assistance */}
-      <button className="w-full bg-[#1d2022] border border-[#00f2ff]/40 text-white rounded-2xl p-4 flex items-center gap-4 hover:border-[#00f2ff] transition-all shadow-xl active:scale-[0.98]">
+      <button type="button" className="w-full bg-[#1d2022] border border-[#00f2ff]/40 text-white rounded-2xl p-4 flex items-center gap-4 hover:border-[#00f2ff] transition-all shadow-xl active:scale-[0.98]">
         <div className="w-12 h-12 rounded-xl bg-[#00f2ff]/10 text-[#00f2ff] border border-[#00f2ff]/30 flex items-center justify-center shrink-0">
           <HandHelping size={24} />
         </div>

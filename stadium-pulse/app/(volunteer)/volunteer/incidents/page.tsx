@@ -41,7 +41,7 @@ export default function VolunteerIncidentsPage() {
       {/* Tabs */}
       <div className="flex gap-2">
         {tabs.map((t) => (
-          <button
+          <button type="button"
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all ${

@@ -31,7 +31,7 @@ export default function NotificationsPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Notifications Center</h2>
           <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">{unread.length} new unread updates</p>
         </div>
-        <button className="text-xs font-mono font-bold text-[#00f2ff] hover:underline">Mark all read</button>
+        <button type="button" className="text-xs font-mono font-bold text-[#00f2ff] hover:underline">Mark all read</button>
       </div>
 
       {/* Unread */}

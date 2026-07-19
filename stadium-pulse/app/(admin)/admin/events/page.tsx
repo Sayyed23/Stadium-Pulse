@@ -17,7 +17,7 @@ export default function EventsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold">Event Management</h2>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors"><Plus size={16} /> Add Event</button>
+        <button type="button" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors"><Plus size={16} /> Add Event</button>
       </div>
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden">
         <table className="w-full text-left">
@@ -38,8 +38,8 @@ export default function EventsPage() {
                 <td className="py-3 px-5 text-sm flex items-center gap-1"><Clock size={12} className="text-zinc-400" />{e.gates}</td>
                 <td className="py-3 px-5"><span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${statusColors[e.status]}`}>{e.status}</span></td>
                 <td className="py-3 px-5 flex items-center gap-2">
-                  <button className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"><Edit size={14} className="text-zinc-400" /></button>
-                  <button className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"><Trash2 size={14} className="text-red-400" /></button>
+                  <button type="button" className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"><Edit size={14} className="text-zinc-400" /></button>
+                  <button type="button" className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"><Trash2 size={14} className="text-red-400" /></button>
                 </td>
               </tr>
             ))}

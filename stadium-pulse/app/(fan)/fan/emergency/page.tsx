@@ -25,7 +25,7 @@ export default function EmergencyPage() {
       </div>
 
       {/* SOS Button */}
-      <button className="relative w-full py-9 rounded-3xl bg-gradient-to-br from-red-600 via-red-700 to-red-900 text-white font-extrabold text-2xl tracking-wider flex flex-col items-center justify-center gap-2 shadow-[0_0_35px_rgba(239,68,68,0.4)] border border-red-500/50 hover:scale-[1.02] transition-all active:scale-95 overflow-hidden group">
+      <button type="button" className="relative w-full py-9 rounded-3xl bg-gradient-to-br from-red-600 via-red-700 to-red-900 text-white font-extrabold text-2xl tracking-wider flex flex-col items-center justify-center gap-2 shadow-[0_0_35px_rgba(239,68,68,0.4)] border border-red-500/50 hover:scale-[1.02] transition-all active:scale-95 overflow-hidden group">
         <div className="flex items-center gap-3">
           <ShieldAlert size={34} className="animate-bounce text-white" />
           <span>1-TAP EMERGENCY SOS</span>
@@ -35,7 +35,7 @@ export default function EmergencyPage() {
 
       {/* Help Categories */}
       <div className="grid grid-cols-2 gap-3">
-        <button className="bg-[#1d2022] border border-red-500/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-red-500 transition-all cursor-pointer">
+        <button type="button" className="bg-[#1d2022] border border-red-500/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-red-500 transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center">
             <Cross size={26} />
           </div>
@@ -45,7 +45,7 @@ export default function EmergencyPage() {
           </div>
         </button>
 
-        <button className="bg-[#1d2022] border border-[#00f2ff]/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-[#00f2ff] transition-all cursor-pointer">
+        <button type="button" className="bg-[#1d2022] border border-[#00f2ff]/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-[#00f2ff] transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-xl bg-[#00f2ff]/10 text-[#00f2ff] flex items-center justify-center">
             <Shield size={26} />
           </div>
@@ -55,7 +55,7 @@ export default function EmergencyPage() {
           </div>
         </button>
 
-        <button className="bg-[#1d2022] border border-amber-500/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-amber-500 transition-all cursor-pointer">
+        <button type="button" className="bg-[#1d2022] border border-amber-500/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-amber-500 transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
             <Search size={26} />
           </div>
@@ -65,7 +65,7 @@ export default function EmergencyPage() {
           </div>
         </button>
 
-        <button className="bg-[#1d2022] border border-purple-500/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-purple-500 transition-all cursor-pointer">
+        <button type="button" className="bg-[#1d2022] border border-purple-500/30 rounded-2xl p-5 flex flex-col items-center gap-3 hover:border-purple-500 transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
             <AlertTriangle size={26} />
           </div>

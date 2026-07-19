@@ -122,7 +122,7 @@ export default function CopilotPage() {
               )}
 
               <div className="mt-auto pt-6">
-                <button 
+                <button type="button" 
                   onClick={handleConfirm}
                   disabled={isSubmitting}
                   className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-70"

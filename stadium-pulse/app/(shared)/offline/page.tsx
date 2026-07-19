@@ -14,7 +14,7 @@ export default function OfflinePage() {
            stadium data and offline maps remain accessible. Reconnect to resume live updates.
         </p>
       </div>
-      <button
+      <button type="button"
         onClick={() => typeof window !== "undefined" && window.location.reload()}
         className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm transition-colors"
       >

@@ -1,5 +1,5 @@
 /**
- * StadiumPulse AI — SSE / Event-Bus Helpers
+ * StadiumPulse AI - SSE / Event-Bus Helpers
  *
  * A single SSE endpoint (/api/zones/stream) serves both the ops dashboard
  * and the fan transport nudges. This module provides the shared utilities.
@@ -94,6 +94,12 @@ export function setCooldown(zoneId: string): void {
   cooldownMap.set(zoneId, Date.now());
 }
 
+function secureRandom(): number {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return array[0] / (0xffffffff + 1);
+}
+
 /**
  * Simulate occupancy drift for a zone.
  * In production, this would be replaced by real IoT/CCTV data.
@@ -107,13 +113,13 @@ export function simulateOccupancyChange(
   // Bias toward increasing when below 80%, random walk when higher
   let delta: number;
   if (pct < 0.5) {
-    delta = Math.floor(Math.random() * 80) + 20; // +20 to +100
+    delta = Math.floor(secureRandom() * 80) + 20; // +20 to +100
   } else if (pct < 0.8) {
-    delta = Math.floor(Math.random() * 60) - 10; // -10 to +50
+    delta = Math.floor(secureRandom() * 60) - 10; // -10 to +50
   } else if (pct < 0.95) {
-    delta = Math.floor(Math.random() * 40) - 15; // -15 to +25
+    delta = Math.floor(secureRandom() * 40) - 15; // -15 to +25
   } else {
-    delta = Math.floor(Math.random() * 30) - 20; // -20 to +10 (tends to decrease)
+    delta = Math.floor(secureRandom() * 30) - 20; // -20 to +10 (tends to decrease)
   }
 
   const newCount = Math.max(0, Math.min(capacity, currentCount + delta));

@@ -30,7 +30,7 @@ export function AlertCard({ id, level, zoneId, summary, action, time, acknowledg
         </div>
       ) : (
         onAcknowledge && (
-          <button 
+          <button type="button" 
             onClick={() => onAcknowledge(id)}
             className="absolute top-4 right-4 flex items-center bg-[#1d2022] text-[#00f2ff] hover:bg-[#00f2ff] hover:text-[#00363a] border border-[#00f2ff]/40 rounded-lg text-xs font-mono font-bold px-2.5 py-1 transition-all"
           >

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import * as bcrypt from "bcrypt";
 
-const log = (msg: string) => console.log(`[${new Date().toISOString()}] ${msg}`);
+const log = (msg: string) => console.info(`[${new Date().toISOString()}] ${msg}`);
 
 // Seed data modeled on realistic India-hosted tournament stadium capacities
 // All data aligns with the venue KB used by the fan navigation assistant (FR-1)

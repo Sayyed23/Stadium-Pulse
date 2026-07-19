@@ -15,7 +15,7 @@ const languages = [
 
 function ToggleButton({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
   return (
-    <button
+    <button type="button"
       onClick={() => onChange(!value)}
       className={`w-11 h-6 rounded-full transition-colors relative ${value ? "bg-[#00f2ff]" : "bg-[#3a494b]"}`}
     >
@@ -52,7 +52,7 @@ export default function SettingsPage() {
         </h3>
         <div className="grid grid-cols-2 gap-2">
           {languages.map((lang) => (
-            <button
+            <button type="button"
               key={lang.code}
               onClick={() => setSelectedLang(lang.code)}
               className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-all ${
@@ -145,7 +145,7 @@ export default function SettingsPage() {
             <span className="text-xs text-white">Offline Cache Engine</span>
             <span className="text-xs font-mono font-bold text-[#5cf968]">ACTIVE</span>
           </div>
-          <button className="w-full bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] font-bold text-xs py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+          <button type="button" className="w-full bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] font-bold text-xs py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)]">
             Install PWA to Home Screen
           </button>
         </div>

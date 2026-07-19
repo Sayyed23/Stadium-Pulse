@@ -69,7 +69,7 @@ export async function verifyGrounding(
 
   // Log hallucinations for review
   if (hallucinations.length > 0) {
-    console.warn(
+    console.error(
       JSON.stringify({
         event: "hallucination_detected",
         hallucinations,
@@ -125,7 +125,7 @@ export async function verifyNavigationResponse(response: {
   }
 
   if (hallucinations.length > 0) {
-    console.warn(
+    console.error(
       JSON.stringify({
         event: "navigation_hallucination",
         hallucinations,

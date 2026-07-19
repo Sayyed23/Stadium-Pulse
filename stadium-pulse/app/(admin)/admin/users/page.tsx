@@ -12,7 +12,7 @@ export default function UsersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold">User Management</h2>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors">
+        <button type="button" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors">
           <Plus size={16} /> Add User
         </button>
       </div>
@@ -46,7 +46,7 @@ export default function UsersPage() {
                   </span>
                 </td>
                 <td className="py-3 px-5">
-                  <button className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                  <button type="button" className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
                     <Edit size={14} className="text-zinc-400" />
                   </button>
                 </td>

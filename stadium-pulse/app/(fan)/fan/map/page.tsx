@@ -84,19 +84,19 @@ export default function MapPage() {
       {/* Floating Category Filters */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 w-[95%] max-w-2xl">
         <div className="flex gap-2 overflow-x-auto py-2 px-2 bg-[#1d2022]/90 backdrop-blur-xl border border-[#00f2ff]/30 rounded-2xl shadow-2xl scrollbar-hide">
-          <button className="flex items-center gap-1.5 px-4 py-2 bg-[#00f2ff] text-[#00363a] font-mono font-bold rounded-xl text-xs shadow-lg transition-all active:scale-95 whitespace-nowrap">
+          <button type="button" className="flex items-center gap-1.5 px-4 py-2 bg-[#00f2ff] text-[#00363a] font-mono font-bold rounded-xl text-xs shadow-lg transition-all active:scale-95 whitespace-nowrap">
             All Facilities
           </button>
-          <button className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
+          <button type="button" className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-[#5cf968]" /> Food Courts
           </button>
-          <button className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
+          <button type="button" className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-red-400" /> Medical Desks
           </button>
-          <button className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
+          <button type="button" className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-blue-400" /> Restrooms
           </button>
-          <button className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
+          <button type="button" className="flex items-center gap-1.5 px-3.5 py-2 bg-[#101415] border border-[#3a494b] text-[#e0e3e5] rounded-xl text-xs transition-all hover:border-[#00f2ff]/50 active:scale-95 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-yellow-400" /> Parking Hubs
           </button>
         </div>

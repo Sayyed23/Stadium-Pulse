@@ -53,7 +53,7 @@ export default function NavigationPage() {
                   className="flex-1 bg-[#101415] rounded-xl px-4 py-3 text-xs text-[#e0e3e5] border border-[#3a494b] focus:outline-none focus:border-[#00f2ff]"
                   placeholder="Starting point"
                 />
-                <button className="w-10 h-10 rounded-xl bg-[#101415] border border-[#3a494b] flex items-center justify-center hover:border-[#00f2ff] transition-colors">
+                <button type="button" className="w-10 h-10 rounded-xl bg-[#101415] border border-[#3a494b] flex items-center justify-center hover:border-[#00f2ff] transition-colors">
                   <Locate size={18} className="text-[#00f2ff]" />
                 </button>
               </div>
@@ -78,7 +78,7 @@ export default function NavigationPage() {
               <span className="text-xs text-[#e0e3e5]">Accessible elevator routes only</span>
             </label>
 
-            <button
+            <button type="button"
               onClick={() => setShowRoute(true)}
               className="w-full bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)] text-xs font-mono uppercase"
             >

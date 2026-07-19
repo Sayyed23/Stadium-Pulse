@@ -11,7 +11,7 @@ export default function AdminVolunteersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold">Volunteer Management (Admin)</h2>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors">
+        <button type="button" className="flex items-center gap-2 px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors">
           <Plus size={16} /> Register Volunteer
         </button>
       </div>

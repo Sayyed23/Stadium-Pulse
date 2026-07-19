@@ -53,7 +53,7 @@ export default function VerifyPage() {
       </Link>
 
       <p className="text-xs text-[#b9cacb] font-mono">
-        Didn&apos;t receive code? <button className="text-[#00f2ff] font-bold hover:underline">Resend OTP</button>
+        Didn&apos;t receive code? <button type="button" className="text-[#00f2ff] font-bold hover:underline">Resend OTP</button>
       </p>
     </div>
   );

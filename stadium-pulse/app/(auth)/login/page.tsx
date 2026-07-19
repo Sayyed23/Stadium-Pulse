@@ -29,7 +29,7 @@ export default function UnifiedLoginPage() {
       {/* Role Selector */}
       <div className="grid grid-cols-4 gap-1 p-1 bg-[#101415] border border-[#3a494b]/40 rounded-xl text-xs font-mono font-bold">
         {(["fan", "volunteer", "ops", "admin"] as const).map((p) => (
-          <button
+          <button type="button"
             key={p}
             onClick={() => setPortal(p)}
             className={`py-2.5 rounded-lg capitalize transition-all ${
