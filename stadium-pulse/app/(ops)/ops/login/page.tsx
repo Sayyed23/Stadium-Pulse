@@ -46,8 +46,9 @@ export default function LoginPage() {
           {error && <div className="text-red-500 text-sm font-medium">{error}</div>}
           
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
+            <label htmlFor="ops-name" className="block text-sm font-medium mb-1">Name</label>
             <input 
+              id="ops-name"
               type="text" 
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -58,8 +59,9 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Role</label>
+            <label htmlFor="ops-role" className="block text-sm font-medium mb-1">Role</label>
             <select
+              id="ops-role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               className="w-full border border-zinc-300 dark:border-zinc-700 rounded-md p-2 bg-transparent"
@@ -71,8 +73,9 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Passcode</label>
+            <label htmlFor="ops-passcode" className="block text-sm font-medium mb-1">Passcode</label>
             <input 
+              id="ops-passcode"
               type="password" 
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}

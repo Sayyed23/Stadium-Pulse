@@ -70,13 +70,13 @@ export default function NavigationPage() {
             </div>
 
             {/* Accessibility Toggle */}
-            <label className="flex items-center gap-2 cursor-pointer pt-1">
-              <div className={`w-9 h-5 rounded-full transition-colors relative ${accessibleOnly ? "bg-[#00f2ff]" : "bg-[#3a494b]"}`} onClick={() => setAccessibleOnly(!accessibleOnly)}>
+            <button type="button" className="flex items-center gap-2 cursor-pointer pt-1" onClick={() => setAccessibleOnly(!accessibleOnly)}>
+              <div className={`w-9 h-5 rounded-full transition-colors relative ${accessibleOnly ? "bg-[#00f2ff]" : "bg-[#3a494b]"}`}>
                 <div className={`absolute top-0.5 w-4 h-4 bg-[#101415] rounded-full shadow transition-transform ${accessibleOnly ? "translate-x-4" : "translate-x-0.5"}`} />
               </div>
               <Accessibility size={16} className={accessibleOnly ? "text-[#00f2ff]" : "text-[#b9cacb]"} />
               <span className="text-xs text-[#e0e3e5]">Accessible elevator routes only</span>
-            </label>
+            </button>
 
             <button type="button"
               onClick={() => setShowRoute(true)}
@@ -99,7 +99,7 @@ export default function NavigationPage() {
               </div>
               <div className="space-y-0 pt-2">
                 {routeSteps.map((step, i) => (
-                  <div key={step.id || step.instruction} className="flex gap-4 pb-5 relative">
+                  <div key={step.instruction} className="flex gap-4 pb-5 relative">
                     <div className="flex flex-col items-center">
                       <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono font-bold shrink-0 ${
                         i === routeSteps.length - 1

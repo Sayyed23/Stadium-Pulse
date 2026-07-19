@@ -54,8 +54,15 @@ export default function CrowdPage() {
           {zones.map((zone) => {
             const isCritical = zone.pct >= 85;
             const isWarning = zone.pct >= 65 && zone.pct < 85;
-            const barColor = isCritical ? "bg-red-400" : isWarning ? "bg-amber-400" : "bg-[#5cf968]";
-            const borderColor = isCritical ? "border-red-500/40" : isWarning ? "border-amber-500/40" : "border-[#3a494b]/50";
+            let barColor = "bg-[#5cf968]";
+            let borderColor = "border-[#3a494b]/50";
+            if (isCritical) {
+              barColor = "bg-red-400";
+              borderColor = "border-red-500/40";
+            } else if (isWarning) {
+              barColor = "bg-amber-400";
+              borderColor = "border-amber-500/40";
+            }
 
             return (
               <div key={zone.id} className={`bg-[#1d2022] rounded-2xl p-4 border ${borderColor} shadow-lg space-y-2`}>

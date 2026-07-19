@@ -55,12 +55,13 @@ export default function UnifiedLoginPage() {
 
       <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
         <div>
-          <label className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#b9cacb]">
+          <label htmlFor="auth-identity" className="block text-[10px] font-mono font-bold uppercase tracking-wider mb-1 text-[#b9cacb]">
             {portal === "fan" ? "Mobile Number" : "Staff Email / Username"}
           </label>
           <div className="relative">
             {portal === "fan" ? <Smartphone className="absolute left-3.5 top-3.5 w-4 h-4 text-[#00f2ff]" /> : <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#00f2ff]" />}
             <input
+              id="auth-identity"
               type={portal === "fan" ? "tel" : "text"}
               value={identity}
               onChange={(e) => setIdentity(e.target.value)}
@@ -72,12 +73,13 @@ export default function UnifiedLoginPage() {
 
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#b9cacb]">Passcode / Auth Token</label>
+            <label htmlFor="auth-passcode" className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#b9cacb]">Passcode / Auth Token</label>
             <Link href="/forgot-password" className="text-[11px] font-mono text-[#00f2ff] hover:underline">Forgot?</Link>
           </div>
           <div className="relative">
             <Lock className="absolute left-3.5 top-3.5 w-4 h-4 text-[#00f2ff]" />
             <input
+              id="auth-passcode"
               type="password"
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}

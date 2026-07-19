@@ -66,8 +66,15 @@ export default function DashboardPage() {
                   const pct = Math.round(zone.pct * 100);
                   const isCritical = pct >= 95;
                   const isWarning = pct >= 85 && pct < 95;
-                  const colorClass = isCritical ? "bg-red-400" : isWarning ? "bg-amber-400" : "bg-[#5cf968]";
-                  const borderClass = isCritical ? "border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.2)]" : isWarning ? "border-amber-500/50" : "border-[#3a494b]/40";
+                  let colorClass = "bg-[#5cf968]";
+                  let borderClass = "border-[#3a494b]/40";
+                  if (isCritical) {
+                    colorClass = "bg-red-400";
+                    borderClass = "border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.2)]";
+                  } else if (isWarning) {
+                    colorClass = "bg-amber-400";
+                    borderClass = "border-amber-500/50";
+                  }
                   
                   return (
                     <div key={zone.zone_id} className={`p-4 rounded-xl border ${borderClass} bg-[#101415] relative overflow-hidden space-y-2`}>
@@ -101,19 +108,28 @@ export default function DashboardPage() {
                 <p>Monitoring event streams & threshold alerts...</p>
               </div>
             ) : (
-              alerts.map((alert, i) => (
-                <AlertCard
-                  key={`${alert.alert_id}-${i}`}
-                  id={alert.alert_id}
-                  zoneId={alert.zone_name}
-                  level={alert.threshold_crossed === "critical" ? "critical" : alert.threshold_crossed === "warning" ? "warning" : "info"}
-                  summary={alert.generated_summary}
-                  action={alert.recommended_action}
-                  time={new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                  acknowledged={alert.acknowledged}
-                  onAcknowledge={handleAcknowledge}
-                />
-              ))
+              alerts.map((alert, i) => {
+                let alertLevel: "critical" | "warning" | "info" = "info";
+                if (alert.threshold_crossed === "critical") {
+                  alertLevel = "critical";
+                } else if (alert.threshold_crossed === "warning") {
+                  alertLevel = "warning";
+                }
+
+                return (
+                  <AlertCard
+                    key={`${alert.alert_id}-${i}`}
+                    id={alert.alert_id}
+                    zoneId={alert.zone_name}
+                    level={alertLevel}
+                    summary={alert.generated_summary}
+                    action={alert.recommended_action}
+                    time={new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    acknowledged={alert.acknowledged}
+                    onAcknowledge={handleAcknowledge}
+                  />
+                );
+              })
             )}
           </div>
         </div>

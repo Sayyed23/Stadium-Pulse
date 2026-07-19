@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShieldCheck, ArrowRight, ArrowLeft } from "lucide-react";
 
 export default function VerifyPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const otpKeys = useMemo(() => Array.from({ length: 6 }, () => crypto.randomUUID()), []);
 
   const handleChange = (index: number, val: string) => {
     if (val.length <= 1) {
@@ -33,13 +34,13 @@ export default function VerifyPage() {
       </div>
 
       <div className="flex justify-center gap-2">
-        {otp.map((digit, i) => (
+        {otpKeys.map((id, index) => (
           <input
-            key={`otp-input-${i}`}
+            key={id}
             type="text"
             maxLength={1}
-            value={digit}
-            onChange={(e) => handleChange(i, e.target.value)}
+            value={otp[index]}
+            onChange={(e) => handleChange(index, e.target.value)}
             className="w-11 h-12 text-center text-lg font-mono font-bold bg-[#101415] border border-[#3a494b] text-white rounded-xl focus:outline-none focus:border-[#00f2ff]"
           />
         ))}

@@ -31,12 +31,12 @@ export default function ContactSupportPage() {
       <form className="glass-panel rounded-2xl p-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
         <h3 className="font-semibold text-base">Send Us a Message</h3>
         <div>
-          <label className="block text-xs text-slate-400 mb-1">Subject</label>
-          <input type="text" placeholder="e.g. Lost item query, Feedback" className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl px-4 py-2 text-sm border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label htmlFor="contact-subject" className="block text-xs text-slate-400 mb-1">Subject</label>
+          <input id="contact-subject" type="text" placeholder="e.g. Lost item query, Feedback" className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl px-4 py-2 text-sm border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <div>
-          <label className="block text-xs text-slate-400 mb-1">Message</label>
-          <textarea rows={4} placeholder="Describe your query..." className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl p-4 text-sm border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
+          <label htmlFor="contact-message" className="block text-xs text-slate-400 mb-1">Message</label>
+          <textarea id="contact-message" rows={4} placeholder="Describe your query..." className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl p-4 text-sm border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
         </div>
         <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors">
           <Send size={16} /> Submit Query

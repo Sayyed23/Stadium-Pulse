@@ -97,7 +97,7 @@ export default function VolunteerDashboardPage() {
           </div>
           <div className="divide-y divide-[#3a494b]/30">
             {notifications.map((n) => (
-              <div key={shift.id || shift.role} className="px-5 py-3 text-xs">
+              <div key={n.title} className="px-5 py-3 text-xs">
                 <div className="font-bold text-white mb-0.5">{n.title}</div>
                 <div className="text-[10px] font-mono text-[#b9cacb]">{n.time}</div>
               </div>

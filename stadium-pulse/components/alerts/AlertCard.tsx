@@ -14,13 +14,16 @@ export function AlertCard({ id, level, zoneId, summary, action, time, acknowledg
   const isCritical = level === "critical";
   const isWarning = level === "warning";
   
-  const borderClass = isCritical 
-    ? "bg-[#101415] border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]" 
-    : isWarning
-      ? "bg-[#101415] border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.15)]"
-      : "bg-[#101415] border-[#00f2ff]/30 shadow-[0_0_15px_rgba(0,242,255,0.1)]";
+  let borderClass = "bg-[#101415] border-[#00f2ff]/30 shadow-[0_0_15px_rgba(0,242,255,0.1)]";
+  let iconColor = "text-[#00f2ff]";
 
-  const iconColor = isCritical ? "text-red-400" : isWarning ? "text-amber-400" : "text-[#00f2ff]";
+  if (isCritical) {
+    borderClass = "bg-[#101415] border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]";
+    iconColor = "text-red-400";
+  } else if (isWarning) {
+    borderClass = "bg-[#101415] border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.15)]";
+    iconColor = "text-amber-400";
+  }
 
   return (
     <div className={`rounded-2xl border p-4 ${borderClass} relative`} aria-live="polite">

@@ -38,8 +38,15 @@ export default function OpsCrowdPage() {
         {zones.map((zone) => {
           const isCritical = zone.pct >= 85;
           const isWarning = zone.pct >= 65;
-          const barColor = isCritical ? "bg-red-500" : isWarning ? "bg-amber-500" : "bg-emerald-500";
-          const borderColor = isCritical ? "border-red-500/30" : isWarning ? "border-amber-500/30" : "border-zinc-200 dark:border-zinc-800";
+          let barColor = "bg-emerald-500";
+          let borderColor = "border-zinc-200 dark:border-zinc-800";
+          if (isCritical) {
+            barColor = "bg-red-500";
+            borderColor = "border-red-500/30";
+          } else if (isWarning) {
+            barColor = "bg-amber-500";
+            borderColor = "border-amber-500/30";
+          }
 
           return (
             <div key={zone.id} className={`bg-white dark:bg-zinc-900 border ${borderColor} rounded-xl p-4 relative overflow-hidden`}>
@@ -62,12 +69,18 @@ export default function OpsCrowdPage() {
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
         <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><BarChart3 size={18} className="text-blue-500" /> Occupancy Trends</h3>
         <div className="h-48 flex items-end gap-2">
-          {[40, 55, 62, 58, 72, 85, 91, 88, 78, 72, 65, 58].map((v, i) => (
-            <div key={m.label} className="flex-1 flex flex-col items-center gap-1">
-              <div className={`w-full rounded-t ${v >= 85 ? "bg-red-500" : v >= 65 ? "bg-amber-500" : "bg-blue-500"} transition-all`} style={{ height: `${v * 1.8}px` }} />
-              <span className="text-[9px] text-zinc-400">{14 + i}:00</span>
-            </div>
-          ))}
+          {[40, 55, 62, 58, 72, 85, 91, 88, 78, 72, 65, 58].map((v, i) => {
+            let bgClass = "bg-blue-500";
+            if (v >= 85) bgClass = "bg-red-500";
+            else if (v >= 65) bgClass = "bg-amber-500";
+            
+            return (
+              <div key={`chart-col-${i}`} className="flex-1 flex flex-col items-center gap-1">
+                <div className={`w-full rounded-t ${bgClass} transition-all`} style={{ height: `${v * 1.8}px` }} />
+                <span className="text-[9px] text-zinc-400">{14 + i}:00</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -77,18 +90,24 @@ export default function OpsCrowdPage() {
           <h3 className="font-semibold text-sm flex items-center gap-2"><Activity size={16} className="text-purple-500" /> AI Predictions</h3>
         </div>
         <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
-          {predictions.map((p) => (
-            <div key={p.zone + p.time} className="px-5 py-3.5 flex items-center justify-between">
-              <div>
-                <span className="text-sm font-medium">{p.zone}</span>
-                <span className="text-xs text-zinc-400 ml-2">({p.time})</span>
+          {predictions.map((p) => {
+            let textColor = "text-zinc-400";
+            if (p.predicted >= 90) textColor = "text-red-400";
+            else if (p.predicted >= 80) textColor = "text-amber-400";
+
+            return (
+              <div key={p.zone + p.time} className="px-5 py-3.5 flex items-center justify-between">
+                <div>
+                  <span className="text-sm font-medium">{p.zone}</span>
+                  <span className="text-xs text-zinc-400 ml-2">({p.time})</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className={`text-sm font-bold ${textColor}`}>{p.predicted}%</span>
+                  <span className="text-xs text-zinc-400">{p.action}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <span className={`text-sm font-bold ${p.predicted >= 90 ? "text-red-400" : p.predicted >= 80 ? "text-amber-400" : "text-zinc-400"}`}>{p.predicted}%</span>
-                <span className="text-xs text-zinc-400">{p.action}</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

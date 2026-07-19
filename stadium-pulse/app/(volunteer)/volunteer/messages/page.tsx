@@ -61,7 +61,7 @@ export default function VolunteerMessagesPage() {
 
         <div className="flex-1 overflow-y-auto p-5 space-y-3">
           {messages.map((msg) => (
-            <div key={msg.id || msg.text} className={`flex ${msg.self ? "justify-end" : "justify-start"}`}>
+            <div key={msg.time + msg.text} className={`flex ${msg.self ? "justify-end" : "justify-start"}`}>
               <div className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm ${
                 msg.self
                   ? "bg-teal-500 text-white rounded-br-md"
