@@ -58,8 +58,8 @@ export default function VolunteerProfilePage() {
           <h3 className="font-semibold text-sm">Recent Activity</h3>
         </div>
         <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
-          {recentActivity.map((item, i) => (
-            <div key={i} className="px-5 py-3 flex items-center justify-between">
+          {recentActivity.map((item) => (
+            <div key={item.id || item.action} className="px-5 py-3 flex items-center justify-between">
               <span className="text-sm">{item.action}</span>
               <span className="text-xs text-slate-400 font-mono shrink-0 ml-4">{item.time}</span>
             </div>

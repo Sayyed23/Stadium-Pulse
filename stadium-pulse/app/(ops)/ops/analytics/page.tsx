@@ -49,7 +49,7 @@ export default function OpsAnalyticsPage() {
         <h3 className="font-semibold mb-4 flex items-center gap-2"><BarChart3 size={16} /> Hourly Occupancy</h3>
         <div className="h-40 flex items-end gap-1.5">
           {[20, 35, 45, 52, 61, 72, 80, 91, 88, 78, 65, 55, 48, 40].map((v, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-1">
+            <div key={s.label} className="flex-1 flex flex-col items-center gap-1">
               <div className={`w-full rounded-t transition-all ${v >= 85 ? "bg-red-500" : v >= 65 ? "bg-amber-500" : "bg-blue-500"}`} style={{ height: `${v * 1.5}px` }} />
               <span className="text-[8px] text-zinc-400">{12 + i}</span>
             </div>

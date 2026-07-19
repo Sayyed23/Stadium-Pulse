@@ -63,7 +63,7 @@ export default function OpsCrowdPage() {
         <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><BarChart3 size={18} className="text-blue-500" /> Occupancy Trends</h3>
         <div className="h-48 flex items-end gap-2">
           {[40, 55, 62, 58, 72, 85, 91, 88, 78, 72, 65, 58].map((v, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center gap-1">
+            <div key={m.label} className="flex-1 flex flex-col items-center gap-1">
               <div className={`w-full rounded-t ${v >= 85 ? "bg-red-500" : v >= 65 ? "bg-amber-500" : "bg-blue-500"} transition-all`} style={{ height: `${v * 1.8}px` }} />
               <span className="text-[9px] text-zinc-400">{14 + i}:00</span>
             </div>

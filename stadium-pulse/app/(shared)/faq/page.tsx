@@ -18,8 +18,8 @@ export default function FAQPage() {
       </div>
 
       <div className="space-y-4">
-        {faqs.map((f, i) => (
-          <div key={i} className="glass-panel rounded-xl p-5 space-y-2">
+        {faqs.map((f) => (
+          <div key={faq.id || faq.q} className="glass-panel rounded-xl p-5 space-y-2">
             <h3 className="font-semibold text-base text-slate-100">{f.q}</h3>
             <p className="text-sm text-slate-400 leading-relaxed">{f.a}</p>
           </div>

@@ -99,7 +99,7 @@ export default function NavigationPage() {
               </div>
               <div className="space-y-0 pt-2">
                 {routeSteps.map((step, i) => (
-                  <div key={i} className="flex gap-4 pb-5 relative">
+                  <div key={step.id || step.instruction} className="flex gap-4 pb-5 relative">
                     <div className="flex flex-col items-center">
                       <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono font-bold shrink-0 ${
                         i === routeSteps.length - 1

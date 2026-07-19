@@ -45,28 +45,15 @@ describe("Realtime Utilities", () => {
   });
   
   describe("simulateOccupancyChange", () => {
-    it("returns a number within bounds for pct < 0.5", () => {
-      const result = simulateOccupancyChange(40, 100);
+    it.each([
+      { current: 40, capacity: 100, desc: "pct < 0.5" },
+      { current: 60, capacity: 100, desc: "pct < 0.8" },
+      { current: 90, capacity: 100, desc: "pct < 0.95" },
+      { current: 98, capacity: 100, desc: "pct >= 0.95" },
+    ])("returns a number within bounds for $desc", ({ current, capacity }) => {
+      const result = simulateOccupancyChange(current, capacity);
       expect(result).toBeGreaterThanOrEqual(0);
-      expect(result).toBeLessThanOrEqual(100);
-    });
-    
-    it("returns a number within bounds for pct < 0.8", () => {
-      const result = simulateOccupancyChange(60, 100);
-      expect(result).toBeGreaterThanOrEqual(0);
-      expect(result).toBeLessThanOrEqual(100);
-    });
-
-    it("returns a number within bounds for pct < 0.95", () => {
-      const result = simulateOccupancyChange(90, 100);
-      expect(result).toBeGreaterThanOrEqual(0);
-      expect(result).toBeLessThanOrEqual(100);
-    });
-
-    it("returns a number within bounds for pct >= 0.95", () => {
-      const result = simulateOccupancyChange(98, 100);
-      expect(result).toBeGreaterThanOrEqual(0);
-      expect(result).toBeLessThanOrEqual(100);
+      expect(result).toBeLessThanOrEqual(capacity);
     });
   });
 });

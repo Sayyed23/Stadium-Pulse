@@ -35,7 +35,7 @@ export default function VerifyPage() {
       <div className="flex justify-center gap-2">
         {otp.map((digit, i) => (
           <input
-            key={i}
+            key={`otp-input-${i}`}
             type="text"
             maxLength={1}
             value={digit}

@@ -9,6 +9,16 @@ export default function UnifiedLoginPage() {
   const [identity, setIdentity] = useState("");
   const [passcode, setPasscode] = useState("");
 
+  const getPortalHref = () => {
+    switch (portal) {
+      case "fan": return "/fan";
+      case "volunteer": return "/volunteer";
+      case "ops": return "/ops/dashboard";
+      case "admin": return "/admin";
+      default: return "/admin";
+    }
+  };
+
   return (
     <div className="w-full max-w-md p-8 bg-[#1d2022] rounded-3xl shadow-2xl border border-[#00f2ff]/30 space-y-6">
       <div className="flex items-center justify-between">
@@ -78,7 +88,7 @@ export default function UnifiedLoginPage() {
         </div>
 
         <Link
-          href={portal === "fan" ? "/fan" : portal === "volunteer" ? "/volunteer" : portal === "ops" ? "/ops/dashboard" : "/admin"}
+          href={getPortalHref()}
           className="w-full bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] font-extrabold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)] mt-2 text-xs font-mono uppercase"
         >
           Authenticate to {portal.toUpperCase()} <ArrowRight size={16} />

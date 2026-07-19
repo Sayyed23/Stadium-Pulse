@@ -46,7 +46,9 @@ describe("InMemoryRatelimit", () => {
     // Advance time by 61 seconds to trigger cleanup logic
     vi.advanceTimersByTime(61000);
     
-    await limiter.limit("user6");
+    const res = await limiter.limit("user6");
+    expect(res.success).toBe(true);
+    
     vi.useRealTimers();
   });
 
@@ -75,11 +77,11 @@ describe("Rate Limit Fallbacks (Missing Config)", () => {
   });
 
   it("warns when redis config is missing", async () => {
-    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const { getAssistantLimiter, getCopilotLimiter, getCached, setCache, InMemoryRatelimit: DynamicInMemory } = await import("../lib/rate-limit");
     
     const limiter = getAssistantLimiter();
-    expect(warnSpy).toHaveBeenCalled();
+    expect(errorSpy).toHaveBeenCalled();
     expect(limiter).toBeInstanceOf(DynamicInMemory);
     
     const copilotLimiter = getCopilotLimiter();
@@ -88,7 +90,7 @@ describe("Rate Limit Fallbacks (Missing Config)", () => {
     expect(await getCached("key")).toBeNull();
     await expect(setCache("key", "val")).resolves.toBeUndefined();
     
-    warnSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 });
 
