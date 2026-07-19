@@ -8,6 +8,13 @@
 
 **StadiumPulse AI** is a state-of-the-art, GenAI-enabled operations layer, spectator navigation companion, and control room management platform custom-built for large-scale sports arenas and multi-stage tournaments. Consolidating spectator navigation, volunteer dispatch workflows, real-time telemetry analytics, and staff command center control systems into a single Next.js application, the platform uses real-time event streaming, premium Stitch UI layouts, and advanced Google Gemini LLM orchestration to translate complex stadium data feeds into grounded, actionable, and secure insights.
 
+
+### 📸 Live Platform Preview
+
+| Unified Spectator Landing Page (Stitch UI) | Operational Control Room Console |
+| :---: | :---: |
+| ![Landing Page](stadium-pulse/public/screenshot_landing.png) | ![Operations Console](stadium-pulse/public/screenshot_dashboard.png) |
+
 ---
 
 ## 🎯 Executive Summary & Problem Statement
@@ -16,26 +23,32 @@ Sports tournaments and mega-events at high-capacity stadiums present monumental 
 
 StadiumPulse AI aligns these operational workflows into a single system, bridging the gap between spectators, volunteers, operators, and administrators:
 
-```
-                  ┌──────────────────────────────────────────────┐
-                  │              STADIUM TELEMETRY               │
-                  │ (Occupancy, Shuttles, Bins, Emergency GPS)   │
-                  └──────────────────────┬───────────────────────┘
-                                         │
-                                         ▼
-                  ┌──────────────────────────────────────────────┐
-                  │              STADIUMPULSE CORE               │
-                  │  (Real-Time SSE Bus, Google Gemini Engine)   │
-                  └──────┬──────────────────────┬─────────┬──────┘
-                         │                      │         │
-        ┌────────────────┴──────────────┐       │         └────────────────┐
-        ▼                               ▼       ▼                          ▼
-┌──────────────┐                ┌──────────────┐ ┌──────────────┐   ┌──────────────┐
-│  SPECTATORS  │                │  VOLUNTEERS  │ │  OPERATORS   │   │  ADMINS      │
-│  Navigation, │                │ Incident     │ │ Live alerts, │   │ Config,      │
-│  Chat RAG,   │                │ Reporting,   │ │ Crowd Flow,  │   │ Guardrails,  │
-│  SOS System  │                │ Tasks Feed   │ │ Control Room │   │ Audit Logs   │
-└──────────────┘                └──────────────┘ └──────────────┘   └──────────────┘
+```mermaid
+graph TD
+    subgraph Sensors & Telemetry
+        O[Occupancy Sensors]
+        S[Shuttle GPS Tracker]
+        W[Smart Waste Monitors]
+        E[Emergency Geolocation]
+    end
+
+    subgraph StadiumPulse AI Core
+        B[EventBroadcaster SSE Stream]
+        G[Gemini LLM Orchestrator]
+        D[Prisma PostgreSQL Database]
+    end
+
+    subgraph Role Portals
+        P1[Spectator Portal]
+        P2[Volunteer Portal]
+        P3[Control Room Console]
+        P4[Admin Dashboard]
+    end
+
+    O & S & W & E --> B
+    B <--> D
+    G <--> D
+    B & G --> P1 & P2 & P3 & P4
 ```
 
 ---
