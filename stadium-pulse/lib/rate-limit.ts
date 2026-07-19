@@ -35,7 +35,7 @@ export class InMemoryRatelimit {
   private readonly limitCount: number;
   private readonly windowMs: number;
   private readonly prefix: string;
-  private static stores = new Map<string, Map<string, number[]>>();
+  private static readonly stores = new Map<string, Map<string, number[]>>();
   private static lastCleanup = Date.now();
 
   constructor(config: { limit: number; windowMs: number; prefix: string }) {

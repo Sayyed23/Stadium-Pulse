@@ -121,7 +121,9 @@ export default function MapPage() {
             Interactive map engine loading fallback view...
           </p>
         </div>
-      ) : isLoaded ? (
+      ) : null}
+
+      {!loadError && isLoaded ? (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
@@ -139,7 +141,9 @@ export default function MapPage() {
             />
           )}
         </GoogleMap>
-      ) : (
+      ) : null}
+
+      {!loadError && !isLoaded ? (
         <div className="flex items-center justify-center h-full bg-[#101415]">
           <div className="flex flex-col items-center gap-3">
             <div className="w-8 h-8 rounded-full border-2 border-[#00f2ff] border-t-transparent animate-spin" />
@@ -148,12 +152,11 @@ export default function MapPage() {
             </p>
           </div>
         </div>
-      )}
+      ) : null}
 
       {/* Accessible Route Selector Panel */}
-      <div
+      <section
         className="absolute bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-20 w-[92%] sm:w-96 p-4 rounded-2xl bg-[#1d2022]/95 backdrop-blur-xl border border-[#00f2ff]/30 shadow-2xl animate-slide-up"
-        role="region"
         aria-label="Route Selection Panel"
       >
         <h3 className="text-xs font-mono font-bold text-[#00f2ff] mb-3 uppercase tracking-wider">
@@ -190,7 +193,7 @@ export default function MapPage() {
             );
           })}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
