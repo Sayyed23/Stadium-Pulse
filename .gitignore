@@ -38,6 +38,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# CodeQL local databases
+codeql-db/
+
 # IDE settings
 .vscode/
 .idea/
