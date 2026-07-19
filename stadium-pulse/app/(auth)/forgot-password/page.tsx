@@ -10,22 +10,37 @@ export default function ForgotPasswordPage() {
   return (
     <div className="w-full max-w-md p-8 bg-[#1d2022] rounded-3xl shadow-2xl border border-[#00f2ff]/30 space-y-6 text-center font-sans">
       <div className="flex items-center justify-between">
-        <Link href="/login" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+        <Link
+          href="/login"
+          className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline"
+        >
           <ArrowLeft size={14} /> Back to Login
         </Link>
-        <span className="text-[10px] font-mono text-[#b9cacb]">PASSWORD RECOVERY</span>
+        <span className="text-[10px] font-mono text-[#b9cacb]">
+          PASSWORD RECOVERY
+        </span>
       </div>
 
       <div className="inline-flex w-12 h-12 rounded-2xl bg-[#00f2ff]/10 text-[#00f2ff] border border-[#00f2ff]/30 items-center justify-center mb-1">
         <KeyRound size={24} />
       </div>
       <div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">Recover Credentials</h2>
-        <p className="text-xs text-[#b9cacb] font-mono mt-1">Enter your staff email to dispatch reset token</p>
+        <h2 className="text-2xl font-bold text-white tracking-tight">
+          Recover Credentials
+        </h2>
+        <p className="text-xs text-[#b9cacb] font-mono mt-1">
+          Enter your staff email to dispatch reset token
+        </p>
       </div>
 
       {!submitted ? (
-        <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="space-y-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSubmitted(true);
+          }}
+          className="space-y-4"
+        >
           <div className="relative text-left">
             <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[#00f2ff]" />
             <input
@@ -49,7 +64,10 @@ export default function ForgotPasswordPage() {
       )}
 
       <div>
-        <Link href="/login" className="text-xs font-mono text-[#b9cacb] hover:text-[#00f2ff] inline-flex items-center gap-1">
+        <Link
+          href="/login"
+          className="text-xs font-mono text-[#b9cacb] hover:text-[#00f2ff] inline-flex items-center gap-1"
+        >
           <ArrowLeft size={12} /> Return to Login
         </Link>
       </div>

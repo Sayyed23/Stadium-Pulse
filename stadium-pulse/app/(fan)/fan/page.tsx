@@ -26,7 +26,9 @@ export default function FanExperiencePage() {
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
             Welcome to Azteca Stadium
           </h1>
-          <p className="text-xs sm:text-sm text-[#b9cacb] mt-1 font-mono">Enjoy the FIFA World Cup Finals — Live Telemetry & Fan Services</p>
+          <p className="text-xs sm:text-sm text-[#b9cacb] mt-1 font-mono">
+            Enjoy the FIFA World Cup Finals — Live Telemetry & Fan Services
+          </p>
         </div>
         <div className="flex items-center gap-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00f2ff]/10 border border-[#00f2ff]/30 text-[#00f2ff] text-xs font-mono font-bold shadow-lg">
@@ -54,13 +56,21 @@ export default function FanExperiencePage() {
                   placeholder="Ask anything... (e.g. 'Where is the nearest medical desk?' or 'Fastest way to Gate 4')"
                   className="bg-transparent border-none focus:outline-none text-[#e0e3e5] placeholder:text-[#b9cacb]/60 w-full text-xs sm:text-sm"
                 />
-                <button type="button" className="ml-2 text-[#00f2ff] p-2 hover:bg-[#00f2ff]/10 rounded-xl transition-colors shrink-0">
+                <button
+                  type="button"
+                  className="ml-2 text-[#00f2ff] p-2 hover:bg-[#00f2ff]/10 rounded-xl transition-colors shrink-0"
+                >
                   <Mic size={20} />
                 </button>
               </div>
             </div>
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-              {["Find My Seat", "Food Near Me", "Nearest Restroom", "Parking Telemetry"].map((chip) => (
+              {[
+                "Find My Seat",
+                "Food Near Me",
+                "Nearest Restroom",
+                "Parking Telemetry",
+              ].map((chip) => (
                 <Link
                   key={chip}
                   href="/fan/assistant"
@@ -74,17 +84,59 @@ export default function FanExperiencePage() {
 
           {/* Quick Actions Grid */}
           <section className="space-y-3">
-            <h2 className="text-xs font-mono font-bold text-[#00f2ff] uppercase tracking-wider">Fan Portal Services</h2>
+            <h2 className="text-xs font-mono font-bold text-[#00f2ff] uppercase tracking-wider">
+              Fan Portal Services
+            </h2>
             <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-3">
               {[
-                { href: "/fan/navigation", label: "Navigate", icon: Navigation, color: "text-[#00f2ff]" },
-                { href: "/fan/map", label: "Map", icon: MapIcon, color: "text-[#00f2ff]" },
-                { href: "/fan/crowd", label: "Crowd", icon: Users, color: "text-[#00f2ff]" },
-                { href: "/fan/amenities", label: "Food", icon: Utensils, color: "text-[#00f2ff]" },
-                { href: "/fan/transport", label: "Parking", icon: Car, color: "text-[#00f2ff]" },
-                { href: "/fan/accessibility", label: "Access", icon: Accessibility, color: "text-[#00f2ff]" },
-                { href: "/fan/settings", label: "Schedule", icon: Calendar, color: "text-[#00f2ff]" },
-                { href: "/fan/emergency", label: "Emergency", icon: ShieldAlert, color: "text-red-400" },
+                {
+                  href: "/fan/navigation",
+                  label: "Navigate",
+                  icon: Navigation,
+                  color: "text-[#00f2ff]",
+                },
+                {
+                  href: "/fan/map",
+                  label: "Map",
+                  icon: MapIcon,
+                  color: "text-[#00f2ff]",
+                },
+                {
+                  href: "/fan/crowd",
+                  label: "Crowd",
+                  icon: Users,
+                  color: "text-[#00f2ff]",
+                },
+                {
+                  href: "/fan/amenities",
+                  label: "Food",
+                  icon: Utensils,
+                  color: "text-[#00f2ff]",
+                },
+                {
+                  href: "/fan/transport",
+                  label: "Parking",
+                  icon: Car,
+                  color: "text-[#00f2ff]",
+                },
+                {
+                  href: "/fan/accessibility",
+                  label: "Access",
+                  icon: Accessibility,
+                  color: "text-[#00f2ff]",
+                },
+                {
+                  href: "/fan/settings",
+                  label: "Schedule",
+                  icon: Calendar,
+                  color: "text-[#00f2ff]",
+                },
+                {
+                  href: "/fan/emergency",
+                  label: "Emergency",
+                  icon: ShieldAlert,
+                  color: "text-red-400",
+                },
               ].map((item) => {
                 const Icon = item.icon;
                 return (
@@ -109,24 +161,38 @@ export default function FanExperiencePage() {
           <section className="space-y-3">
             <div className="flex items-center gap-2">
               <Sparkles className="text-[#00f2ff]" size={18} />
-              <h2 className="text-sm font-mono font-bold text-[#00f2ff] uppercase tracking-wider">AI Live Recommendations</h2>
+              <h2 className="text-sm font-mono font-bold text-[#00f2ff] uppercase tracking-wider">
+                AI Live Recommendations
+              </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-[#1d2022] p-4 rounded-2xl flex items-start gap-4 border border-[#00f2ff]/20 shadow-xl">
-                <Navigation className="text-[#00f2ff] mt-0.5 shrink-0" size={22} />
+                <Navigation
+                  className="text-[#00f2ff] mt-0.5 shrink-0"
+                  size={22}
+                />
                 <div>
-                  <h3 className="font-bold text-white text-sm">Fastest route to your seat</h3>
+                  <h3 className="font-bold text-white text-sm">
+                    Fastest route to your seat
+                  </h3>
                   <p className="text-[#b9cacb] text-xs mt-1 leading-relaxed">
-                    Take the North Elevator to bypass the heavy Gate 1 congestion. Estimated 4 min walk.
+                    Take the North Elevator to bypass the heavy Gate 1
+                    congestion. Estimated 4 min walk.
                   </p>
                 </div>
               </div>
               <div className="bg-[#1d2022] p-4 rounded-2xl flex items-start gap-4 border border-[#00f2ff]/20 shadow-xl">
-                <DoorOpen className="text-[#00f2ff] mt-0.5 shrink-0" size={22} />
+                <DoorOpen
+                  className="text-[#00f2ff] mt-0.5 shrink-0"
+                  size={22}
+                />
                 <div>
-                  <h3 className="font-bold text-white text-sm">Less crowded Gate 2</h3>
+                  <h3 className="font-bold text-white text-sm">
+                    Less crowded Gate 2
+                  </h3>
                   <p className="text-[#b9cacb] text-xs mt-1 leading-relaxed">
-                    Entry speed at Gate 2 is currently 40% faster than your assigned gate entry queue.
+                    Entry speed at Gate 2 is currently 40% faster than your
+                    assigned gate entry queue.
                   </p>
                 </div>
               </div>
@@ -143,11 +209,17 @@ export default function FanExperiencePage() {
               <span className="px-2.5 py-1 bg-[#00f2ff] text-[#00363a] font-mono text-[10px] font-extrabold rounded uppercase tracking-wider">
                 Level 3 • Section 214
               </span>
-              <h3 className="font-extrabold text-white text-lg mt-2">Your Seat: Row K-12</h3>
-              <p className="text-xs text-[#b9cacb] font-mono">Gate Access: North Concourse Gate 12</p>
+              <h3 className="font-extrabold text-white text-lg mt-2">
+                Your Seat: Row K-12
+              </h3>
+              <p className="text-xs text-[#b9cacb] font-mono">
+                Gate Access: North Concourse Gate 12
+              </p>
             </div>
             <div className="relative z-10 flex items-center justify-between border-t border-[#3a494b]/30 pt-3">
-              <span className="text-xs font-mono text-[#5cf968] font-bold">STATUS: CONFIRMED</span>
+              <span className="text-xs font-mono text-[#5cf968] font-bold">
+                STATUS: CONFIRMED
+              </span>
               <Link
                 href="/fan/navigation"
                 className="flex items-center gap-1.5 bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all shadow-[0_0_12px_rgba(0,242,255,0.3)]"
@@ -159,23 +231,41 @@ export default function FanExperiencePage() {
 
           {/* Live Stadium Telemetry Grid */}
           <section className="bg-[#1d2022] border border-[#3a494b]/40 rounded-2xl p-4 space-y-3 shadow-xl">
-            <h3 className="font-mono font-bold text-xs text-[#00f2ff] uppercase tracking-wider">Stadium Telemetry</h3>
+            <h3 className="font-mono font-bold text-xs text-[#00f2ff] uppercase tracking-wider">
+              Stadium Telemetry
+            </h3>
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-[#101415] p-3 rounded-xl border border-[#3a494b]/40 border-l-4 border-l-[#00f2ff]">
-                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">Crowd Density</span>
-                <span className="block font-mono text-2xl font-extrabold text-[#00f2ff] mt-0.5">84%</span>
+                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">
+                  Crowd Density
+                </span>
+                <span className="block font-mono text-2xl font-extrabold text-[#00f2ff] mt-0.5">
+                  84%
+                </span>
               </div>
               <div className="bg-[#101415] p-3 rounded-xl border border-[#3a494b]/40">
-                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">Temperature</span>
-                <span className="block font-mono text-2xl font-extrabold text-[#e0e3e5] mt-0.5">24°C</span>
+                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">
+                  Temperature
+                </span>
+                <span className="block font-mono text-2xl font-extrabold text-[#e0e3e5] mt-0.5">
+                  24°C
+                </span>
               </div>
               <div className="bg-[#101415] p-3 rounded-xl border border-[#3a494b]/40">
-                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">Parking P4</span>
-                <span className="block font-mono text-2xl font-extrabold text-red-400 mt-0.5">FULL</span>
+                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">
+                  Parking P4
+                </span>
+                <span className="block font-mono text-2xl font-extrabold text-red-400 mt-0.5">
+                  FULL
+                </span>
               </div>
               <div className="bg-[#101415] p-3 rounded-xl border border-[#3a494b]/40">
-                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">Next Shuttle</span>
-                <span className="block font-mono text-2xl font-extrabold text-[#5cf968] mt-0.5">5 min</span>
+                <span className="text-[10px] font-mono uppercase text-[#b9cacb]">
+                  Next Shuttle
+                </span>
+                <span className="block font-mono text-2xl font-extrabold text-[#5cf968] mt-0.5">
+                  5 min
+                </span>
               </div>
             </div>
           </section>

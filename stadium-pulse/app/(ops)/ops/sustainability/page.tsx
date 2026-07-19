@@ -38,10 +38,39 @@ const typeIcon: Record<string, React.ReactNode> = {
 
 function statusColor(pct: number) {
   if (pct >= 0.9)
-    return { bar: "bg-red-500", badge: "text-red-400 bg-red-500/10", label: "Full" };
+    return {
+      bar: "bg-red-500",
+      badge: "text-red-400 bg-red-500/10",
+      label: "Full",
+    };
   if (pct >= 0.7)
-    return { bar: "bg-amber-500", badge: "text-amber-400 bg-amber-500/10", label: "Filling" };
-  return { bar: "bg-emerald-500", badge: "text-emerald-400 bg-emerald-500/10", label: "OK" };
+    return {
+      bar: "bg-amber-500",
+      badge: "text-amber-400 bg-amber-500/10",
+      label: "Filling",
+    };
+  return {
+    bar: "bg-emerald-500",
+    badge: "text-emerald-400 bg-emerald-500/10",
+    label: "OK",
+  };
+}
+
+function handleTransportUpdate(prev: TransportZone[], data: TransportZone) {
+  const idx = prev.findIndex((z) => z.zone_id === data.zone_id);
+  if (idx >= 0) {
+    const copy = [...prev];
+    copy[idx] = data;
+    return copy;
+  }
+  return [...prev, data];
+}
+
+function handleWasteBinAlert(prev: WasteBinAlert[], data: WasteBinAlert) {
+  const withTs = { ...data, timestamp: new Date().toISOString() };
+  // Keep most recent 30 alerts, dedup by bin_id (keep latest)
+  const filtered = prev.filter((b) => b.bin_id !== data.bin_id);
+  return [withTs, ...filtered].slice(0, 30);
 }
 
 /* ── Component ──────────────────────────────────────────────── */
@@ -56,26 +85,13 @@ export default function SustainabilityPage() {
 
     es.addEventListener("transport_update", (e) => {
       const data = JSON.parse(e.data) as TransportZone;
-      setTransport((prev) => {
-        const idx = prev.findIndex((z) => z.zone_id === data.zone_id);
-        if (idx >= 0) {
-          const copy = [...prev];
-          copy[idx] = data;
-          return copy;
-        }
-        return [...prev, data];
-      });
+      setTransport((prev) => handleTransportUpdate(prev, data));
       setConnected(true);
     });
 
     es.addEventListener("waste_bin_alert", (e) => {
       const data = JSON.parse(e.data) as WasteBinAlert;
-      setWasteBins((prev) => {
-        const withTs = { ...data, timestamp: new Date().toISOString() };
-        // Keep most recent 30 alerts, dedup by bin_id (keep latest)
-        const filtered = prev.filter((b) => b.bin_id !== data.bin_id);
-        return [withTs, ...filtered].slice(0, 30);
-      });
+      setWasteBins((prev) => handleWasteBinAlert(prev, data));
       setConnected(true);
     });
 
@@ -85,7 +101,9 @@ export default function SustainabilityPage() {
 
   /* ── Stats ────────────────────────────────────────────────── */
   const fullCount = transport.filter((z) => z.pct >= 0.9).length;
-  const fillingCount = transport.filter((z) => z.pct >= 0.7 && z.pct < 0.9).length;
+  const fillingCount = transport.filter(
+    (z) => z.pct >= 0.7 && z.pct < 0.9
+  ).length;
   const okCount = transport.filter((z) => z.pct < 0.7).length;
 
   return (
@@ -111,7 +129,11 @@ export default function SustainabilityPage() {
 
       {/* ── Summary Stat Cards ──────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total Hubs" value={transport.length} color="text-blue-400" />
+        <StatCard
+          label="Total Hubs"
+          value={transport.length}
+          color="text-blue-400"
+        />
         <StatCard label="Available" value={okCount} color="text-emerald-400" />
         <StatCard label="Filling" value={fillingCount} color="text-amber-400" />
         <StatCard label="Full" value={fullCount} color="text-red-400" />
@@ -126,7 +148,10 @@ export default function SustainabilityPage() {
             <h3 className="font-semibold text-sm">Transport Hub Status</h3>
           </div>
 
-          <div className="divide-y divide-zinc-200 dark:divide-zinc-800 max-h-[36rem] overflow-y-auto" aria-live="polite">
+          <div
+            className="divide-y divide-zinc-200 dark:divide-zinc-800 max-h-[36rem] overflow-y-auto"
+            aria-live="polite"
+          >
             {transport.length === 0 && (
               <div className="flex flex-col items-center justify-center py-16 text-zinc-500">
                 <Bus className="w-8 h-8 mb-2 animate-pulse" />
@@ -137,15 +162,24 @@ export default function SustainabilityPage() {
             {transport.map((zone) => {
               const s = statusColor(zone.pct);
               return (
-                <div key={zone.zone_id} className="flex items-center gap-4 px-5 py-3.5 hover:bg-zinc-800/30 transition-colors">
+                <div
+                  key={zone.zone_id}
+                  className="flex items-center gap-4 px-5 py-3.5 hover:bg-zinc-800/30 transition-colors"
+                >
                   <span className="text-zinc-400 shrink-0">
-                    {typeIcon[zone.transport_type] || <Bus className="w-5 h-5" />}
+                    {typeIcon[zone.transport_type] || (
+                      <Bus className="w-5 h-5" />
+                    )}
                   </span>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm font-medium truncate">{zone.name}</span>
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 ${s.badge}`}>
+                      <span className="text-sm font-medium truncate">
+                        {zone.name}
+                      </span>
+                      <span
+                        className={`text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 ${s.badge}`}
+                      >
                         {s.label}
                       </span>
                     </div>
@@ -156,7 +190,9 @@ export default function SustainabilityPage() {
                       />
                     </div>
                     <div className="flex justify-between text-[11px] text-zinc-500 mt-1">
-                      <span>{zone.current_count} / {zone.capacity}</span>
+                      <span>
+                        {zone.current_count} / {zone.capacity}
+                      </span>
                       <span>{Math.round(zone.pct * 100)}%</span>
                     </div>
                   </div>
@@ -178,7 +214,10 @@ export default function SustainabilityPage() {
             )}
           </div>
 
-          <div className="divide-y divide-zinc-200 dark:divide-zinc-800 max-h-[36rem] overflow-y-auto" aria-live="polite">
+          <div
+            className="divide-y divide-zinc-200 dark:divide-zinc-800 max-h-[36rem] overflow-y-auto"
+            aria-live="polite"
+          >
             {wasteBins.length === 0 && (
               <div className="flex flex-col items-center justify-center py-16 text-zinc-500">
                 <CheckCircle2 className="w-8 h-8 mb-2 text-emerald-500/60" />
@@ -243,7 +282,9 @@ function StatCard({
 }) {
   return (
     <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
-      <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">{label}</p>
+      <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">
+        {label}
+      </p>
       <p className={`text-2xl font-bold ${color}`}>{value}</p>
     </div>
   );

@@ -1,4 +1,12 @@
-import { UserCircle2, MapPin, Globe, Clock, BarChart3, Star, Award } from "lucide-react";
+import {
+  UserCircle2,
+  MapPin,
+  Globe,
+  Clock,
+  BarChart3,
+  Star,
+  Award,
+} from "lucide-react";
 
 const stats = [
   { label: "Tasks Completed", value: "23", icon: BarChart3 },
@@ -28,9 +36,15 @@ export default function VolunteerProfilePage() {
             <h2 className="text-2xl font-bold">Arjun Kumar</h2>
             <p className="text-sm text-slate-400">Volunteer — ID: VOL-007</p>
             <div className="flex items-center gap-3 mt-2 text-xs text-slate-400">
-              <span className="flex items-center gap-1"><MapPin size={12} /> Zone B</span>
-              <span className="flex items-center gap-1"><Globe size={12} /> English, Hindi</span>
-              <span className="flex items-center gap-1 text-emerald-400 font-medium">● Available</span>
+              <span className="flex items-center gap-1">
+                <MapPin size={12} /> Zone B
+              </span>
+              <span className="flex items-center gap-1">
+                <Globe size={12} /> English, Hindi
+              </span>
+              <span className="flex items-center gap-1 text-emerald-400 font-medium">
+                ● Available
+              </span>
             </div>
           </div>
         </div>
@@ -41,10 +55,15 @@ export default function VolunteerProfilePage() {
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.label} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+            <div
+              key={stat.label}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4"
+            >
               <div className="flex items-center gap-2 mb-2">
                 <Icon size={16} className="text-teal-500" />
-                <span className="text-xs text-slate-400 uppercase tracking-wider">{stat.label}</span>
+                <span className="text-xs text-slate-400 uppercase tracking-wider">
+                  {stat.label}
+                </span>
               </div>
               <div className="text-2xl font-bold">{stat.value}</div>
             </div>
@@ -59,9 +78,14 @@ export default function VolunteerProfilePage() {
         </div>
         <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
           {recentActivity.map((item) => (
-            <div key={item.action} className="px-5 py-3 flex items-center justify-between">
+            <div
+              key={item.action}
+              className="px-5 py-3 flex items-center justify-between"
+            >
               <span className="text-sm">{item.action}</span>
-              <span className="text-xs text-slate-400 font-mono shrink-0 ml-4">{item.time}</span>
+              <span className="text-xs text-slate-400 font-mono shrink-0 ml-4">
+                {item.time}
+              </span>
             </div>
           ))}
         </div>

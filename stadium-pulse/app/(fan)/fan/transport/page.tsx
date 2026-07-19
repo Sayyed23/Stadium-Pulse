@@ -20,9 +20,23 @@ const typeIcon: Record<string, React.ReactNode> = {
 };
 
 function statusColor(pct: number) {
-  if (pct >= 0.9) return { bar: "bg-red-500", badge: "text-red-400 bg-red-500/10", label: "Full" };
-  if (pct >= 0.7) return { bar: "bg-amber-500", badge: "text-amber-400 bg-amber-500/10", label: "Filling" };
-  return { bar: "bg-emerald-500", badge: "text-emerald-400 bg-emerald-500/10", label: "Available" };
+  if (pct >= 0.9)
+    return {
+      bar: "bg-red-500",
+      badge: "text-red-400 bg-red-500/10",
+      label: "Full",
+    };
+  if (pct >= 0.7)
+    return {
+      bar: "bg-amber-500",
+      badge: "text-amber-400 bg-amber-500/10",
+      label: "Filling",
+    };
+  return {
+    bar: "bg-emerald-500",
+    badge: "text-emerald-400 bg-emerald-500/10",
+    label: "Available",
+  };
 }
 
 function TransportZoneItem({ zone }: { zone: TransportZone }) {
@@ -45,7 +59,7 @@ function TransportZoneItem({ zone }: { zone: TransportZone }) {
       </div>
 
       {/* Progress Bar */}
-      <div 
+      <div
         className="w-full h-2 bg-[#101415] rounded-full overflow-hidden mb-2"
         role="progressbar"
         aria-valuenow={Math.round(zone.pct * 100)}
@@ -60,7 +74,9 @@ function TransportZoneItem({ zone }: { zone: TransportZone }) {
       </div>
 
       <div className="flex justify-between text-xs font-mono text-[#b9cacb]">
-        <span>{zone.current_count} / {zone.capacity} Units</span>
+        <span>
+          {zone.current_count} / {zone.capacity} Units
+        </span>
         <span>{Math.round(zone.pct * 100)}% Capacity</span>
       </div>
     </div>
@@ -104,20 +120,29 @@ export default function TransportPage() {
     { title: "Shuttles", icon: <Bus className="w-5 h-5" />, items: shuttles },
     { title: "Parking", icon: <Car className="w-5 h-5" />, items: parking },
     { title: "Metro", icon: <Train className="w-5 h-5" />, items: metro },
-    ...(other.length > 0 ? [{ title: "Other", icon: <Bus className="w-5 h-5" />, items: other }] : []),
+    ...(other.length > 0
+      ? [{ title: "Other", icon: <Bus className="w-5 h-5" />, items: other }]
+      : []),
   ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
-      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+      <Link
+        href="/fan"
+        className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline"
+      >
         <ArrowLeft size={14} /> Back to Fan Dashboard
       </Link>
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Transport & Parking Telemetry</h2>
-          <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Live shuttle countdowns, parking capacities & transit alerts</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+            Transport & Parking Telemetry
+          </h2>
+          <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">
+            Live shuttle countdowns, parking capacities & transit alerts
+          </p>
         </div>
         <span
           className={`flex items-center gap-1.5 text-xs font-mono font-semibold px-3 py-1 rounded-full border ${
@@ -142,7 +167,8 @@ export default function TransportPage() {
         >
           <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
           <p className="text-xs text-[#b9cacb]">
-            Some parking & transit options are near capacity. Consider alternatives marked
+            Some parking & transit options are near capacity. Consider
+            alternatives marked
             <span className="font-bold text-[#5cf968]"> AVAILABLE</span>.
           </p>
         </div>
@@ -153,7 +179,9 @@ export default function TransportPage() {
         {zones.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-[#b9cacb]">
             <Bus className="w-10 h-10 mb-3 animate-bounce text-[#00f2ff]" />
-            <p className="text-xs font-mono uppercase tracking-wider">Loading Live Transport Status...</p>
+            <p className="text-xs font-mono uppercase tracking-wider">
+              Loading Live Transport Status...
+            </p>
           </div>
         )}
 

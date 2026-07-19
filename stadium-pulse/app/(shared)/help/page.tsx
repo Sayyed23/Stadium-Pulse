@@ -21,21 +21,27 @@ export default function HelpCenterPage() {
             <MessageSquare size={20} />
           </div>
           <h3 className="font-semibold text-sm">AI Assistant</h3>
-          <p className="text-xs text-slate-400">Ask real-time questions in English, Hindi, or Marathi</p>
+          <p className="text-xs text-slate-400">
+            Ask real-time questions in English, Hindi, or Marathi
+          </p>
         </div>
         <div className="glass-panel rounded-xl p-5 text-center space-y-2">
           <div className="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto">
             <Phone size={20} />
           </div>
           <h3 className="font-semibold text-sm">Helpline</h3>
-          <p className="text-xs text-slate-400">Call stadium support for emergency assistance</p>
+          <p className="text-xs text-slate-400">
+            Call stadium support for emergency assistance
+          </p>
         </div>
         <div className="glass-panel rounded-xl p-5 text-center space-y-2">
           <div className="w-10 h-10 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center mx-auto">
             <BookOpen size={20} />
           </div>
           <h3 className="font-semibold text-sm">Stadium Guide</h3>
-          <p className="text-xs text-slate-400">Read rules, accessibility info, and gate maps</p>
+          <p className="text-xs text-slate-400">
+            Read rules, accessibility info, and gate maps
+          </p>
         </div>
       </div>
     </div>

@@ -257,7 +257,10 @@ describe("Broadcaster", () => {
     ]);
     (prisma.wasteBin.update as any).mockResolvedValue({});
 
-    const mathRandomSpy = vi.spyOn(Math, "random").mockReturnValue(0.9); // drift will be 0.9 * 0.05 = 0.045, newFill = 0.865
+    const cryptoSpy = vi.spyOn(globalThis.crypto, "getRandomValues").mockImplementation((arr: any) => {
+      arr[0] = 3865470565; // ~0.9 * 4294967295, drift will be 0.045
+      return arr;
+    });
 
     const listener = vi.fn();
     globalBroadcaster.register(listener);
@@ -270,7 +273,7 @@ describe("Broadcaster", () => {
       bin_id: "wb1"
     }));
 
-    mathRandomSpy.mockRestore();
+    cryptoSpy.mockRestore();
     globalBroadcaster.unregister(listener);
   });
 
@@ -279,7 +282,10 @@ describe("Broadcaster", () => {
       { id: "wb1", zoneId: "z1", fillPct: 0.82 }
     ]);
     (prisma.wasteBin.update as any).mockRejectedValue(new Error("DB Failed"));
-    const mathRandomSpy = vi.spyOn(Math, "random").mockReturnValue(0.9);
+    const cryptoSpy = vi.spyOn(globalThis.crypto, "getRandomValues").mockImplementation((arr: any) => {
+      arr[0] = 3865470565;
+      return arr;
+    });
 
     const listener = vi.fn();
     globalBroadcaster.register(listener);
@@ -288,7 +294,7 @@ describe("Broadcaster", () => {
     
     expect(listener).not.toHaveBeenCalledWith(expect.objectContaining({ type: "waste_bin_alert" }));
 
-    mathRandomSpy.mockRestore();
+    cryptoSpy.mockRestore();
     globalBroadcaster.unregister(listener);
   });
 
@@ -297,7 +303,10 @@ describe("Broadcaster", () => {
       { id: "wb1", zoneId: "z1", fillPct: 0.98 }
     ]);
     (prisma.wasteBin.update as any).mockResolvedValue({});
-    const mathRandomSpy = vi.spyOn(Math, "random").mockReturnValue(0.9); // drift 0.045, total 1.025 -> 0.05
+    const cryptoSpy = vi.spyOn(globalThis.crypto, "getRandomValues").mockImplementation((arr: any) => {
+      arr[0] = 3865470565;
+      return arr;
+    }); // drift 0.045, total 1.025 -> 0.05
 
     const listener = vi.fn();
     globalBroadcaster.register(listener);
@@ -309,7 +318,7 @@ describe("Broadcaster", () => {
       data: expect.objectContaining({ fillPct: 0.05 })
     }));
 
-    mathRandomSpy.mockRestore();
+    cryptoSpy.mockRestore();
     globalBroadcaster.unregister(listener);
   });
 

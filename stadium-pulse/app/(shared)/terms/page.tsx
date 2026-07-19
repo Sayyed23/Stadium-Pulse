@@ -10,13 +10,28 @@ export default function TermsOfServicePage() {
       <p className="text-xs text-slate-400">Last updated: July 2026</p>
 
       <div className="space-y-4 text-sm text-slate-300 leading-relaxed pt-2">
-        <p>By using the StadiumPulse AI progressive web application, you agree to comply with venue safety regulations and platform terms.</p>
+        <p>
+          By using the StadiumPulse AI progressive web application, you agree to
+          comply with venue safety regulations and platform terms.
+        </p>
 
-        <h3 className="font-bold text-slate-100 text-base">1. Acceptable Use</h3>
-        <p>The platform is designed for tournament navigation, facility discovery, and emergency reporting. Misuse of the SOS system or submission of false incidents is prohibited.</p>
+        <h3 className="font-bold text-slate-100 text-base">
+          1. Acceptable Use
+        </h3>
+        <p>
+          The platform is designed for tournament navigation, facility
+          discovery, and emergency reporting. Misuse of the SOS system or
+          submission of false incidents is prohibited.
+        </p>
 
-        <h3 className="font-bold text-slate-100 text-base">2. Grounded AI Directions</h3>
-        <p>AI navigation responses are generated based on real-time database facts. Follow physical stadium signage and staff directions in case of any discrepancy.</p>
+        <h3 className="font-bold text-slate-100 text-base">
+          2. Grounded AI Directions
+        </h3>
+        <p>
+          AI navigation responses are generated based on real-time database
+          facts. Follow physical stadium signage and staff directions in case of
+          any discrepancy.
+        </p>
       </div>
     </div>
   );

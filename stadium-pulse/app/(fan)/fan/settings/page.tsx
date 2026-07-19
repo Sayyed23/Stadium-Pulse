@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Globe, Accessibility, Bell, Smartphone, Check, ArrowLeft } from "lucide-react";
+import {
+  Globe,
+  Accessibility,
+  Bell,
+  Smartphone,
+  Check,
+  ArrowLeft,
+} from "lucide-react";
 
 const languages = [
   { code: "en", label: "English", native: "English" },
@@ -13,13 +20,22 @@ const languages = [
   { code: "es", label: "Spanish", native: "Español" },
 ];
 
-function ToggleButton({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+function ToggleButton({
+  value,
+  onChange,
+}: {
+  value: boolean;
+  onChange: (v: boolean) => void;
+}) {
   return (
-    <button type="button"
+    <button
+      type="button"
       onClick={() => onChange(!value)}
       className={`w-11 h-6 rounded-full transition-colors relative ${value ? "bg-[#00f2ff]" : "bg-[#3a494b]"}`}
     >
-      <div className={`absolute top-0.5 w-5 h-5 bg-[#101415] rounded-full shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`} />
+      <div
+        className={`absolute top-0.5 w-5 h-5 bg-[#101415] rounded-full shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`}
+      />
     </button>
   );
 }
@@ -35,13 +51,21 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
-      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+      <Link
+        href="/fan"
+        className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline"
+      >
         <ArrowLeft size={14} /> Back to Fan Dashboard
       </Link>
 
       <div className="bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">System & Accessibility Settings</h2>
-        <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Configure language, accessibility contrast & notification dispatch preferences</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          System & Accessibility Settings
+        </h2>
+        <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">
+          Configure language, accessibility contrast & notification dispatch
+          preferences
+        </p>
       </div>
 
       {/* Language */}
@@ -52,7 +76,8 @@ export default function SettingsPage() {
         </h3>
         <div className="grid grid-cols-2 gap-2">
           {languages.map((lang) => (
-            <button type="button"
+            <button
+              type="button"
               key={lang.code}
               onClick={() => setSelectedLang(lang.code)}
               className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-all ${
@@ -77,22 +102,34 @@ export default function SettingsPage() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold text-white">High Contrast UI</div>
-              <div className="text-[11px] text-[#b9cacb]">Maximize screen element contrast</div>
+              <div className="text-xs font-bold text-white">
+                High Contrast UI
+              </div>
+              <div className="text-[11px] text-[#b9cacb]">
+                Maximize screen element contrast
+              </div>
             </div>
             <ToggleButton value={highContrast} onChange={setHighContrast} />
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold text-white">Large Text Rendering</div>
-              <div className="text-[11px] text-[#b9cacb]">Increase typography scale</div>
+              <div className="text-xs font-bold text-white">
+                Large Text Rendering
+              </div>
+              <div className="text-[11px] text-[#b9cacb]">
+                Increase typography scale
+              </div>
             </div>
             <ToggleButton value={largeText} onChange={setLargeText} />
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold text-white">Screen Reader Optimization</div>
-              <div className="text-[11px] text-[#b9cacb]">Enhanced ARIA announcement labels</div>
+              <div className="text-xs font-bold text-white">
+                Screen Reader Optimization
+              </div>
+              <div className="text-[11px] text-[#b9cacb]">
+                Enhanced ARIA announcement labels
+              </div>
             </div>
             <ToggleButton value={screenReader} onChange={setScreenReader} />
           </div>
@@ -108,22 +145,34 @@ export default function SettingsPage() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold text-white">Real-Time Push Alerts</div>
-              <div className="text-[11px] text-[#b9cacb]">Receive instant stadium updates</div>
+              <div className="text-xs font-bold text-white">
+                Real-Time Push Alerts
+              </div>
+              <div className="text-[11px] text-[#b9cacb]">
+                Receive instant stadium updates
+              </div>
             </div>
             <ToggleButton value={pushNotifs} onChange={setPushNotifs} />
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold text-white">Crowd Density Warnings</div>
-              <div className="text-[11px] text-[#b9cacb]">Alert when zones approach peak capacity</div>
+              <div className="text-xs font-bold text-white">
+                Crowd Density Warnings
+              </div>
+              <div className="text-[11px] text-[#b9cacb]">
+                Alert when zones approach peak capacity
+              </div>
             </div>
             <ToggleButton value={crowdAlerts} onChange={setCrowdAlerts} />
           </div>
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold text-white">Match & Gate Announcements</div>
-              <div className="text-[11px] text-[#b9cacb]">Official match schedule updates</div>
+              <div className="text-xs font-bold text-white">
+                Match & Gate Announcements
+              </div>
+              <div className="text-[11px] text-[#b9cacb]">
+                Official match schedule updates
+              </div>
             </div>
             <ToggleButton value={eventUpdates} onChange={setEventUpdates} />
           </div>
@@ -139,13 +188,20 @@ export default function SettingsPage() {
         <div className="space-y-2">
           <div className="flex items-center justify-between py-2 border-b border-[#3a494b]/20">
             <span className="text-xs text-white">Platform Build</span>
-            <span className="text-xs text-[#00f2ff] font-mono">v0.1.0-stitch</span>
+            <span className="text-xs text-[#00f2ff] font-mono">
+              v0.1.0-stitch
+            </span>
           </div>
           <div className="flex items-center justify-between py-2">
             <span className="text-xs text-white">Offline Cache Engine</span>
-            <span className="text-xs font-mono font-bold text-[#5cf968]">ACTIVE</span>
+            <span className="text-xs font-mono font-bold text-[#5cf968]">
+              ACTIVE
+            </span>
           </div>
-          <button type="button" className="w-full bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] font-bold text-xs py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+          <button
+            type="button"
+            className="w-full bg-[#00f2ff] hover:bg-[#74f5ff] text-[#00363a] font-bold text-xs py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(0,242,255,0.3)]"
+          >
             Install PWA to Home Screen
           </button>
         </div>

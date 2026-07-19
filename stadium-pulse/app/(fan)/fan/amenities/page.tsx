@@ -2,7 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Utensils, Droplets, Cross, Landmark, ShoppingBag, GlassWater, MapPin, Clock, Star, ArrowLeft } from "lucide-react";
+import {
+  Utensils,
+  Droplets,
+  Cross,
+  Landmark,
+  ShoppingBag,
+  GlassWater,
+  MapPin,
+  Clock,
+  Star,
+  ArrowLeft,
+} from "lucide-react";
 
 const categories = [
   { id: "all", label: "All", icon: MapPin },
@@ -15,36 +26,156 @@ const categories = [
 ];
 
 const amenities = [
-  { name: "North Food Court", type: "food", zone: "Zone A", distance: "120m", status: "open", wait: "~5 min", rating: 4.2 },
-  { name: "South Food Court", type: "food", zone: "Zone B", distance: "200m", status: "open", wait: "~12 min", rating: 4.5 },
-  { name: "Chai Point", type: "food", zone: "Zone C", distance: "85m", status: "open", wait: "~3 min", rating: 4.0 },
-  { name: "Restroom A1", type: "restroom", zone: "Zone A", distance: "45m", status: "open", wait: "~2 min", rating: null },
-  { name: "Restroom B2", type: "restroom", zone: "Zone B", distance: "60m", status: "open", wait: "No wait", rating: null },
-  { name: "Restroom C3", type: "restroom", zone: "Zone C", distance: "150m", status: "maintenance", wait: "Closed", rating: null },
-  { name: "Medical Center", type: "medical", zone: "Zone A", distance: "200m", status: "open", wait: "Available", rating: null },
-  { name: "First Aid Post", type: "medical", zone: "Zone D", distance: "100m", status: "open", wait: "Available", rating: null },
-  { name: "ATM — SBI", type: "atm", zone: "Zone A", distance: "180m", status: "open", wait: "~3 min", rating: null },
-  { name: "ATM — HDFC", type: "atm", zone: "Zone C", distance: "220m", status: "open", wait: "No wait", rating: null },
-  { name: "Official Merch Store", type: "merch", zone: "Zone B", distance: "90m", status: "open", wait: "~8 min", rating: 4.7 },
-  { name: "Water Station 1", type: "water", zone: "Zone A", distance: "30m", status: "open", wait: "No wait", rating: null },
-  { name: "Water Station 2", type: "water", zone: "Zone C", distance: "70m", status: "open", wait: "No wait", rating: null },
-  { name: "Water Station 3", type: "water", zone: "Zone D", distance: "55m", status: "open", wait: "~1 min", rating: null },
+  {
+    name: "North Food Court",
+    type: "food",
+    zone: "Zone A",
+    distance: "120m",
+    status: "open",
+    wait: "~5 min",
+    rating: 4.2,
+  },
+  {
+    name: "South Food Court",
+    type: "food",
+    zone: "Zone B",
+    distance: "200m",
+    status: "open",
+    wait: "~12 min",
+    rating: 4.5,
+  },
+  {
+    name: "Chai Point",
+    type: "food",
+    zone: "Zone C",
+    distance: "85m",
+    status: "open",
+    wait: "~3 min",
+    rating: 4.0,
+  },
+  {
+    name: "Restroom A1",
+    type: "restroom",
+    zone: "Zone A",
+    distance: "45m",
+    status: "open",
+    wait: "~2 min",
+    rating: null,
+  },
+  {
+    name: "Restroom B2",
+    type: "restroom",
+    zone: "Zone B",
+    distance: "60m",
+    status: "open",
+    wait: "No wait",
+    rating: null,
+  },
+  {
+    name: "Restroom C3",
+    type: "restroom",
+    zone: "Zone C",
+    distance: "150m",
+    status: "maintenance",
+    wait: "Closed",
+    rating: null,
+  },
+  {
+    name: "Medical Center",
+    type: "medical",
+    zone: "Zone A",
+    distance: "200m",
+    status: "open",
+    wait: "Available",
+    rating: null,
+  },
+  {
+    name: "First Aid Post",
+    type: "medical",
+    zone: "Zone D",
+    distance: "100m",
+    status: "open",
+    wait: "Available",
+    rating: null,
+  },
+  {
+    name: "ATM — SBI",
+    type: "atm",
+    zone: "Zone A",
+    distance: "180m",
+    status: "open",
+    wait: "~3 min",
+    rating: null,
+  },
+  {
+    name: "ATM — HDFC",
+    type: "atm",
+    zone: "Zone C",
+    distance: "220m",
+    status: "open",
+    wait: "No wait",
+    rating: null,
+  },
+  {
+    name: "Official Merch Store",
+    type: "merch",
+    zone: "Zone B",
+    distance: "90m",
+    status: "open",
+    wait: "~8 min",
+    rating: 4.7,
+  },
+  {
+    name: "Water Station 1",
+    type: "water",
+    zone: "Zone A",
+    distance: "30m",
+    status: "open",
+    wait: "No wait",
+    rating: null,
+  },
+  {
+    name: "Water Station 2",
+    type: "water",
+    zone: "Zone C",
+    distance: "70m",
+    status: "open",
+    wait: "No wait",
+    rating: null,
+  },
+  {
+    name: "Water Station 3",
+    type: "water",
+    zone: "Zone D",
+    distance: "55m",
+    status: "open",
+    wait: "~1 min",
+    rating: null,
+  },
 ];
 
 export default function AmenitiesPage() {
   const [active, setActive] = useState("all");
 
-  const filtered = active === "all" ? amenities : amenities.filter((a) => a.type === active);
+  const filtered =
+    active === "all" ? amenities : amenities.filter((a) => a.type === active);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 md:pb-12 font-sans space-y-6">
-      <Link href="/fan" className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline">
+      <Link
+        href="/fan"
+        className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#00f2ff] hover:underline"
+      >
         <ArrowLeft size={14} /> Back to Fan Dashboard
       </Link>
 
       <div className="bg-[#1d2022] border border-[#3a494b]/40 p-5 rounded-2xl shadow-xl">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">Stadium Amenities Telemetry</h2>
-        <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">Find nearby food courts, restrooms, medical centers & services</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          Stadium Amenities Telemetry
+        </h2>
+        <p className="text-xs sm:text-sm text-[#b9cacb] font-mono mt-1">
+          Find nearby food courts, restrooms, medical centers & services
+        </p>
       </div>
 
       {/* Category Filter */}
@@ -53,7 +184,8 @@ export default function AmenitiesPage() {
           const Icon = cat.icon;
           const isActive = active === cat.id;
           return (
-            <button type="button"
+            <button
+              type="button"
               key={cat.id}
               onClick={() => setActive(cat.id)}
               className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0 ${
@@ -78,21 +210,36 @@ export default function AmenitiesPage() {
           >
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-bold text-white truncate">{item.name}</span>
+                <span className="text-sm font-bold text-white truncate">
+                  {item.name}
+                </span>
                 {item.status === "maintenance" && (
-                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 uppercase">Closed</span>
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 uppercase">
+                    Closed
+                  </span>
                 )}
               </div>
               <div className="flex items-center gap-3 text-xs text-[#b9cacb] font-mono">
-                <span className="flex items-center gap-1 text-[#00f2ff]"><MapPin size={11} />{item.zone}</span>
+                <span className="flex items-center gap-1 text-[#00f2ff]">
+                  <MapPin size={11} />
+                  {item.zone}
+                </span>
                 <span>{item.distance}</span>
-                <span className="flex items-center gap-1"><Clock size={11} />{item.wait}</span>
+                <span className="flex items-center gap-1">
+                  <Clock size={11} />
+                  {item.wait}
+                </span>
                 {item.rating && (
-                  <span className="flex items-center gap-0.5"><Star size={11} className="text-amber-400 fill-amber-400" />{item.rating}</span>
+                  <span className="flex items-center gap-0.5">
+                    <Star size={11} className="text-amber-400 fill-amber-400" />
+                    {item.rating}
+                  </span>
                 )}
               </div>
             </div>
-            <div className={`w-2.5 h-2.5 rounded-full shrink-0 ${item.status === "open" ? "bg-[#5cf968] animate-pulse" : "bg-red-500"}`} />
+            <div
+              className={`w-2.5 h-2.5 rounded-full shrink-0 ${item.status === "open" ? "bg-[#5cf968] animate-pulse" : "bg-red-500"}`}
+            />
           </div>
         ))}
       </div>

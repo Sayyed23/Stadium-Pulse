@@ -43,13 +43,20 @@ export default function LoginPage() {
       <div className="w-full max-w-sm p-8 bg-white dark:bg-zinc-900 rounded-lg shadow-md border border-zinc-200 dark:border-zinc-800">
         <h2 className="text-2xl font-bold mb-6 text-center">Staff Login</h2>
         <form className="space-y-4" onSubmit={handleLogin}>
-          {error && <div className="text-red-500 text-sm font-medium">{error}</div>}
-          
+          {error && (
+            <div className="text-red-500 text-sm font-medium">{error}</div>
+          )}
+
           <div>
-            <label htmlFor="ops-name" className="block text-sm font-medium mb-1">Name</label>
-            <input 
+            <label
+              htmlFor="ops-name"
+              className="block text-sm font-medium mb-1"
+            >
+              Name
+            </label>
+            <input
               id="ops-name"
-              type="text" 
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full border border-zinc-300 dark:border-zinc-700 rounded-md p-2 bg-transparent"
@@ -59,7 +66,12 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="ops-role" className="block text-sm font-medium mb-1">Role</label>
+            <label
+              htmlFor="ops-role"
+              className="block text-sm font-medium mb-1"
+            >
+              Role
+            </label>
             <select
               id="ops-role"
               value={role}
@@ -73,10 +85,15 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="ops-passcode" className="block text-sm font-medium mb-1">Passcode</label>
-            <input 
+            <label
+              htmlFor="ops-passcode"
+              className="block text-sm font-medium mb-1"
+            >
+              Passcode
+            </label>
+            <input
               id="ops-passcode"
-              type="password" 
+              type="password"
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}
               className="w-full border border-zinc-300 dark:border-zinc-700 rounded-md p-2 bg-transparent"
@@ -84,8 +101,8 @@ export default function LoginPage() {
             />
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             className="w-full bg-blue-600 text-white font-medium py-2 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
           >

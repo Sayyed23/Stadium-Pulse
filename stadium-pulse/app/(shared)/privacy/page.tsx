@@ -10,16 +10,37 @@ export default function PrivacyPolicyPage() {
       <p className="text-xs text-slate-400">Last updated: July 2026</p>
 
       <div className="space-y-4 text-sm text-slate-300 leading-relaxed pt-2">
-        <p>StadiumPulse AI prioritizes spectator privacy and operational security. This policy outlines how data is gathered and handled during venue visits.</p>
+        <p>
+          StadiumPulse AI prioritizes spectator privacy and operational
+          security. This policy outlines how data is gathered and handled during
+          venue visits.
+        </p>
 
-        <h3 className="font-bold text-slate-100 text-base">1. Location Telemetry</h3>
-        <p>Indoor navigation features use anonymized zone-level positioning. We do not store precise GPS or personal movement history tied to individual identities.</p>
+        <h3 className="font-bold text-slate-100 text-base">
+          1. Location Telemetry
+        </h3>
+        <p>
+          Indoor navigation features use anonymized zone-level positioning. We
+          do not store precise GPS or personal movement history tied to
+          individual identities.
+        </p>
 
-        <h3 className="font-bold text-slate-100 text-base">2. AI Assistant Logging</h3>
-        <p>Queries submitted to the AI assistant are processed securely. Grounding audits check queries against database facts to prevent hallucinated directions.</p>
+        <h3 className="font-bold text-slate-100 text-base">
+          2. AI Assistant Logging
+        </h3>
+        <p>
+          Queries submitted to the AI assistant are processed securely.
+          Grounding audits check queries against database facts to prevent
+          hallucinated directions.
+        </p>
 
-        <h3 className="font-bold text-slate-100 text-base">3. Operational Incidents</h3>
-        <p>Incident reports filed via the Volunteer Copilot are logged strictly for emergency response and staff dispatch purposes.</p>
+        <h3 className="font-bold text-slate-100 text-base">
+          3. Operational Incidents
+        </h3>
+        <p>
+          Incident reports filed via the Volunteer Copilot are logged strictly
+          for emergency response and staff dispatch purposes.
+        </p>
       </div>
     </div>
   );
