@@ -48,7 +48,7 @@ export function FanShell({ children }: { children: React.ReactNode }) {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1.5 ml-4">
+          <nav className="hidden lg:flex items-center gap-1.5 ml-4" aria-label="Fan portal navigation">
             {primaryNavItems.slice(0, 7).map((item) => {
               const isActive = pathname === item.href || (item.href !== "/fan" && pathname.startsWith(item.href + "/"));
               const Icon = item.icon;
@@ -56,11 +56,12 @@ export function FanShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-[#00f2ff] ${
                     isActive
                       ? "bg-[#00f2ff]/15 text-[#00f2ff] border border-[#00f2ff]/40 shadow-[0_0_10px_rgba(0,242,255,0.2)]"
                       : "text-[#b9cacb] hover:text-white hover:bg-[#1d2022]"
                   }`}
+                  aria-current={isActive ? "page" : undefined}
                 >
                   <Icon size={15} />
                   <span>{item.label}</span>
@@ -76,15 +77,17 @@ export function FanShell({ children }: { children: React.ReactNode }) {
           <div className="hidden md:flex items-center gap-2 mr-2">
             <Link
               href="/fan/emergency"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-500/10 text-red-400 border border-red-500/30 text-xs font-mono font-bold hover:bg-red-500/20 transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-500/10 text-red-400 border border-red-500/30 text-xs font-mono font-bold hover:bg-red-500/20 transition-all focus-visible:ring-2 focus-visible:ring-[#00f2ff]"
+              aria-label="Emergency SOS"
             >
               <ShieldAlert size={15} />
               <span>SOS</span>
             </Link>
             <Link
               href="/fan/settings"
-              className="p-2 rounded-xl text-[#b9cacb] hover:text-[#00f2ff] hover:bg-[#1d2022] transition-colors"
+              className="p-2 rounded-xl text-[#b9cacb] hover:text-[#00f2ff] hover:bg-[#1d2022] transition-colors focus-visible:ring-2 focus-visible:ring-[#00f2ff]"
               title="Settings"
+              aria-label="Settings"
             >
               <Settings size={18} />
             </Link>
@@ -92,14 +95,16 @@ export function FanShell({ children }: { children: React.ReactNode }) {
 
           <Link
             href="/fan/notifications"
-            className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#1d2022] border border-[#3a494b]/40 text-[#b9cacb] hover:text-[#00f2ff] hover:border-[#00f2ff]/30 transition-all relative"
+            className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#1d2022] border border-[#3a494b]/40 text-[#b9cacb] hover:text-[#00f2ff] hover:border-[#00f2ff]/30 transition-all relative focus-visible:ring-2 focus-visible:ring-[#00f2ff]"
+            aria-label="Notifications"
           >
             <Bell className="w-4 h-4" />
             <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-[#00f2ff] shadow-[0_0_6px_#00f2ff]" />
           </Link>
           <Link
             href="/profile"
-            className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#1d2022] border border-[#3a494b]/40 text-[#b9cacb] hover:text-[#00f2ff] hover:border-[#00f2ff]/30 transition-all"
+            className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#1d2022] border border-[#3a494b]/40 text-[#b9cacb] hover:text-[#00f2ff] hover:border-[#00f2ff]/30 transition-all focus-visible:ring-2 focus-visible:ring-[#00f2ff]"
+            aria-label="User profile"
           >
             <UserCircle2 className="w-5 h-5" />
           </Link>
@@ -113,7 +118,7 @@ export function FanShell({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Floating Bottom Navigation Dock (Hidden on md+ desktop screens) */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[95%] max-w-md z-40 md:hidden">
-        <nav className="bg-[#1d2022]/95 backdrop-blur-xl border border-[#00f2ff]/30 rounded-2xl flex items-center justify-around h-16 px-2 shadow-[0_0_25px_rgba(0,0,0,0.8)]">
+        <nav className="bg-[#1d2022]/95 backdrop-blur-xl border border-[#00f2ff]/30 rounded-2xl flex items-center justify-around h-16 px-2 shadow-[0_0_25px_rgba(0,0,0,0.8)]" aria-label="Fan mobile navigation">
           {primaryNavItems.slice(0, 5).map((item) => {
             const isActive = pathname === item.href || (item.href !== "/fan" && pathname.startsWith(item.href + "/"));
             const Icon = item.icon;
@@ -121,9 +126,10 @@ export function FanShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all ${
+                className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all focus-visible:ring-2 focus-visible:ring-[#00f2ff] ${
                   isActive ? "text-[#00f2ff] font-bold" : "text-[#b9cacb] hover:text-white"
                 }`}
+                aria-current={isActive ? "page" : undefined}
               >
                 <div className={`p-1 rounded-lg ${isActive ? "bg-[#00f2ff]/10" : ""}`}>
                   <Icon size={18} />

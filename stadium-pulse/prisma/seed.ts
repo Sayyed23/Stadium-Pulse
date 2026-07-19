@@ -1,4 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+import * as bcrypt from "bcrypt";
+
+const log = (msg: string) => console.log(`[${new Date().toISOString()}] ${msg}`);
 
 // Seed data modeled on realistic India-hosted tournament stadium capacities
 // All data aligns with the venue KB used by the fan navigation assistant (FR-1)
@@ -6,7 +9,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🏟️  Seeding StadiumPulse AI venue data...\n");
+  log("🏟️  Seeding StadiumPulse AI venue data...\n");
 
   // ─── Venue ────────────────────────────────────────────────
   const venue = await prisma.venue.create({
@@ -16,7 +19,7 @@ async function main() {
       timezone: "Asia/Kolkata",
     },
   });
-  console.log(`✅ Venue: ${venue.name}`);
+  log(`✅ Venue: ${venue.name}`);
 
   // ─── Zones ────────────────────────────────────────────────
   const zoneData = [
@@ -65,7 +68,7 @@ async function main() {
       data: { venueId: venue.id, ...zd },
     });
     zones[zone.name] = zone.id;
-    console.log(`  📍 Zone: ${zone.name} (${zone.capacity} cap)`);
+    log(`  📍 Zone: ${zone.name} (${zone.capacity} cap)`);
   }
 
   // ─── Amenities ────────────────────────────────────────────
@@ -162,7 +165,7 @@ async function main() {
       data: { zoneId: zones[zoneName], ...rest },
     });
   }
-  console.log(`  🏥 Amenities: ${amenityData.length} created`);
+  log(`  🏥 Amenities: ${amenityData.length} created`);
 
   // ─── Volunteers ───────────────────────────────────────────
   const volunteerData = [
@@ -207,7 +210,7 @@ async function main() {
       zoneName: "Zone A – North Stand",
       contactChannel: "dashboard",
       role: "admin" as const,
-      // password: "admin123" — hashed below
+      passwordHash: bcrypt.hashSync("admin123", 10),
     },
     {
       name: "Meera Operator",
@@ -224,7 +227,7 @@ async function main() {
       data: { zoneAssignmentId: zones[zoneName], ...rest },
     });
   }
-  console.log(`  👤 Volunteers/Staff: ${volunteerData.length} created`);
+  log(`  👤 Volunteers/Staff: ${volunteerData.length} created`);
 
   // ─── Transport Zones ──────────────────────────────────────
   await prisma.transportZone.createMany({
@@ -235,13 +238,15 @@ async function main() {
       { name: "Shuttle Stop B – Gate 5", type: "shuttle_stop", capacity: 200, currentCount: 120 },
     ],
   });
-  console.log("  🚌 Transport Zones: 4 created");
+  log("  🚌 Transport Zones: 4 created");
 
   // ─── Waste Bins ───────────────────────────────────────────
   const wasteBinData = [
     { zoneName: "Zone A – North Stand", fillPct: 0.45 },
     { zoneName: "Zone B – South Stand", fillPct: 0.72 },
     { zoneName: "Zone C – Concourse (Gate 2/3)", fillPct: 0.88 },
+    { zoneName: "Zone D – Premium Boxes", fillPct: 0.20 },
+    { zoneName: "Zone E – Overflow (Gate 7)", fillPct: 0.10 },
   ];
 
   for (const wb of wasteBinData) {
@@ -249,9 +254,9 @@ async function main() {
       data: { zoneId: zones[wb.zoneName], fillPct: wb.fillPct },
     });
   }
-  console.log("  🗑️  Waste Bins: 3 created");
+  log(`  🗑️  Waste Bins: ${wasteBinData.length} created`);
 
-  console.log("\n🎉 Seed complete! StadiumPulse AI venue KB is ready.\n");
+  log("\n🎉 Seed complete! StadiumPulse AI venue KB is ready.\n");
 }
 
 main()

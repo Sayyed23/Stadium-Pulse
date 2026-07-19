@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authenticateStaff, SESSION_COOKIE } from "@/lib/auth";
+import { authenticateStaff, SESSION_COOKIE, loginRateLimiter } from "@/lib/auth";
 
 /**
  * POST /api/auth/login
@@ -11,7 +11,13 @@ import { authenticateStaff, SESSION_COOKIE } from "@/lib/auth";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, role } = body;
+    const { name, role, passcode } = body;
+    const ip = request.headers.get("x-forwarded-for") || "unknown";
+
+    const rateLimit = loginRateLimiter.limit(ip);
+    if (!rateLimit.success) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
 
     if (!name || !role) {
       return NextResponse.json(
@@ -20,7 +26,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await authenticateStaff(name, role);
+    const result = await authenticateStaff(name, role, passcode);
 
     if (!result) {
       return NextResponse.json(

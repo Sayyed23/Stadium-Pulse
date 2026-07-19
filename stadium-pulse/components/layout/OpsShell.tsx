@@ -43,7 +43,7 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
         
-        <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto" aria-label="Ops portal navigation">
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/ops/dashboard" && pathname.startsWith(item.href + "/"));
             const Icon = item.icon;
@@ -51,11 +51,12 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group ${
+                className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-blue-500 ${
                   isActive 
                     ? "text-blue-700 dark:text-blue-300 font-medium" 
                     : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
                 }`}
+                aria-current={isActive ? "page" : undefined}
               >
                 {isActive && (
                   <div className="absolute inset-0 bg-blue-50 dark:bg-blue-900/20 rounded-xl transition-all" />
@@ -73,7 +74,8 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
         <div className="p-4 border-t border-slate-200 dark:border-slate-800/50">
           <Link
             href="/ops/login"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-200 transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-200 transition-colors focus-visible:ring-2 focus-visible:ring-blue-500"
+            aria-label="Logout"
           >
             <LogOut size={20} />
             <span className="font-medium">Logout</span>

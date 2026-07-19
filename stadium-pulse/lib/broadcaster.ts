@@ -13,8 +13,9 @@ import {
 class EventBroadcaster extends EventEmitter {
   private intervalId: NodeJS.Timeout | null = null;
   private activeListeners = 0;
-  private previousCounts: Map<string, number[]> = new Map();
+  private previousCounts: Map<string, { counts: number[]; lastUpdated: number }> = new Map();
   private tickInFlight = false;
+  private readonly HISTORY_MAX_AGE_MS = 60 * 1000; // 1 minute eviction
 
   constructor() {
     super();
@@ -54,6 +55,14 @@ class EventBroadcaster extends EventEmitter {
         ]);
 
         const events: SSEEvent[] = [];
+        const now = Date.now();
+
+        // Evict old history
+        for (const [zoneId, data] of this.previousCounts.entries()) {
+          if (now - data.lastUpdated > this.HISTORY_MAX_AGE_MS) {
+            this.previousCounts.delete(zoneId);
+          }
+        }
 
         // --- Process Standard Zones ---
         for (const zone of zones) {
@@ -63,15 +72,21 @@ class EventBroadcaster extends EventEmitter {
 
           const newCount = simulateOccupancyChange(zone.currentCount, zone.capacity);
 
-          await prisma.zone.update({
-            where: { id: zone.id },
-            data: { currentCount: newCount },
-          });
+          try {
+            await prisma.zone.update({
+              where: { id: zone.id },
+              data: { currentCount: newCount },
+            });
+          } catch (err) {
+            console.error(`Failed to update zone ${zone.id}:`, err);
+            continue;
+          }
 
-          const history = this.previousCounts.get(zone.id) || [];
+          const historyData = this.previousCounts.get(zone.id) || { counts: [], lastUpdated: now };
+          const history = historyData.counts;
           history.push(newCount);
           if (history.length > 5) history.shift();
-          this.previousCounts.set(zone.id, history);
+          this.previousCounts.set(zone.id, { counts: history, lastUpdated: now });
 
           const pct = newCount / zone.capacity;
           const update: ZoneUpdate = {
@@ -136,37 +151,46 @@ class EventBroadcaster extends EventEmitter {
               recommendedAction = "Monitor closely and prepare overflow routing.";
             }
 
-            const alertLog = await prisma.alertLog.create({
-              data: {
-                zoneId: zone.id,
-                thresholdCrossed: breach.level,
-                generatedSummary: summary,
-                recommendedAction: recommendedAction,
-                triggeringMetric: pct,
-              },
-            });
+            try {
+              const alertLog = await prisma.alertLog.create({
+                data: {
+                  zoneId: zone.id,
+                  thresholdCrossed: breach.level,
+                  generatedSummary: summary,
+                  recommendedAction: recommendedAction,
+                  triggeringMetric: pct,
+                },
+              });
 
-            const alertEvent: AlertEvent = {
-              type: "alert",
-              zone_id: zone.id,
-              zone_name: zone.name,
-              threshold_crossed: breach.level,
-              generated_summary: summary,
-              recommended_action: recommendedAction,
-              alert_id: alertLog.id,
-              timestamp: new Date().toISOString(),
-            };
-            events.push(alertEvent);
+              const alertEvent: AlertEvent = {
+                type: "alert",
+                zone_id: zone.id,
+                zone_name: zone.name,
+                threshold_crossed: breach.level,
+                generated_summary: summary,
+                recommended_action: recommendedAction,
+                alert_id: alertLog.id,
+                timestamp: new Date().toISOString(),
+              };
+              events.push(alertEvent);
+            } catch (err) {
+              console.error(`Failed to create alert log for zone ${zone.id}:`, err);
+            }
           }
         }
 
         // --- Process Transport Zones ---
         for (const tz of transportZones) {
           const newCount = simulateOccupancyChange(tz.currentCount, tz.capacity);
-          await prisma.transportZone.update({
-            where: { id: tz.id },
-            data: { currentCount: newCount },
-          });
+          try {
+            await prisma.transportZone.update({
+              where: { id: tz.id },
+              data: { currentCount: newCount },
+            });
+          } catch (err) {
+            console.error(`Failed to update transport zone ${tz.id}:`, err);
+            continue;
+          }
           const pct = newCount / tz.capacity;
           events.push({
             type: "transport_update",
@@ -185,10 +209,15 @@ class EventBroadcaster extends EventEmitter {
           let newFill = wb.fillPct + drift;
           if (newFill > 1) newFill = 0.05;
 
-          await prisma.wasteBin.update({
-            where: { id: wb.id },
-            data: { fillPct: newFill, lastUpdated: new Date() },
-          });
+          try {
+            await prisma.wasteBin.update({
+              where: { id: wb.id },
+              data: { fillPct: newFill, lastUpdated: new Date() },
+            });
+          } catch (err) {
+            console.error(`Failed to update waste bin ${wb.id}:`, err);
+            continue;
+          }
 
           if (newFill > 0.85) {
             events.push({

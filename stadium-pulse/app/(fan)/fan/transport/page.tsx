@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { Bus, Car, Train, AlertTriangle, ArrowLeft } from "lucide-react";
 
@@ -23,6 +23,48 @@ function statusColor(pct: number) {
   if (pct >= 0.9) return { bar: "bg-red-500", badge: "text-red-400 bg-red-500/10", label: "Full" };
   if (pct >= 0.7) return { bar: "bg-amber-500", badge: "text-amber-400 bg-amber-500/10", label: "Filling" };
   return { bar: "bg-emerald-500", badge: "text-emerald-400 bg-emerald-500/10", label: "Available" };
+}
+
+function TransportZoneItem({ zone }: { zone: TransportZone }) {
+  const s = useMemo(() => statusColor(zone.pct), [zone.pct]);
+  return (
+    <div className="bg-[#1d2022] border border-[#3a494b]/40 rounded-2xl p-4 transition-all duration-300 hover:border-[#00f2ff]/40 shadow-lg">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2.5">
+          <span className="text-[#00f2ff]">
+            {typeIcon[zone.transport_type] || <Bus className="w-5 h-5" />}
+          </span>
+          <span className="font-bold text-sm text-white">{zone.name}</span>
+        </div>
+        <span
+          className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${s.badge}`}
+          aria-label={`Status: ${s.label}`}
+        >
+          {s.label}
+        </span>
+      </div>
+
+      {/* Progress Bar */}
+      <div 
+        className="w-full h-2 bg-[#101415] rounded-full overflow-hidden mb-2"
+        role="progressbar"
+        aria-valuenow={Math.round(zone.pct * 100)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label={`${zone.name} capacity`}
+      >
+        <div
+          className={`h-full rounded-full transition-all duration-700 ease-out ${s.bar}`}
+          style={{ width: `${Math.min(zone.pct * 100, 100)}%` }}
+        />
+      </div>
+
+      <div className="flex justify-between text-xs font-mono text-[#b9cacb]">
+        <span>{zone.current_count} / {zone.capacity} Units</span>
+        <span>{Math.round(zone.pct * 100)}% Capacity</span>
+      </div>
+    </div>
+  );
 }
 
 export default function TransportPage() {
@@ -124,40 +166,9 @@ export default function TransportPage() {
                 {section.title}
               </div>
               <div className="grid gap-3">
-                {section.items.map((zone) => {
-                  const s = statusColor(zone.pct);
-                  return (
-                    <div
-                      key={zone.zone_id}
-                      className="bg-[#1d2022] border border-[#3a494b]/40 rounded-2xl p-4 transition-all duration-300 hover:border-[#00f2ff]/40 shadow-lg"
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2.5">
-                          <span className="text-[#00f2ff]">
-                            {typeIcon[zone.transport_type] || <Bus className="w-5 h-5" />}
-                          </span>
-                          <span className="font-bold text-sm text-white">{zone.name}</span>
-                        </div>
-                        <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${s.badge}`}>
-                          {s.label}
-                        </span>
-                      </div>
-
-                      {/* Progress Bar */}
-                      <div className="w-full h-2 bg-[#101415] rounded-full overflow-hidden mb-2">
-                        <div
-                          className={`h-full rounded-full transition-all duration-700 ease-out ${s.bar}`}
-                          style={{ width: `${Math.min(zone.pct * 100, 100)}%` }}
-                        />
-                      </div>
-
-                      <div className="flex justify-between text-xs font-mono text-[#b9cacb]">
-                        <span>{zone.current_count} / {zone.capacity} Units</span>
-                        <span>{Math.round(zone.pct * 100)}% Capacity</span>
-                      </div>
-                    </div>
-                  );
-                })}
+                {section.items.map((zone) => (
+                  <TransportZoneItem key={zone.zone_id} zone={zone} />
+                ))}
               </div>
             </div>
           ))}

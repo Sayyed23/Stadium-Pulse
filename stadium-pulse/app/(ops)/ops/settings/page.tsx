@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { Settings, Bell, Activity, Save } from "lucide-react";
 
-function ToggleButton({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+function ToggleButton({ value, onChange, ariaLabel }: { value: boolean; onChange: (v: boolean) => void; ariaLabel: string }) {
   return (
     <button
+      role="switch"
+      aria-checked={value}
+      aria-label={ariaLabel}
       onClick={() => onChange(!value)}
-      className={`w-11 h-6 rounded-full transition-colors relative ${value ? "bg-blue-500" : "bg-slate-300 dark:bg-slate-700"}`}
+      className={`w-11 h-6 rounded-full transition-colors relative focus-visible:ring-2 focus-visible:ring-blue-500 ${value ? "bg-blue-500" : "bg-slate-300 dark:bg-slate-700"}`}
     >
       <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${value ? "translate-x-5" : "translate-x-0.5"}`} />
     </button>
@@ -31,27 +34,30 @@ export default function OpsSettingsPage() {
         <div className="space-y-4">
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium">Warning Threshold</label>
-              <span className="text-sm font-bold text-amber-500">{warningThreshold}%</span>
+              <label htmlFor="warning-slider" className="text-sm font-medium">Warning Threshold</label>
+              <span className="text-sm font-bold text-amber-500" aria-hidden="true">{warningThreshold}%</span>
             </div>
-            <input type="range" min={50} max={95} value={warningThreshold} onChange={(e) => setWarningThreshold(Number(e.target.value))}
-              className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-amber-500" />
+            <input id="warning-slider" type="range" min={50} max={95} value={warningThreshold} onChange={(e) => setWarningThreshold(Number(e.target.value))}
+              aria-valuemin={50} aria-valuemax={95} aria-valuenow={warningThreshold} aria-label="Warning Threshold Percentage"
+              className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-amber-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" />
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium">Critical Threshold</label>
-              <span className="text-sm font-bold text-red-500">{criticalThreshold}%</span>
+              <label htmlFor="critical-slider" className="text-sm font-medium">Critical Threshold</label>
+              <span className="text-sm font-bold text-red-500" aria-hidden="true">{criticalThreshold}%</span>
             </div>
-            <input type="range" min={80} max={100} value={criticalThreshold} onChange={(e) => setCriticalThreshold(Number(e.target.value))}
-              className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-red-500" />
+            <input id="critical-slider" type="range" min={80} max={100} value={criticalThreshold} onChange={(e) => setCriticalThreshold(Number(e.target.value))}
+              aria-valuemin={80} aria-valuemax={100} aria-valuenow={criticalThreshold} aria-label="Critical Threshold Percentage"
+              className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" />
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium">Anti-Spam Cooldown</label>
-              <span className="text-sm font-bold">{cooldownSec}s</span>
+              <label htmlFor="cooldown-slider" className="text-sm font-medium">Anti-Spam Cooldown</label>
+              <span className="text-sm font-bold" aria-hidden="true">{cooldownSec}s</span>
             </div>
-            <input type="range" min={15} max={180} value={cooldownSec} onChange={(e) => setCooldownSec(Number(e.target.value))}
-              className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-blue-500" />
+            <input id="cooldown-slider" type="range" min={15} max={180} value={cooldownSec} onChange={(e) => setCooldownSec(Number(e.target.value))}
+              aria-valuemin={15} aria-valuemax={180} aria-valuenow={cooldownSec} aria-label="Anti-Spam Cooldown in Seconds"
+              className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full appearance-none cursor-pointer accent-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" />
           </div>
         </div>
       </div>
@@ -65,14 +71,14 @@ export default function OpsSettingsPage() {
               <div className="text-sm font-medium">Push Notifications</div>
               <div className="text-xs text-zinc-400">Browser push for threshold alerts</div>
             </div>
-            <ToggleButton value={pushEnabled} onChange={setPushEnabled} />
+            <ToggleButton value={pushEnabled} onChange={setPushEnabled} ariaLabel="Toggle Push Notifications" />
           </div>
           <div className="flex items-center justify-between">
             <div>
               <div className="text-sm font-medium">Email Notifications</div>
               <div className="text-xs text-zinc-400">Daily summary and critical alerts</div>
             </div>
-            <ToggleButton value={emailEnabled} onChange={setEmailEnabled} />
+            <ToggleButton value={emailEnabled} onChange={setEmailEnabled} ariaLabel="Toggle Email Notifications" />
           </div>
         </div>
       </div>

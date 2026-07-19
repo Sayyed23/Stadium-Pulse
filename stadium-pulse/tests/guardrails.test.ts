@@ -69,4 +69,24 @@ describe("Grounding & Hallucination Guardrails Test Suite", () => {
     expect(res.verifiedSources).toContain("zone_a");
     expect(res.verifiedSources).toContain("food_north");
   });
+
+  it("should verify structured navigation response with NO hallucinations", async () => {
+    vi.mocked(prisma.zone.findMany).mockResolvedValueOnce([
+      { id: "zone_a" },
+    ] as any);
+    vi.mocked(prisma.amenity.findMany).mockResolvedValueOnce([
+      { id: "food_north" },
+    ] as any);
+
+    const res = await verifyNavigationResponse({
+      answer: "Turn left at Zone A towards North Food Court",
+      route: ["zone_a"],
+      grounded_sources: ["food_north"],
+    });
+
+    expect(res.hasHallucination).toBe(false);
+    expect(res.hallucinations).toHaveLength(0);
+    expect(res.verifiedSources).toContain("zone_a");
+    expect(res.verifiedSources).toContain("food_north");
+  });
 });

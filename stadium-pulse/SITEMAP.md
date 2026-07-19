@@ -272,17 +272,17 @@ The sitemap above maps to the following Next.js App Router route groups:
 | `/ops/incidents` | ✅ Built |
 | `/ops/sustainability` | ✅ Built |
 | `/ops/login` | ✅ Built |
-| `/fan/navigation` | 🔲 Planned |
-| `/fan/amenities` | 🔲 Planned |
-| `/fan/crowd` | 🔲 Planned |
-| `/fan/accessibility` | 🔲 Planned |
-| `/fan/emergency` | 🔲 Planned |
-| `/fan/notifications` | 🔲 Planned |
-| `/fan/settings` | 🔲 Planned |
-| `/volunteer/*` | 🔲 Planned |
-| `/ops/crowd` | 🔲 Planned |
-| `/ops/volunteers` | 🔲 Planned |
-| `/ops/analytics` | 🔲 Planned |
-| `/ops/settings` | 🔲 Planned |
-| `/admin/*` | 🔲 Planned |
-| Shared Pages | 🔲 Planned |
+| `/fan/navigation` | ✅ Built |
+| `/fan/amenities` | ✅ Built |
+| `/fan/crowd` | ✅ Built |
+| `/fan/accessibility` | ✅ Built |
+| `/fan/emergency` | ✅ Built |
+| `/fan/notifications` | ✅ Built |
+| `/fan/settings` | ✅ Built |
+| `/volunteer/*` | ✅ Built |
+| `/ops/crowd` | ✅ Built |
+| `/ops/volunteers` | ✅ Built |
+| `/ops/analytics` | ✅ Built |
+| `/ops/settings` | ✅ Built |
+| `/admin/*` | ✅ Built |
+| Shared Pages | ✅ Built |

@@ -1,5 +1,30 @@
 import { cookies } from "next/headers";
 import { prisma } from "./db";
+import * as bcrypt from "bcrypt";
+
+// Simple in-memory rate limiter for login
+class InMemoryRatelimit {
+  private store = new Map<string, { count: number; resetTime: number }>();
+
+  limit(ip: string): { success: boolean } {
+    const now = Date.now();
+    const record = this.store.get(ip);
+    
+    if (!record || now > record.resetTime) {
+      this.store.set(ip, { count: 1, resetTime: now + 60 * 1000 }); // 1 minute window
+      return { success: true };
+    }
+    
+    if (record.count >= 5) {
+      return { success: false };
+    }
+    
+    record.count += 1;
+    return { success: true };
+  }
+}
+
+export const loginRateLimiter = new InMemoryRatelimit();
 
 /**
  * StadiumPulse AI — Staff Authentication Helpers
@@ -134,7 +159,8 @@ export async function getStaffSession(): Promise<StaffSession | null> {
  */
 export async function authenticateStaff(
   name: string,
-  role: string
+  role: string,
+  password?: string
 ): Promise<{ token: string; session: StaffSession } | null> {
   // Look up the volunteer/staff member by name
   const staff = await prisma.volunteer.findFirst({
@@ -145,6 +171,12 @@ export async function authenticateStaff(
   });
 
   if (!staff) return null;
+
+  if (staff.passwordHash) {
+    if (!password) return null;
+    const isValidPassword = await bcrypt.compare(password, staff.passwordHash);
+    if (!isValidPassword) return null;
+  }
 
   const session: StaffSession = {
     staffId: staff.id,

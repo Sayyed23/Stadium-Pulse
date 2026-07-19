@@ -79,7 +79,7 @@ export function VolunteerShell({ children }: { children: React.ReactNode }) {
           </div>
         )}
 
-        <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+        <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto" aria-label="Volunteer portal navigation">
           {navItems.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -91,11 +91,12 @@ export function VolunteerShell({ children }: { children: React.ReactNode }) {
                 key={item.href}
                 href={item.href}
                 title={collapsed ? item.label : undefined}
-                className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group ${
+                className={`relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-teal-500 ${
                   isActive
                     ? "text-teal-700 dark:text-teal-300 font-medium"
                     : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
                 }`}
+                aria-current={isActive ? "page" : undefined}
               >
                 {isActive && (
                   <div className="absolute inset-0 bg-teal-50 dark:bg-teal-900/20 rounded-xl transition-all" />
@@ -120,7 +121,8 @@ export function VolunteerShell({ children }: { children: React.ReactNode }) {
         <div className="p-3 border-t border-slate-200 dark:border-slate-800/50">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-200 transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-200 transition-colors focus-visible:ring-2 focus-visible:ring-teal-500"
+            aria-label="Back to Home"
           >
             <ChevronLeft size={20} className="shrink-0" />
             {!collapsed && <span className="font-medium">Back to Home</span>}

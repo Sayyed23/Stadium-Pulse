@@ -137,3 +137,37 @@ body {
 .animate-pulse-cyan {
   animation: pulse-cyan 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Accessibility Utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus-visible\:not-sr-only:focus-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--stitch-cyan);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--stitch-cyan);
+  color: var(--stitch-dark);
+}
